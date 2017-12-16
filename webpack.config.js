@@ -1,7 +1,7 @@
 const HTMLWebpackPLugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./TourRenderer.ts",
+  entry: "./src/js/main.ts",
   output: {
     filename: "bundle.js",
     path: __dirname + "/dist"
@@ -40,7 +40,7 @@ module.exports = {
   plugins: [
     new HTMLWebpackPLugin({
       filename: 'index.html',
-      template: `./index.pug`,
+      template: `./src/views/index.pug`,
       inject: false
     })
   ]
