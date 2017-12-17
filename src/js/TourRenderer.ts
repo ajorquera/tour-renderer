@@ -1,93 +1,106 @@
+require('pannellum');
+declare const pannellum: any;
 
+import Tour from './models/Tour'
+import Pano from './models/Pano'
 
-export default class TourRender {
-  constructor() {
+export default class TourRenderer {
+  private _tour: Tour;
+  private _viewer: any;
+  private _dom: Element;
+  private _pannellumPanos: PannellumPano[];
+
+  constructor(tour: Tour, dom: string | Element) {
+    this._tour = tour;
+
+    if(typeof dom === 'string') {
+      dom = document.querySelector(dom);
+    }
+
+    this._dom = dom;
+    this._init();
+  }
+
+  getPano(id: number): Pano | null {
+    let panoToReturn = null;
+    const panos = this._tour.panos;
+    for(let i = 0; i < panos.length; i++) {
+      const pano = panos[i];
+      if(pano.id === id) {
+        panoToReturn = pano;
+        break;
+      }
+    }
+    return panoToReturn;
+  }
+
+  private _init(): void {
+
+    this._pannellumPanos = this._tour.panos.map(this._transformToPano);
+
+    const params: pannellumOpts = {
+      title: this._tour.name,
+      autoLoad: false,
+      preview: true,
+      showControls: true,
+      scenes: this._pannellumPanos,
+      default: {
+        firstScene: this._tour.firstPanoId ,
+        sceneFadeDuration: 1000,
+        yaw: 0,
+        pitch: 0
+      }
+    };
+
+    this._viewer = pannellum.viewer(this._dom, params);
+    this._setListeners();
+  }
+
+  private _setListeners(): void {
+    this._viewer.on('load', this._onLoadPano.bind(this));
+    this._viewer.on('mousedown', this._onClick.bind(this));
+    this._viewer.on('touchstart', this._onClick.bind(this));
+  }
+
+  private _onClick(): void {
 
   }
 
-  init() {
+  private _onLoadPano(): void {
 
   }
 
-  setFirst() {
-
-  }
-
-  setPOV() {
-
-  }
-
-  createInfoElem() {
-
-  }
-
-  createLink() {
-
-  }
-
-  removeLink() {
-
+  private _transformToPano(pano: Pano): PannellumPano {
+    return {
+      id: pano.id,
+      title: pano.name,
+      type: 'equirectangular',
+      panorama: pano.url.href
+    };
   }
 
   destroy() {
-
-  }
-
-  private onLoad() {
-
+    this._viewer.destroy();
   }
 }
 
-const helpers = {
-  arrayToHash: function(array, prop) {
-    prop = prop || 'id';
-
-    return array.reduce((obj, item) => {
-      obj[item[prop]] = item;
-      return obj
-    }, {});
-  }
+interface PannellumPano {
+  id: number,
+  title: string,
+  type: string,
+  panorama: string
 }
 
-
-interface InfoElement {
-  readonly id: number;
+interface pannellumOpts {
   title: string;
-  content: string;
-}
-
-interface POV {
-  readonly id: number;
-  pitch: number;
-  yaw: number;
-}
-
-interface Link {
-  readonly id: number;
-  readonly toId: number;
-  readonly panoId: number;
-}
-
-interface Image {
-  readonly id: number;
-  link: Url;
-  name: string;
-}
-
-interface Tour {
-  readonly id: number;
-  firstPanoId: number;
-  name: string;
-  description: string;
-  images: Image[];
-  panos: Pano[]
-}
-
-interface Pano extends Image {
-  infoElements: InfoElement[];
-  links: Link[]
-}
-
-class Url {
-
+  autoLoad?: boolean;
+  preview?: boolean;
+  showControls?: boolean;
+  scenes: PannellumPano[],
+  default?: {
+    firstScene?: number;
+    sceneFadeDuration?: number;
+    yaw?: number;
+    pitch?: number;
+  }
 }

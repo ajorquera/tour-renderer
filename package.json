@@ -4,6 +4,7 @@
   "description": "Pannellum wrapper to create virtual tours",
   "repository": "git@bitbucket.org:jorquerad/tour-renderer.git",
   "dependencies": {
+    "@types/node": "^8.5.1",
     "pannellum": "ajorquera/pannellum"
   },
   "devDependencies": {
