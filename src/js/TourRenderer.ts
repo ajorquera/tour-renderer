@@ -3,12 +3,13 @@ declare const pannellum: any;
 
 import Tour from './models/Tour'
 import Pano from './models/Pano'
+import Hashtable, { Table } from './models/Hashtable'
 
 export default class TourRenderer {
   private _tour: Tour;
   private _viewer: any;
   private _dom: Element;
-  private _pannellumPanos: PannellumPano[];
+  private _pannellumPanos: Hashtable<PannellumPano>;
 
   constructor(tour: Tour, dom: string | Element) {
     this._tour = tour;
@@ -36,14 +37,14 @@ export default class TourRenderer {
 
   private _init(): void {
 
-    this._pannellumPanos = this._tour.panos.map(this._transformToPano);
+    this._pannellumPanos = new Hashtable(this._tour.panos.map(this._transformToPannellumPano));
 
     const params: pannellumOpts = {
       title: this._tour.name,
       autoLoad: false,
-      preview: true,
+      preview: this._tour.images[0].link,
       showControls: true,
-      scenes: this._pannellumPanos,
+      scenes: this._pannellumPanos.table,
       default: {
         firstScene: this._tour.firstPanoId ,
         sceneFadeDuration: 1000,
@@ -70,12 +71,12 @@ export default class TourRenderer {
 
   }
 
-  private _transformToPano(pano: Pano): PannellumPano {
+  private _transformToPannellumPano(pano: Pano): PannellumPano {
     return {
       id: pano.id,
       title: pano.name,
       type: 'equirectangular',
-      panorama: pano.url.href
+      panorama: pano.link
     };
   }
 
@@ -94,9 +95,9 @@ interface PannellumPano {
 interface pannellumOpts {
   title: string;
   autoLoad?: boolean;
-  preview?: boolean;
+  preview?: string;
   showControls?: boolean;
-  scenes: PannellumPano[],
+  scenes: Table<PannellumPano>,
   default?: {
     firstScene?: number;
     sceneFadeDuration?: number;

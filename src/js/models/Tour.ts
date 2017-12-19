@@ -6,6 +6,6 @@ export default interface Tour {
   firstPanoId: number;
   name: string;
   description: string;
-  images: Image[];
-  panos: Pano[]
+  images?: Image[];
+  panos?: Pano[]
 }

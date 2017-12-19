@@ -1,6 +1,5 @@
-
 describe('TestRenderer', () => {
-  describe('', () => {
+  describe('different states of the tour', () => {
     it('should manage when there is no panoramas', () => {
 
     });
@@ -13,6 +12,13 @@ describe('TestRenderer', () => {
 
     });
 
+    it("should change panoramas when clicking on a link", function () {
 
+    });
+  });
+
+  describe('create elements on the tour', () => {
+    it('should create a link succesfully');
+    it('should create an information element succesfully');
   });
 });

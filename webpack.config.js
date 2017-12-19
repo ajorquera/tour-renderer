@@ -1,14 +1,18 @@
 const HTMLWebpackPLugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+
+const extractLESS = new ExtractTextPlugin('css/style.css');
 
 module.exports = {
   entry: "./src/js/main.ts",
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/dist"
+    filename: "js/main.js",
+    path: path.resolve(__dirname + "/dist")
   },
   //need to implement refreshing
   devServer: {
-    hot: true,
+    hot: false,
     inline: true,
     open: true,
   },
@@ -17,7 +21,10 @@ module.exports = {
   devtool: "source-map",
 
   resolve: {
-    extensions: [".ts", ".js", ".json"]
+    extensions: [".ts", ".js", ".json"],
+    alias: {
+      models: path.resolve(__dirname, 'src/js/models')
+    }
   },
 
   module: {
@@ -35,6 +42,9 @@ module.exports = {
     }, {
       test: /\.pug/,
       loader: ['raw-loader', 'pug-html-loader']
+    }, {
+      test: /\.less$/i,
+      use: extractLESS.extract(['css-loader', 'less-loader'])
     }]
   },
   plugins: [
@@ -42,7 +52,8 @@ module.exports = {
       filename: 'index.html',
       template: `./src/views/index.pug`,
       inject: false
-    })
+    }),
+    extractLESS
   ]
 
 };
