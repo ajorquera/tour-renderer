@@ -3,11 +3,10 @@ import Pano from './Pano'
 import POV from './POV'
 
 export default interface Tour {
-  readonly id: number;
-  firstPanoId?: number;
-  name: string;
-  description: string;
-  POV?: POV;
-  images?: Image[];
-  panos?: Pano[]
+  readonly id           : number;
+  readonly name         : string;
+  readonly description  : string;
+  readonly firstPano    : Pano;
+  readonly preview?     : Image;
+  readonly panos?       : Pano[];
 }

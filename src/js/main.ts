@@ -1,11 +1,7 @@
 const fakeTour = require('./mockData/tour.json')
 import TourRenderer from './TourRenderer'
-import {transformApiTourToPannellum} from './helpers'
 require('../less/style.less');
 
-
 window.onload = function() {
-  const tour = transformApiTourToPannellum(fakeTour);
-
-  const tourRenderer = new TourRenderer(tour, '#single-pano');
+  const tourRenderer = new TourRenderer(fakeTour, '#single-pano');
 }
