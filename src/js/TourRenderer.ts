@@ -3,13 +3,22 @@ declare const pannellum: any;
 
 import Tour from './models/Tour'
 import Pano from './models/Pano'
+import Image from './models/Image'
+import Link from './models/Link'
 import Hashtable, { Table } from './models/Hashtable'
 
 export default class TourRenderer {
-  private _tour: Tour;
-  private _viewer: any;
-  private _dom: Element;
-  private _pannellumPanos: Hashtable<PannellumPano>;
+  private readonly _tour            : Tour;
+  private          _viewer         : any;
+  private          _dom            : Element;
+
+  private          _panos          : Hashtable<Pano>;
+  private          _links          : Hashtable<Link>
+  private          _first          : Pano;
+  private          _preview        : Image;
+
+  private          _pannellumPanos : Hashtable<PannellumPano>;
+  private          _pannellumLinks : Hashtable<PannellumLink>;
 
   constructor(tour: Tour, dom: string | Element) {
     this._tour = tour;
@@ -23,22 +32,16 @@ export default class TourRenderer {
   }
 
   getPano(id: number): Pano | null {
-    let panoToReturn = null;
-    const panos = this._tour.panos;
-    for(let i = 0; i < panos.length; i++) {
-      const pano = panos[i];
-      if(pano.id === id) {
-        panoToReturn = pano;
-        break;
-      }
-    }
-    return panoToReturn;
+    return this._panos.get(id);
   }
 
   private _init(): void {
+    this._processTour();
+    this._initViewer();
+    this._setListeners();
+  }
 
-    this._pannellumPanos = new Hashtable(this._tour.panos.map(this._transformToPannellumPano));
-
+  private _initViewer(): void {
     const params: pannellumOpts = {
       title: this._tour.name,
       autoLoad: false,
@@ -54,7 +57,19 @@ export default class TourRenderer {
     };
 
     this._viewer = pannellum.viewer(this._dom, params);
-    this._setListeners();
+  }
+
+  private _processPanos(): void {
+    this._pannellumPanos = new Hashtable(this._tour.panos.map(this._transformToPannellumPano.bind(this)));
+  }
+
+  private _processLinks(): void {
+    this._links = new Hashtable(this._tour.links.map(this._transformToLink.bind(this)));
+  }
+
+  private _processTour(): void {
+    this._processPanos();
+    this._processLinks();
   }
 
   private _setListeners(): void {
@@ -71,12 +86,37 @@ export default class TourRenderer {
 
   }
 
+  private _setLinks(): void {
+
+  }
+  private _transformToLink(link: Link): PannellumLink {
+    return {
+      id: number,
+      pitch: number,
+      yaw: number,
+      type: number,
+      sceneId: number,
+      text: number,
+      targetPitch: number,
+       targetYaw: number,
+    }
+  }
+
   private _transformToPannellumPano(pano: Pano): PannellumPano {
+    let pitch, yaw;
+
+    if(this._tour.firstPanoId === pano.id && this._tour.POV) {
+      pitch = this._tour.POV.pitch;
+      yaw = this._tour.POV.yaw;
+    }
+
     return {
       id: pano.id,
       title: pano.name,
       type: 'equirectangular',
-      panorama: pano.link
+      panorama: pano.link,
+      yaw,
+      pitch
     };
   }
 
@@ -89,7 +129,20 @@ interface PannellumPano {
   id: number,
   title: string,
   type: string,
-  panorama: string
+  panorama: string,
+  yaw: number,
+  pitch: number
+}
+
+interface PannellumLink {
+  readonly id: number,
+  readonly pitch: number,
+  readonly yaw: number,
+  readonly type: number,
+  readonly sceneId: number,
+  readonly text: number,
+  readonly targetPitch: number,
+  readonly targetYaw: number,
 }
 
 interface pannellumOpts {

@@ -5,7 +5,7 @@
   "repository": "git@bitbucket.org:jorquerad/tour-renderer.git",
   "dependencies": {
     "@types/node": "^8.5.1",
-    "pannellum": "ajorquera/pannellum",
+    "pannellum": "ajorquera/pannellum"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",

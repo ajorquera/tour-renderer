@@ -12,8 +12,8 @@ export default class HashTable<T> {
     }, {});
   }
 
-  get(index: string): T {
-    return this.table[index];
+  get(index: string | number): T {
+    return this.table[index] || null;
   }
 
   length(): number {
