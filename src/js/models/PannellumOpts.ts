@@ -6,7 +6,8 @@ export default interface pannellumOpts {
   autoLoad?: boolean;
   preview?: string;
   showControls?: boolean;
-  scenes: Table<PannellumPano>,
+  hfov?:number;  
+  scenes: Table<PannellumPano>;
   default?: {
     firstScene?: number;
     sceneFadeDuration?: number;

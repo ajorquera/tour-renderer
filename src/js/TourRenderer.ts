@@ -51,6 +51,8 @@ export default class TourRenderer {
     const params: PannellumOpts = {
       title: this._tour.name,
       autoLoad: false,
+      //zoom level 120, 100 default, 50 most
+      hfov: 120,
       preview: this._preview.url,
       showControls: true,
       scenes: this._pannellumPanos.table,
