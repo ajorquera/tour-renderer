@@ -5,6 +5,7 @@
   "repository": "git@bitbucket.org:jorquerad/tour-renderer.git",
   "dependencies": {
     "@types/node": "^8.5.1",
+    "flexboxgrid": "^6.3.1",
     "pannellum": "ajorquera/pannellum"
   },
   "devDependencies": {

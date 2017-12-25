@@ -8,19 +8,26 @@ import PannellumPano from './models/PannellumPano'
 import PannellumLink from './models/PannellumLink'
 import PannellumOpts from './models/PannellumOpts'
 import Link from './models/Link'
+import POV from './models/POV'
 import Hashtable, { Table } from './models/Hashtable'
 
 export default class TourRenderer {
   private readonly _tour           : any;
   private          _viewer         : any;
   private          _dom            : Element;
-
-  private          _panos          : Hashtable<Pano>;
+  private          _loaded         : boolean;
+  
+  private          _panos           : Hashtable<Pano>;
+  private          _name           : string;
+  private          _description    : string;
   private          _first          : Pano;
   private          _preview        : Image;
-
+  
   private          _pannellumPanos : Hashtable<PannellumPano>;
-  private          _pannellumLinks : Hashtable<PannellumLink[]>;
+
+  get panos(): Table<Pano> {
+    return this._panos.table;
+  }
 
   constructor(tour: any, dom: string | Element) {
     this._tour = tour;
@@ -37,10 +44,49 @@ export default class TourRenderer {
     return this._panos.get(id);
   }
 
-  getCurrentPano(): string {
-      return this._viewer && this._viewer.getScene();
+  getPanos
+
+  getCurrentPano(): Pano {
+    if(!this._viewer) {
+      return null;
+    }
+      const panoId = this._viewer.getScene();
+      return this._panos.get(panoId);
   }
 
+  getPOV(): POV {
+    const POV = {
+      yaw: 0,
+      pitch: 0
+    };
+
+    if(this._viewer) {
+      POV.yaw = this._viewer.getYaw(),
+      POV.pitch = this._viewer.getPitch()
+    }
+
+    return POV;
+  }
+
+  setLinkTo(pano: Pano, POV: POV = this.getPOV(), targetPOV: POV = {pitch: 0, yaw:0}): void {
+    if(!this._loaded) return console.info('Viewer not loaded');
+    if(!pano) throw new Error('parameter missing: pano');
+
+    const link: Link = {
+      id: null,
+      name: pano.name,
+      toId: pano.id,
+      POV,
+      targetPOV
+    }
+
+    const currentPano = this.getCurrentPano();
+    
+    currentPano.links.add(link.id, link);
+    this._addLink(link);
+  }
+
+// ---------------------------------------- PRIVATE ----------------------------------------------------------------------------
   private _init(): void {
     this._processTour();
     this._initViewer();
@@ -53,7 +99,6 @@ export default class TourRenderer {
       autoLoad: false,
       //zoom level 120, 100 default, 50 most
       hfov: 120,
-      preview: this._preview.url,
       showControls: true,
       scenes: this._pannellumPanos.table,
       default: {
@@ -63,6 +108,10 @@ export default class TourRenderer {
         pitch: 0
       }
     };
+
+    if(this._preview) {
+      params.preview = this._preview.url;
+    }
 
     this._viewer = pannellum.viewer(this._dom, params);
   }
@@ -79,26 +128,31 @@ export default class TourRenderer {
       }
     }));
 
-    this._first = this._panos.get(this._tour.firstPhotoSphereId);
-    this._first.POV = this._tour.POV;
+    if(this._tour.firstPhotoSphereId) {
+      this._first = this._panos.get(this._tour.firstPhotoSphereId);
+      this._first.POV = this._tour.POV;
+    } else {
+      this._first = this._panos.get();
+      this._first.POV = {
+        yaw: 0,
+        pitch: 0
+      }
+    }
 
     this._pannellumPanos = new Hashtable(this._panos.array().map(this._transformToPannellumPano.bind(this)));
   }
 
-  private _processLinks(): void {
-    this._pannellumLinks = new Hashtable<PannellumLink[]>();
-
-    this._panos.array().forEach((pano) => {
-      this._pannellumLinks.add(pano.id, pano.links.array().map(this._transformToPannellumLink.bind(this)));
-    })
-  }
-
   private _processTour(): void {
     const image = this._tour.images && this._tour.images[0];
-    this._preview = {url: image.link, name: image.name, id: image.id};
+
+    if(image) {
+      this._preview = {url: image.link, name: image.name, id: image.id};
+    }
+
+    this._name = this._tour.name;
+    this._description = this._tour.description;
 
     this._processPanos();
-    this._processLinks();
   }
 
   private _setListeners(): void {
@@ -112,16 +166,20 @@ export default class TourRenderer {
   }
 
   private _onLoadPano(id): void {
+    console.log('sceneId: ', this.getCurrentPano());
+    this._loaded = true;
     this._setLinks();
   }
 
   private _setLinks(): void {
-    const id = this.getCurrentPano();
-
-    const links = this._pannellumLinks.get(id);
-    links.forEach((link) => {
-      this._viewer.addHotSpot(link);
+    const links = this.getCurrentPano().links;
+    links.array().forEach((link) => {
+      this._addLink(link);
     });
+  }
+
+  private _addLink(link: Link): void {
+    this._viewer.addHotSpot(this._transformToPannellumLink(link));
   }
 
   private _transformToLink(link: any): Link {

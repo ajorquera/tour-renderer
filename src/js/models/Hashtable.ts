@@ -20,8 +20,9 @@ export default class HashTable<T> {
 
     return this;
   }
-  get(index: string | number): T {
-    return this.table[index] || null;
+  get(index: string | number = 0): T {
+    let item;
+    return index ? this.table[index] : this._array[index];
   }
 
   length(): number {

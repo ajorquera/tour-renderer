@@ -8,12 +8,27 @@ html
     p Here we will test the tour renderer with all its features
     
     section(id="single-pano-example")
-      h2 Single pano
-      div(id="single-pano")
+      a(href="#single-pano-example"): h2 Single pano
+      div(class="row")
+        div(class="col-xs-4")
+          div(id="single-pano" class="viewer")
     
     section(id="multiple-pano-example")
-      h2 Multiple pano
-      div(id="multiple-pano")
+      a(href="#multiple-pano-example"): h2 Multiple pano
+      div(class="row")
+        div(class="col-xs-4")
+          div(id="multiple-pano" class="viewer")
+
+    section(id="link-manipulation-example")
+      a(href="#link-manipulation-example"): h2 Link Manipulation
+      div(class="row")
+        div(class="col-xs-4")
+          div(id="link-manipulation" class="viewer")
+        div(class="col-xs-3")
+          button(id="select-create-link") Create link
+          br 
+          br
+          button(id="create-link") Create link in the middle
     
     
     h2 Links
