@@ -1,0 +1,24 @@
+{
+	"POV": {
+		"yaw": "0",
+		"pitch": "0"
+	},
+	"id": "37",
+	"name": "Soluciones en Granada",
+	"description": "Portal en Buensuceso",
+	"address": "",
+	"views": 0,
+	"likes": 0,
+	"isPublic": true,
+	"firstPhotoSphereId": null,
+	"photoSpheres": [
+		{
+			"id": "453",
+			"name": "Panorama_Copia_",
+			"AWSFileId": "150886040257267745016785",
+			"link": "https://s3-us-west-2.amazonaws.com/virtualitour.files/150886040257267745016785",
+			"links": [],
+			"infoElements": []
+		}
+	]
+}

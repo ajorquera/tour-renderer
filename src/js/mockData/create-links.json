@@ -1,0 +1,40 @@
+{
+	"POV": {
+		"yaw": "0",
+		"pitch": "0"
+	},
+	"id": "10",
+	"name": "The Caffarella Park",
+	"description": "Beautiful park in Rome, Italy. Courtesy of Luca Biada.\nhttps://goo.gl/tB4t8c\nLicense https://goo.gl/PkBQVQ",
+	"address": "",
+	"views": 0,
+	"likes": 0,
+	"isPublic": true,
+	"firstPhotoSphereId": null,
+	"images": [
+		{
+			"id": "305",
+			"name": "cover",
+			"AWSFileId": "151206238694676632597771",
+			"link": "https://s3-us-west-2.amazonaws.com/virtualitour.files/151206238694676632597771"
+		}
+	],
+	"photoSpheres": [
+		{
+			"id": "1716",
+			"name": "a",
+			"AWSFileId": "151206239141301199609715",
+			"link": "https://s3-us-west-2.amazonaws.com/virtualitour.files/151206239141301199609715",
+			"links": [],
+			"infoElements": []
+		},
+		{
+			"id": "1717",
+			"name": "b",
+			"AWSFileId": "151206239245431299399647",
+			"link": "https://s3-us-west-2.amazonaws.com/virtualitour.files/151206239245431299399647",
+			"links": [],
+			"infoElements": []
+		}
+	]
+}

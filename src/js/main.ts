@@ -1,15 +1,24 @@
-const tours = require('./mockData/tours.json')
-import TourRenderer from './TourRenderer'
+import modules from './modules/modules'
 require('../less/style.less');
 
-window.onload = function() {
-  let viewer;
-  viewer = new TourRenderer(tours.singlePano, '#single-pano');
-  viewer = new TourRenderer(tours.multiplePanos, '#multiple-pano');
-  viewer = new TourRenderer(tours.linkManipulation, '#link-manipulation');
+const MODULE_NAME = 'all';
 
-  document.querySelector('#create-link').addEventListener('click', (ev) => {
-    const panoToLink = viewer.panos[1717];
-    viewer.setLinkTo(panoToLink);
-  });
+window.onload = function() {
+	document.querySelectorAll('section').forEach((section) => {
+		section.setAttribute('class', 'hide');
+	});
+	
+	
+	modules[MODULE_NAME].forEach((module) => {
+		const element = document.querySelector('#' + module.name);
+
+		if (!element) {
+			throw new Error('module id not found in DOM: ' + module.name);
+		}
+
+		element.setAttribute('class', '');
+		module.init();
+	});
+	
 }
+
