@@ -1,11 +1,14 @@
 import modules from './modules/modules'
 require('../less/style.less');
 
+/**
+ * Modules: single-pano, multiple-pano, create-links, all
+ */ 
 const MODULE_NAME = 'all';
 
 window.onload = function() {
 	document.querySelectorAll('section').forEach((section) => {
-		section.setAttribute('class', 'hide');
+		section.classList.add('dn');
 	});
 	
 	
@@ -16,8 +19,8 @@ window.onload = function() {
 			throw new Error('module id not found in DOM: ' + module.name);
 		}
 
-		element.setAttribute('class', '');
-		module.init();
+		element.classList.remove('dn');
+		module.init(element);
 	});
 	
 }

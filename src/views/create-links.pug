@@ -1,10 +1,17 @@
-section(id="create-links")
-	a(href="#link-manipulation-example"): h2 Link Manipulation
-	div(class="row")
-		div(class="col-xs-4")
-			div(id="link-manipulation" class="viewer")
-		div(class="col-xs-3")
-			button(id="select-create-link") Create link
-			br 
-			br
-			button(id="create-link") Create link in the middle
+section(id="create-links" class="cf")
+	a(href="#create-links"): h2 Link Manipulation
+	div(class="fl w-30 pr2")
+		div(class="viewer h5")
+
+	div(class="fl w-70 pa2")
+		div
+			select
+				option Select a pano
+		br
+		div 
+			button(id="create-link-location") Create link
+			button(id="create-link" class="ml3") Create link in the middle
+
+		div 
+			h3 links
+			ul 

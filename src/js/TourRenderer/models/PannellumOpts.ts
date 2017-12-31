@@ -2,7 +2,7 @@ import PannellumPano from './PannellumPano'
 import {Table} from './Hashtable'
 
 export default interface pannellumOpts {
-  title: string;
+  title?: string;
   autoLoad?: boolean;
   preview?: string;
   showControls?: boolean;
