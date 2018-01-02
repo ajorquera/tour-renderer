@@ -1,4 +1,4 @@
-const tour = require('../mockData/multiple-pano.json')
+import * as tour from '../mockData/multiple-pano.json'
 import TourRenderer from '../tourRenderer/TourRenderer'
 
 export default {
