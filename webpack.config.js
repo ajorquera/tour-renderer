@@ -11,29 +11,29 @@ module.exports = {
 		filename: "js/main.js",
 		path: path.resolve(__dirname + "/dist")
 	},
-	
+
 	//need to implement refreshing
 	devServer: {
-		hot: true, 
+		hot: true,
 		inline: true,
 		open: true,
 		watchContentBase: true,
 		watchOptions: {
 			ignored: /node_modules/,
 			poll: true
-		}		
+		}
 	},
-	
+
 	// Enable sourcemaps for debugging webpack's output.
-	devtool: "source-map", 
-	
+	devtool: "source-map",
+
 	resolve: {
-		extensions: [".ts", ".js", ".json"],
+		extensions: [".ts", ".js", ".json", ".tsx"],
 		alias: {
 			models: path.resolve(__dirname, 'src/js/models')
 		}
 	},
-	
+
 	module: {
 		rules: [{
 			test: /\.tsx?$/,
@@ -52,6 +52,9 @@ module.exports = {
 		}, {
 			test: /\.less$/i,
 			use: extractLESS.extract(['css-loader', 'less-loader'])
+		},{
+			test: /\.html$/,
+			loader: 'polymer-webpack-loader'
 		}]
 	},
 	plugins: [
@@ -62,7 +65,12 @@ module.exports = {
 		}),
 		extractLESS,
 		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.DefinePlugin({
+			'process.env': {
+				'NODE_ENV': JSON.stringify('development')
+			}
+		})
 	]
-	
+
 };

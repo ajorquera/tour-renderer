@@ -13,6 +13,7 @@ import PannellumOpts from './models/PannellumOpts';
 import PannellumOverlay from './models/PannellumOverlay';
 import PannellumPano from './models/PannellumPano';
 import Pano from './models/Pano';
+import Info from './models/Info';
 import POV from './models/POV';
 import Tour from './models/Tour';
 
@@ -33,13 +34,12 @@ export default class TourRenderer {
 	private          _selectPOVDeferred: Defer<POV>;
 	private          _isSelectingPOV: boolean;
 
-	get panos(): Table<Pano> {
-		return this._panos.table;
-	}
+	get panos(): Hashtable<Pano> {
+		return this._panos;
+	};
 
 	constructor(tour: any, dom: string | Element) {
 		this._tour = tour;
-
 		if (typeof dom === 'string') {
 			dom = document.querySelector(dom);
 		}
@@ -92,7 +92,6 @@ export default class TourRenderer {
 			pitch: pov.pitch,
 			yaw: pov.yaw,
 			type: 'info',
-			cssClass: this._createClass('info-element'),
 			createTooltipFunc: (divParent) => render(elm, divParent)
 		}
 
@@ -103,21 +102,32 @@ export default class TourRenderer {
 
 	}
 
-	public addInfoElement(pov: POV) {
-		const pano = this.getPano();
-		const infoElement = (<info-element></info-element>);
-
-		// pano.infoElements.add(infoElement);
-		this.addOverlay(infoElement, pov);
+	public forceToRender() {
+		this._viewer.setYaw(this._viewer.getYaw());
 	}
 
-	public deleteInfoElement(elem: InfoElement | string): void {
+	public addInfoElement(obj: {id?: string, description?: string, title?: string, POV?: POV }) {
+		const {id, title, description, POV} = obj;
+		const pano = this.getPano();
+		const info = {
+			id: id || generateId(),
+			POV,
+			title,
+			description,
+			infoElement: (<InfoElement title={title} description={description} id={id} />)
+		};
+
+		pano.infos.add(info);
+		this._addInfo(info);
+	}
+
+	public deleteInfoElement(elem: Info | string): void {
 		const pano = this.getPano();
 		if (typeof elem === 'string') {
-			elem = pano.infoElements.get(elem);
+			elem = pano.infos.get(elem);
 		}
 
-		pano.infoElements.delete(elem);
+		pano.infos.delete(elem);
 		// this.deleteOverlay((<InfoElement> elem).html);
 	}
 
@@ -229,19 +239,10 @@ export default class TourRenderer {
 		}));
 
 		this._tour.photoSpheres.forEach((photoSphere) => {
-			this._panos.get(photoSphere.id).links = new Hashtable(photoSphere.links.map(this._transformToLink.bind(this)))
+			const pano = this._panos.get(photoSphere.id);
+			pano.links = new Hashtable(photoSphere.links.map(this._transformToLink.bind(this)));
+			pano.infos = new Hashtable(photoSphere.infoElements.map(this._transformToInfo.bind(this)));
 		});
-
-		if (this._tour.firstPhotoSphereId) {
-			this._first = this._panos.get(this._tour.firstPhotoSphereId);
-			this._first.POV = this._tour.POV;
-		} else {
-			this._first = this._panos.get();
-			this._first.POV = {
-				pitch: 0,
-				yaw: 0
-			};
-		}
 
 		this._pannellumPanos = new Hashtable(this._panos.array.map(this._transformToPannellumPano.bind(this)));
 	}
@@ -257,12 +258,24 @@ export default class TourRenderer {
 		this._description = this._tour.description;
 
 		this._processPanos();
+
+		if (this._tour.firstPhotoSphereId) {
+			this._first = this._panos.get(this._tour.firstPhotoSphereId);
+			this._first.POV = this._tour.POV;
+		} else {
+			this._first = this._panos.get();
+			this._first.POV = {
+				pitch: 0,
+				yaw: 0
+			};
+		}
 	}
 
 	private _setListeners(): void {
 		this._viewer.on('load', this._onLoadPano.bind(this));
 		this._viewer.on('mousedown', this._onClick.bind(this));
 		this._viewer.on('touchstart', this._onClick.bind(this));
+		this._dom.addEventListener('toggle-info', this.forceToRender.bind(this));
 	}
 
 	private _onClick(mouseEvent: any): void {
@@ -271,7 +284,7 @@ export default class TourRenderer {
 			return;
 		}
 
-		const event = (mouseEvent.targetTouches && mouseEvent.targetTouches[0]) || mouseEvent
+		const event = (mouseEvent.targetTouches && mouseEvent.targetTouches[0]) || mouseEvent;
 
 		const coords = this._viewer.mouseEventToCoords(event);
 
@@ -288,6 +301,7 @@ export default class TourRenderer {
 	private _onLoadPano(id): void {
 		this._isLoaded = true;
 		this._setLinks();
+		this._setInfos();
 
 		// NOTE use CustomEvent to pass data
 		const event = new Event('load');
@@ -302,6 +316,16 @@ export default class TourRenderer {
 		});
 	}
 
+	private _setInfos(): void {
+		const infos = this.getCurrentPano().infos;
+		infos.array.forEach((info) => {
+			this._addInfo(info);
+		});
+	}
+
+	private _addInfo(info: Info): void {
+		this._viewer.addHotSpot(this._transformToPannellumOverlay(info));
+	}
 	private _addLink(link: Link): void {
 		this._viewer.addHotSpot(this._transformToPannellumLink(link));
 	}
@@ -314,6 +338,29 @@ export default class TourRenderer {
 			id: link.id,
 			targetPOV: link.targetPOV,
 			to: pano
+		};
+	}
+
+	private _transformToInfo(infoElement): Info {
+		const {POV, id, name, description} = infoElement;
+
+		return {
+			title: name,
+			description,
+			POV,
+			id,
+			infoElement: (<InfoElement id={id} title={name} description={description} />)
+		};
+	}
+	private _transformToPannellumOverlay(info: Info): PannellumOverlay {
+
+		return {
+			id: info.id,
+			pitch: info.POV.pitch,
+			yaw: info.POV.yaw,
+			type: 'info',
+			cssClass: 'n',
+			createTooltipFunc: (divParent: HTMLElement) => render(info.infoElement, divParent)
 		};
 	}
 

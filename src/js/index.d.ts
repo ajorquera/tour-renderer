@@ -16,3 +16,4 @@ declare module JSX {
 
 declare const panellum: any;
 declare const anchorme: any;
+declare const DOMPurify: any;

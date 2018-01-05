@@ -1,0 +1,16 @@
+{
+	"extends": [
+	  "tslint-clean-code",
+	  "tslint:recommended"
+	],
+	"rules": {
+		"indent": [true, "tabs", 2],
+		"quotemark": [true, "single"],
+		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+		"trailing-comma": [true, "ignore"],
+		"interface-name": [true, "never-prefix"],
+		"no-angle-bracket-type-assertion": false,
+		"object-literal-sort-keys": [false],
+		"ordered-imports": [false]
+    }
+}

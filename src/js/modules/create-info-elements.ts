@@ -1,5 +1,6 @@
-import TourRenderer from '../tourRenderer/TourRenderer'
-import * as tour from '../mockData/create-info-elements.json'
+import TourRenderer from '../tourRenderer/TourRenderer';
+import * as tour from '../mockData/create-info-elements.json';
+import { buildList } from '../helpers';
 
 let domViewer: HTMLElement;
 let DOM: HTMLElement;
@@ -13,6 +14,7 @@ export default {
 		getDomElement();
 		viewer = new TourRenderer(tour, domViewer);
 		setListeners();
+		createListInfoElements();
 	},
 	name: 'create-info-elements'
 }
@@ -20,18 +22,25 @@ export default {
 const getDomElement = () => {
 	domViewer = DOM.querySelector('.viewer');
 	createButton = DOM.querySelector('button');
+	infoList = DOM.querySelector('ul');
 };
 
 const setListeners = () => {
 	createButton.addEventListener('click', (event) => {
 		viewer.selectPOVInViewer().then((POV) => {
-			viewer.addInfoElement(POV);
+			viewer.addInfoElement({POV});
+			createListInfoElements();
 		}).catch((err) => {
 			console.log(err);
 		});
 	});
 };
 
+const onClickDeleteInfo = (event, info) => {
+	viewer.deleteInfoElement(info);
+	createListInfoElements();
+};
+
 const createListInfoElements = () => {
-	infoList.innerHTML = '';
+	buildList(infoList, viewer.getPano().infos.array);
 };
