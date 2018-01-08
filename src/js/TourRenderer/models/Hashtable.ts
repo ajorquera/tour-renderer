@@ -21,23 +21,18 @@ export default class HashTable<T> {
 	}
 
 	public delete(item: string | number | T ) {
-		let index: string;
-
-		if (typeof index === 'object') {
-			item = this.get(<any> index[this._prop]);
-		} else {
-			item = this.get(index);
+		if (typeof item === 'string' || typeof item === 'number') {
+			item = this.get(item);
 		}
-		index = index[this._prop];
 
 		if (item) {
 			this._array.forEach((arrayItem, i) => {
-				if (arrayItem[this._prop]) {
+				if (arrayItem[this._prop] === item[this._prop]) {
 					this._array.splice(i, 1);
 				}
 			});
 
-			return delete this.table[index];
+			return delete this.table[item[this._prop]];
 		}
 
 		return false;

@@ -4,12 +4,12 @@ import 'pannellum';
 import { h, render, Component } from 'preact';
 import { generateId } from './helpers';
 import Defer from './models/Defer';
-import Hashtable, { Table } from './models/Hashtable';
 import Image from './models/Image';
-import InfoElement from './models/InfoElement';
 import Link from './models/Link';
+import InfoElement from './models/InfoElement';
 import PannellumLink from './models/PannellumLink';
 import PannellumOpts from './models/PannellumOpts';
+import Hashtable, { Table } from './models/Hashtable';
 import PannellumOverlay from './models/PannellumOverlay';
 import PannellumPano from './models/PannellumPano';
 import Pano from './models/Pano';
@@ -18,6 +18,12 @@ import POV from './models/POV';
 import Tour from './models/Tour';
 
 export default class TourRenderer {
+	public static EVENTS: Table<string> = Object.assign({}, InfoElement.EVENTS, {
+		CREATE_INFO_ELEMENT: 'CREATE_INFO_ELEMENT',
+		CREATE_LINK: 'CREATE_LINK',
+		DELETE_LINK: 'DELETE_LINK'
+	});
+
 	private readonly _classPrefix: string = 'tr';
 	private readonly _tour: any;
 	private          _viewer: any;
@@ -36,7 +42,7 @@ export default class TourRenderer {
 
 	get panos(): Hashtable<Pano> {
 		return this._panos;
-	};
+	}
 
 	constructor(tour: any, dom: string | Element) {
 		this._tour = tour;
@@ -93,28 +99,42 @@ export default class TourRenderer {
 			yaw: pov.yaw,
 			type: 'info',
 			createTooltipFunc: (divParent) => render(elm, divParent)
-		}
+		};
 
 		this._viewer.addHotSpot(params);
 	}
 
-	public deleteOverlay(elm: HTMLElement) {
+	public deleteOverlay(item: Info | string | number) {
+		let index;
 
+		if (typeof item === 'object') {
+			index = item.id;
+		} else {
+			index = item;
+		}
+
+		this._viewer.removeHotSpot(index);
 	}
 
 	public forceToRender() {
 		this._viewer.setYaw(this._viewer.getYaw());
 	}
 
-	public addInfoElement(obj: {id?: string, description?: string, title?: string, POV?: POV }) {
-		const {id, title, description, POV} = obj;
+	public addInfoElement(obj: {id?: string, description?: string, title?: string, POV?: POV, isEdit?: boolean }) {
+		let {id, title, description, POV, isEdit} = obj;
+		id = id || generateId();
+		description = description || 'Description';
+		title = title || 'Title';
+		isEdit = typeof isEdit === 'boolean' ? isEdit : false;
 		const pano = this.getPano();
 		const info = {
-			id: id || generateId(),
+			id,
 			POV,
 			title,
 			description,
-			infoElement: (<InfoElement title={title} description={description} id={id} />)
+			infoElement: (
+				<InfoElement isEdit={isEdit} classPrefix={this._classPrefix} title={title} description={description} id={id} />
+			)
 		};
 
 		pano.infos.add(info);
@@ -128,7 +148,7 @@ export default class TourRenderer {
 		}
 
 		pano.infos.delete(elem);
-		// this.deleteOverlay((<InfoElement> elem).html);
+		this.deleteOverlay(elem);
 	}
 
 	public getPano(id: string = this._viewer.getScene()): Pano | null {
@@ -275,7 +295,21 @@ export default class TourRenderer {
 		this._viewer.on('load', this._onLoadPano.bind(this));
 		this._viewer.on('mousedown', this._onClick.bind(this));
 		this._viewer.on('touchstart', this._onClick.bind(this));
-		this._dom.addEventListener('toggle-info', this.forceToRender.bind(this));
+		this._dom.addEventListener(InfoElement.EVENTS.TOGGLE_INFO_ELEMENT, this.forceToRender.bind(this));
+		this._dom.addEventListener(InfoElement.EVENTS.UPDATE_INFO_ELEMENT, this._updateInfoListener.bind(this));
+		this._dom.addEventListener(InfoElement.EVENTS.DELETE_INFO_ELEMENT, this._deleteInfoListener.bind(this));
+	}
+
+	private _deleteInfoListener(ev) {
+		const data = ev.detail;
+		this.deleteInfoElement(data.id);
+	}
+
+	private _updateInfoListener(ev) {
+		const data = ev.detail;
+		const info = this.getPano().infos.get(data.id);
+		info.title = data.title;
+		info.description = data.title;
 	}
 
 	private _onClick(mouseEvent: any): void {
@@ -342,14 +376,14 @@ export default class TourRenderer {
 	}
 
 	private _transformToInfo(infoElement): Info {
-		const {POV, id, name, description} = infoElement;
+		const { POV, id, name, description } = infoElement;
 
 		return {
 			title: name,
 			description,
 			POV,
 			id,
-			infoElement: (<InfoElement id={id} title={name} description={description} />)
+			infoElement: (<InfoElement classPrefix={this._classPrefix} id={id} title={name} description={description} />)
 		};
 	}
 	private _transformToPannellumOverlay(info: Info): PannellumOverlay {

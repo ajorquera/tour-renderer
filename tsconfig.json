@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "ES2016",
 		"module": "commonjs",
-		"types": [],
+		"types": ["node"],
 		"jsx": "react",
 		"jsxFactory": "h"
 	},

@@ -17,7 +17,7 @@ export default {
 		createListInfoElements();
 	},
 	name: 'create-info-elements'
-}
+};
 
 const getDomElement = () => {
 	domViewer = DOM.querySelector('.viewer');
@@ -28,19 +28,26 @@ const getDomElement = () => {
 const setListeners = () => {
 	createButton.addEventListener('click', (event) => {
 		viewer.selectPOVInViewer().then((POV) => {
-			viewer.addInfoElement({POV});
+			viewer.addInfoElement({POV, isEdit: true});
 			createListInfoElements();
-		}).catch((err) => {
-			console.log(err);
-		});
+		}).catch((err) => { });
+	});
+
+	DOM.addEventListener(TourRenderer.EVENTS.UPDATE_INFO_ELEMENT, () => {
+		createListInfoElements();
+	});
+
+	DOM.addEventListener(TourRenderer.EVENTS.DELETE_INFO_ELEMENT, () => {
+		createListInfoElements();
 	});
 };
 
 const onClickDeleteInfo = (event, info) => {
 	viewer.deleteInfoElement(info);
 	createListInfoElements();
+
 };
 
 const createListInfoElements = () => {
-	buildList(infoList, viewer.getPano().infos.array);
+	buildList(infoList, viewer.getPano().infos.array, onClickDeleteInfo);
 };
