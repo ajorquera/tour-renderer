@@ -19,7 +19,7 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.tsx?$/,
-			loader: 'awesome-typescript-loader'
+			loader: 'ts-loader'
 		}, {
 			test: /\.less$/i,
 			use: extractLESS.extract([{loader: 'css-loader', options: {minimize: true}}, 'less-loader'])

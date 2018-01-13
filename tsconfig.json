@@ -1,15 +1,16 @@
 {
 	"compilerOptions": {
-		"target": "ES2016",
+		"target": "es6",
 		"module": "commonjs",
-		"types": ["node"],
 		"jsx": "react",
-		"jsxFactory": "h"
+		"jsxFactory": "h",
+		"sourceMap": true
 	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.tsx"
 	],
+
 	"exclude": [
 		"node_modules"
 	]

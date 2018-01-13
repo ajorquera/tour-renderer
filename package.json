@@ -5,39 +5,38 @@
 	"repository": "git@bitbucket.org:jorquerad/tour-renderer.git",
 	"license": "MIT",
 	"dependencies": {
-		"anchorme": "1.1.2",
-		"dompurify": "1.0.3",
-		"linkstate": "1.1.0",
-		"pannellum": "ajorquera/pannellum",
-		"preact": "8.2.7"
-	},
-	"devDependencies": {
-		"tachyons": "4.9.0",
 		"@types/node": "8.5.2",
-		"awesome-typescript-loader": "3.4.1",
+		"anchorme": "1.1.2",
 		"babel-core": "6.26.0",
-		"babel-preset-es2015": "6.24.1",
 		"compression-webpack-plugin": "1.1.3",
 		"css-loader": "0.28.7",
+		"dompurify": "1.0.3",
 		"extract-text-webpack-plugin": "3.0.2",
+		"less": "2.7.3",
+		"less-loader": "4.0.5",
+		"linkstate": "1.1.0",
+		"pannellum": "ajorquera/pannellum",
+		"preact": "8.2.7",
+		"raw-loader": "0.5.1",
+		"style-loader": "0.19.1",
+		"ts-loader": "^3.2.0",
+		"typescript": "^2.6.2",
+		"uglifyjs-webpack-plugin": "1.1.6",
+		"webpack": "3.10.0",
+		"webpack-merge": "4.1.1"
+	},
+	"devDependencies": {
 		"html-webpack-plugin": "2.30.1",
 		"jasmine": "2.8.0",
 		"karma": "1.7.1",
 		"karma-chrome-launcher": "2.2.0",
 		"karma-jasmine": "1.1.1",
 		"karma-webpack": "2.0.9",
-		"less": "2.7.3",
-		"less-loader": "4.0.5",
 		"pug-html-loader": "1.1.5",
-		"raw-loader": "0.5.1",
-		"style-loader": "0.19.1",
+		"tachyons": "4.9.0",
 		"tslint": "5.8.0",
 		"tslint-clean-code": "0.2.2",
-		"typescript": "2.6.2",
-		"uglifyjs-webpack-plugin": "1.1.6",
-		"webpack": "3.10.0",
-		"webpack-dev-server": "2.9.7",
-		"webpack-merge": "4.1.1"
+		"webpack-dev-server": "2.9.7"
 	},
 	"main": "TourRenderer.min.js",
 	"scripts": {
@@ -46,6 +45,7 @@
 		"build-dev": "webpack --display-modules --config webpack/webpack.dev",
 		"test-prod": "webpack-dev-server --config webpack/webpack.test.prod",
 		"test": "karma start",
-		"deploy": ""
+		"deploy": "",
+		"postinstall": "npm run build && npm run build-dev"
 	}
 }
