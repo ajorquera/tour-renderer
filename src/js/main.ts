@@ -7,9 +7,12 @@ import '../less/style.less';
 const MODULE_NAME = 'create-info-elements';
 
 window.onload = () => {
-	document.querySelectorAll('section').forEach((section) => {
+	const sections = document.querySelectorAll('section');
+
+	for (let i = 0; i < sections.length; i++) {
+		const section = sections[i];
 		section.classList.add('dn');
-	});
+	}
 
 	modules[MODULE_NAME].forEach((module) => {
 		const element = <HTMLElement> document.querySelector('#' + module.name);
