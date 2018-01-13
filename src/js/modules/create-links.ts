@@ -1,7 +1,7 @@
-import TourRenderer from '../tourRenderer/TourRenderer'
-import * as tour from '../mockData/create-links.json'
+import TourRenderer from '../tourRenderer/TourRenderer';
+import * as tour from '../mockData/create-links.json';
 
-let name = 'create-links';
+const name = 'create-links';
 let viewer: any;
 let panoId: string;
 let DOM: Element;
@@ -89,7 +89,7 @@ const buildLinksHTML = () => {
 	linkList.innerHTML = '';
 
 	const links = viewer.getCurrentPano().links;
-	links.array().forEach((link) => {
+	links.array.forEach((link) => {
 		const li = createDOM('li');
 		li.innerHTML = `${link.to.name} <span class="blue underline pointer">unlink</span>`;
 

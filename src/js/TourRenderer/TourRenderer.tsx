@@ -1,5 +1,5 @@
 declare var pannellum: any;
-
+import '../../less/tour-renderer.less';
 import 'pannellum';
 import { h, render, Component } from 'preact';
 import { generateId } from './helpers';

@@ -1,3 +1,5 @@
+@import (css) '../../node_modules/pannellum/build/pannellum.css';
+
 .tr-hide {
 	visibility: hidden;
 }
@@ -18,11 +20,56 @@
 	.tr-info-element-header {
 		margin: 0;
 		padding: 10px;
+		&:focus {
+			outline: 0;
+		}
 	}
 
 	.tr-info-element-body {
 		width: 200px;
 		word-wrap: break-word;
 		padding: 10px;
+		padding-top: 0;
+		margin:0;
+		text-align: justify;
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	.tr-info-element-footer {
+		text-align: center;
+		padding-bottom: 10px;
+
+		button {
+			background-color: transparent;
+			color: white;
+			border-radius: 15%;
+			cursor: pointer;
+			&:focus {
+				outline: 0;
+			}
+		}
+	}
+
+	.tr-info-element-close {
+		float: right;
+		border-radius: 50%;
+		padding: 3px 7px;
+		background-color: black;
+		color: white;
+		border-width: 2px;
+	}
+
+	.tr-info-element-clickable {
+		cursor: pointer;
+	}
+
+	.tr-info-element-editable {
+		cursor: text;
+	}
+
+	a {
+		color: #6dbaea;
 	}
 }
