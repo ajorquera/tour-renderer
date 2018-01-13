@@ -9,10 +9,10 @@
 		"dompurify": "1.0.3",
 		"linkstate": "1.1.0",
 		"pannellum": "ajorquera/pannellum",
-		"preact": "8.2.7",
-		"tachyons": "4.9.0"
+		"preact": "8.2.7"
 	},
 	"devDependencies": {
+		"tachyons": "4.9.0",
 		"@types/node": "8.5.2",
 		"awesome-typescript-loader": "3.4.1",
 		"babel-core": "6.26.0",
@@ -41,9 +41,10 @@
 	},
 	"main": "TourRenderer.min.js",
 	"scripts": {
-		"start": "webpack-dev-server --config webpack/webpack.dev",
+		"start": "webpack-dev-server --config webpack/webpack.test.dev",
 		"build": "webpack --display-modules --config webpack/webpack.prod",
-		"test-prod": "webpack-dev-server --config webpack/webpack.dev-prod",
+		"build-dev": "webpack --display-modules --config webpack/webpack.dev",
+		"test-prod": "webpack-dev-server --config webpack/webpack.test.prod",
 		"test": "karma start",
 		"deploy": ""
 	}
