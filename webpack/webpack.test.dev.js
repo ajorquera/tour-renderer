@@ -1,20 +1,19 @@
 const HTMLWebpackPLugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const webpack           = require('webpack');
-const merge             = require('webpack-merge');
-const common            = require('./webpack.common.js');
-const UglifyJsPlugin    = require('uglifyjs-webpack-plugin');
-
-const path = require('path');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
+
 	//need to implement refreshing
 	devServer: {
+		hot: true,
+		inline: true,
 		open: true,
-		compress: true,
 		watchContentBase: true,
 		watchOptions: {
-			ignored: /node_modules/
+			ignored: /node_modules/,
+			poll: true
 		}
 	},
 
@@ -32,20 +31,18 @@ module.exports = merge(common, {
 			}
 		]
 	},
-
 	plugins: [
 		new HTMLWebpackPLugin({
 			filename: 'index.html',
 			template: `./src/views/index.pug`,
 			inject: false
 		}),
-
+		new webpack.NamedModulesPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
+				'NODE_ENV': JSON.stringify('development')
 			}
-		}),
-		new UglifyJsPlugin()
+		})
 	]
-
 });
