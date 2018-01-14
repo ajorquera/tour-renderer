@@ -1,16 +1,12 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "CommonJS",
+		"module": "commonjs",
 		"jsx": "react",
 		"jsxFactory": "h",
 		"sourceMap": true,
 		"lib": ["es6", "dom"]
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.tsx"
-	],
 
 	"exclude": [
 		"node_modules"

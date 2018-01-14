@@ -1,4 +1,6 @@
 declare var pannellum: any;
+declare var window: any;
+
 import '../../less/tour-renderer.less';
 import 'pannellum';
 import { h, render, Component } from 'preact';
@@ -432,3 +434,5 @@ export default class TourRenderer {
 		return params;
 	}
 }
+
+window.TourRenderer = TourRenderer;
