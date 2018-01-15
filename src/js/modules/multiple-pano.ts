@@ -1,10 +1,10 @@
-import * as tour from '../mockData/multiple-pano.json'
-import TourRenderer from '../tourRenderer/TourRenderer'
+import * as tour from '../mockData/multiple-pano.json';
+import TourRenderer from '../tourRenderer/TourRenderer';
 
 export default {
-	tour: tour,
+	tour,
 	name: 'multiple-pano',
-	init: function() {
-		let viewer = new TourRenderer(tour, '#multiple-pano .viewer');
+	init: () => {
+		const viewer = new TourRenderer(tour, '#multiple-pano .viewer');
 	}
 }

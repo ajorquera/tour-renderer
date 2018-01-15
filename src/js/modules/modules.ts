@@ -1,7 +1,8 @@
-import singlePano from './single-pano'
-import createLinks from './create-links'
-import multiplePano from './multiple-pano'
-import createInfoElements from './create-info-elements'
+import singlePano from './single-pano';
+import createLinks from './create-links';
+import multiplePano from './multiple-pano';
+import createInfoElements from './create-info-elements';
+import usingQueryParams from './using-query-params';
 
 const uniqFilter = (value, index, self) => {
 	return self.indexOf(value) === index;
@@ -17,6 +18,7 @@ const modules = (() => {
 		'single-pano'  : [singlePano],
 		'create-links' : [createLinks],
 		'create-info-elements' : [createInfoElements],
+		'using-query-params' : [usingQueryParams],
 		'multiple-pano': [multiplePano]
 	};
 
@@ -24,6 +26,7 @@ const modules = (() => {
 		modules['single-pano'],
 		modules['multiple-pano'],
 		modules['create-info-elements'],
+		modules['using-query-params'],
 		modules['create-links']
 	);
 

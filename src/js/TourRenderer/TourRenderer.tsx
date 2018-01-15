@@ -18,6 +18,7 @@ import Pano from './models/Pano';
 import Info from './models/Info';
 import POV from './models/POV';
 import Tour from './models/Tour';
+import TourRendererOpts from './models/TourRendererOpts';
 
 export default class TourRenderer {
 	public static EVENTS: Table<string> = Object.assign({}, InfoElement.EVENTS, {
@@ -26,11 +27,18 @@ export default class TourRenderer {
 		DELETE_LINK: 'DELETE_LINK'
 	});
 
+	public static readonly DEFAULTS: object = {
+		autoLoad: false,
+		autoRotate: undefined,
+		showControls: true
+	};
+
 	private readonly _classPrefix: string = 'tr';
 	private readonly _tour: any;
 	private          _viewer: any;
 	private          _dom: Element;
 	private          _isLoaded: boolean;
+	private          _options: TourRendererOpts;
 
 	private          _panos: Hashtable<Pano>;
 	private          _name: string;
@@ -46,10 +54,15 @@ export default class TourRenderer {
 		return this._panos;
 	}
 
-	constructor(tour: any, dom: string | Element) {
+	constructor(tour: any, dom: string | Element, options?: TourRendererOpts) {
 		this._tour = tour;
+		this._options = Object.assign(TourRenderer.DEFAULTS, options);
 		if (typeof dom === 'string') {
 			dom = document.querySelector(dom);
+		}
+
+		if (!tour) {
+			throw new Error('tour object missing');
 		}
 
 		this._dom = dom;
@@ -223,7 +236,10 @@ export default class TourRenderer {
 
 	private _initViewer(): void {
 		const params: PannellumOpts = {
-			autoLoad: false,
+			autoLoad: this._options.autoLoad,
+			autoRotate: this._options.autoRotate,
+			showControls: this._options.showControls,
+
 			// zoom level 120, 100 default, 50 most
 			default: {
 				firstScene: this._first.id,
@@ -232,8 +248,7 @@ export default class TourRenderer {
 				yaw: 0
 			},
 			hfov: 120,
-			scenes: this._pannellumPanos.table,
-			showControls: true
+			scenes: this._pannellumPanos.table
 		};
 
 		if (this._preview) {
