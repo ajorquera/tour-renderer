@@ -8,7 +8,7 @@ const path = require('path');
 module.exports = merge(common, {
 	entry: "./src/js/TourRenderer/TourRenderer.tsx",
 	output: {
-		filename: "js/TourRenderer.min.js",
+		filename: "js/TourRenderer.js",
 		path: path.resolve('..', __dirname,'../', "dist")
 	},
 
