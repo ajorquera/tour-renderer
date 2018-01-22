@@ -4,7 +4,7 @@ import TourRenderer from '../tourRenderer/TourRenderer';
 export default {
 	tour,
 	name: 'multiple-pano',
-	init: () => {
+	init: (dom) => {
 		const viewer = new TourRenderer(tour, '#multiple-pano .viewer');
 	}
-}
+};

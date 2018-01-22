@@ -44,6 +44,6 @@
 		"test-prod": "webpack-dev-server --config webpack/webpack.test.prod",
 		"test": "karma start",
 		"deploy": "",
-		"postinstall": "npm run build"
+		"postinstall": "npm run build:dev"
 	}
 }
