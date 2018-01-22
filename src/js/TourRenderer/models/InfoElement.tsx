@@ -1,3 +1,5 @@
+declare var window: any;
+
 import linkState from 'linkstate';
 import anchorme from 'anchorme';
 const createDOMPurify = require('dompurify');
@@ -140,3 +142,6 @@ export default class InfoElement extends Component<object, object> {
 		};
 	}
 }
+
+window.anchorme = anchorme;
+window.DOMPurify = DOMPurify;
