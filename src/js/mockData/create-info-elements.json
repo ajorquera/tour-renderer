@@ -44,6 +44,15 @@
 						"yaw": -21,
 						"pitch": 15
 					}
+				},
+				{
+					"id": "95",
+					"name": "Html here <div onclick=\"alert('hereee')\">This is a div tag with some code</div>",
+					"description": "Looks like U2 is playing. Soooo cool. Check their website http://www.u2.com/",
+					"POV": {
+						"yaw": -31,
+						"pitch": 39
+					}
 				}
 			]
 		}

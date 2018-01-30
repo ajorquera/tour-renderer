@@ -6,7 +6,7 @@ export const buildList = (
 
 		items.forEach((item) => {
 			const li = document.createElement('li');
-			li.innerHTML = `${item.title} <span class="blue underline pointer">unlink</span>`;
+			li.innerHTML = `${escapeHtml(item.title)} <span class="blue underline pointer">unlink</span>`;
 
 			if (callback) {
 				li.querySelector('.pointer').addEventListener('click', (event) => {
@@ -18,4 +18,21 @@ export const buildList = (
 		});
 
 		return ul;
+};
+
+const entityMap = {
+	'&' : '&amp;',
+	'<' : '&lt;',
+	'>' : '&gt;',
+	'"' : '&quot;',
+	'\'': '&#39;',
+	'/' : '&#x2F;',
+	'`' : '&#x60;',
+	'=' : '&#x3D;'
+};
+
+export const escapeHtml = (str) => {
+	return String(str).replace(/[&<>"'`=\/]/g, (s) => {
+		return entityMap[s];
+	});
 };

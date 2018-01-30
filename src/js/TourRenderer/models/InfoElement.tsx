@@ -83,13 +83,18 @@ export default class InfoElement extends Component<object, object> {
 
 	public sanitize(text: string) {
 		return DOMPurify.sanitize(text, {
-			ALLOWED_ATTR: ['href'],
+			ALLOWED_ATTR: ['href', 'target'],
 			ALLOWED_TAGS: ['a']
 		});
 	}
 
 	public addAnyLink(text: string) {
-		return anchorme(text);
+		return anchorme(text, {
+			attributes: [{
+				name: 'target',
+				value: '_blank'
+			}]
+		});
 	}
 
 	private _updateContent(e) {

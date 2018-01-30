@@ -54,7 +54,9 @@ export default class TourRenderer {
 		return this._panos;
 	}
 
-	constructor(tour: any, dom: string | Element, options?: TourRendererOpts) {
+	constructor(tour: Tour, dom: string | Element, options?: TourRendererOpts) {
+		// not sure if we need to check for properties
+
 		this._tour = tour;
 		this._options = Object.assign(TourRenderer.DEFAULTS, options);
 		if (typeof dom === 'string') {

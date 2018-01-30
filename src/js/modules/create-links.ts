@@ -18,7 +18,7 @@ export const init = (dom: Element) => {
 	createSelect();
 	addListeners();
 
-	viewer = new TourRenderer(tour, viewerDOM);
+	viewer = new TourRenderer(<any> tour, viewerDOM);
 };
 
 const getElemts = () => {

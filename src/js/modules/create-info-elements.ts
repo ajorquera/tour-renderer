@@ -12,7 +12,7 @@ export default {
 	init: (dom: HTMLElement) => {
 		DOM = dom;
 		getDomElement();
-		viewer = new TourRenderer(tour, domViewer);
+		viewer = new TourRenderer(<any> tour, domViewer);
 		setListeners();
 		createListInfoElements();
 	},
