@@ -1,27 +1,17 @@
-describe('TestRenderer', () => {
+xdescribe('TestRenderer', () => {
   describe('different states of the tour', () => {
-    it('should manage when there is no panoramas', () => {
 
-    });
-
-    it('should manage a single page pano', () => {
-      
-    });
-
-    it('should manage when there is not first pano set', () => {
-      
-    });
 
     it('should manage when there is multiple panos', () => {
-      
+
     });
 
     it('should manage when there are info elements in a single pano', () => {
-      
+
     });
 
     it('should manage when there are info elements in a multiple pano', () => {
-      
+
     });
 
     it("should manage when there is no picture for preview", function () {
@@ -37,7 +27,7 @@ describe('TestRenderer', () => {
     });
 
     it('should give an error in console if wrong parameters', () => {
-      
+
     });
   });
 

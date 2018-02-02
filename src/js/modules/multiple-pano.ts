@@ -5,6 +5,6 @@ export default {
 	tour,
 	name: 'multiple-pano',
 	init: (dom) => {
-		const viewer = new TourRenderer(tour, '#multiple-pano .viewer');
+		const viewer = new TourRenderer(<any> tour, '#multiple-pano .viewer');
 	}
 };

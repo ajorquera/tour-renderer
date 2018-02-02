@@ -27,6 +27,9 @@ export default class TourRenderer {
 		DELETE_LINK: 'DELETE_LINK'
 	});
 
+	public static ERRORS: Table<string> = {
+		INVALID_TOUR: 'The properties of the tour are not valid'
+	};
 	public static readonly DEFAULTS: object = {
 		autoLoad: false,
 		autoRotate: undefined,
@@ -63,9 +66,7 @@ export default class TourRenderer {
 			dom = document.querySelector(dom);
 		}
 
-		if (!tour) {
-			throw new Error('tour object missing');
-		}
+		this._validateTour();
 
 		this._dom = dom;
 		this._init();
@@ -279,6 +280,9 @@ export default class TourRenderer {
 
 		this._tour.photoSpheres.forEach((photoSphere) => {
 			const pano = this._panos.get(photoSphere.id);
+			photoSphere.links = photoSphere.links || [];
+			photoSphere.infoElements = photoSphere.infoElements || [];
+
 			pano.links = new Hashtable(photoSphere.links.map(this._transformToLink.bind(this)));
 			pano.infos = new Hashtable(photoSphere.infoElements.map(this._transformToInfo.bind(this)));
 		});
@@ -286,13 +290,26 @@ export default class TourRenderer {
 		this._pannellumPanos = new Hashtable(this._panos.array.map(this._transformToPannellumPano.bind(this)));
 	}
 
-	private _processTour(): void {
+	private _validateTour(): void {
 		const image = this._tour.images && this._tour.images[0];
 
 		if (image) {
 			this._preview = {url: image.link, name: image.name, id: image.id};
 		}
 
+		if (!this._tour.POV) {
+			this._tour.POV = {
+				yaw: 0,
+				pitch: 0
+			};
+		}
+
+		if (!this._tour.photoSpheres || !this._tour.photoSpheres.length || !this._tour.name) {
+			throw new Error(TourRenderer.ERRORS.INVALID_TOUR);
+		}
+	}
+
+	private _processTour(): void {
 		this._name = this._tour.name;
 		this._description = this._tour.description;
 
@@ -300,17 +317,11 @@ export default class TourRenderer {
 
 		if (this._tour.firstPhotoSphereId) {
 			this._first = this._panos.get(this._tour.firstPhotoSphereId);
-			this._first.POV = this._tour.POV;
 		} else {
 			this._first = this._panos.get();
 		}
 
-		if (!this._first.POV) {
-			this._first.POV = {
-				pitch: 0,
-				yaw: 0
-			};
-		}
+		this._first.POV = this._tour.POV;
 	}
 
 	private _setListeners(): void {

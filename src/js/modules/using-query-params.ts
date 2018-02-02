@@ -22,7 +22,7 @@ export default {
 		getElemts();
 		addListeners();
 
-		viewer = new TourRenderer(tour, viewerDOM, {
+		viewer = new TourRenderer(<any> tour, viewerDOM, {
 			autoLoad: isAutoLoad,
 			autoRotate: isAutoRotate ? 10 : undefined,
 			showControls: isShowControls
