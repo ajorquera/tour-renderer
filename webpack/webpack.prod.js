@@ -6,6 +6,7 @@ const UglifyJsPlugin    = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
 module.exports = merge(common, {
+	mode: 'production',
 	entry: "./src/js/TourRenderer/TourRenderer.tsx",
 	output: {
 		filename: "js/TourRenderer.js",

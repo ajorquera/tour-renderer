@@ -1,5 +1,5 @@
 {
-	"name": "tour-renderer",
+	"name": "tour-render",
 	"version": "1.0.0",
 	"description": "Pannellum wrapper to create virtual tours",
 	"repository": "git@bitbucket.org:jorquerad/tour-renderer.git",
@@ -9,41 +9,40 @@
 		"anchorme": "1.1.2",
 		"css-loader": "0.28.7",
 		"dompurify": "1.0.3",
-		"extract-text-webpack-plugin": "3.0.2",
-		"less": "2.7.3",
-		"less-loader": "4.0.5",
+		"extract-text-webpack-plugin": "^4.0.0-beta.0",
+		"html-webpack-plugin": "^3.2.0",
+		"less": "^3.8.1",
+		"less-loader": "^4.1.0",
 		"linkstate": "1.1.0",
-		"pannellum": "ajorquera/pannellum",
+		"pannellum": "^2.4.1",
 		"preact": "8.2.7",
 		"raw-loader": "0.5.1",
 		"style-loader": "0.19.1",
-		"ts-loader": "3.2.0",
+		"ts-loader": "5.3.1",
 		"typescript": "2.6.2",
 		"uglifyjs-webpack-plugin": "1.1.6",
-		"webpack": "3.10.0",
+		"webpack": "^4.26.1",
+		"webpack-cli": "^3.1.2",
+		"webpack-dev-server": "^3.1.10",
 		"webpack-merge": "4.1.1"
 	},
 	"devDependencies": {
-		"html-webpack-plugin": "2.30.1",
 		"jasmine": "2.8.0",
-		"karma": "1.7.1",
+		"karma": "^3.1.1",
 		"karma-chrome-launcher": "2.2.0",
 		"karma-jasmine": "1.1.1",
-		"karma-webpack": "2.0.9",
+		"karma-webpack": "^3.0.5",
 		"pug-html-loader": "1.1.5",
 		"tachyons": "4.9.0",
 		"tslint": "5.8.0",
-		"tslint-clean-code": "0.2.2",
-		"webpack-dev-server": "2.9.7"
+		"tslint-clean-code": "0.2.2"
 	},
 	"main": "dist/js/TourRenderer.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack/webpack.test.dev",
+		"start:pro": "webpack-dev-server --config webpack/webpack.test.prod",
 		"build": "webpack --display-modules --config webpack/webpack.prod",
 		"build:dev": "webpack --display-modules --config webpack/webpack.dev",
-		"test-prod": "webpack-dev-server --config webpack/webpack.test.prod",
-		"test": "karma start",
-		"deploy": "",
-		"postinstall": "npm run build:dev"
+		"test": "karma start"
 	}
 }

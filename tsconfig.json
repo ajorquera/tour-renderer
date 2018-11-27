@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "ES5",
 		"module": "commonjs",
 		"jsx": "react",
 		"jsxFactory": "h",
@@ -9,6 +9,7 @@
 	},
 
 	"exclude": [
-		"node_modules"
+		"node_modules",
+		"test"
 	]
 }

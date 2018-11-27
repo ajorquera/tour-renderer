@@ -4,6 +4,7 @@ const extractLESS       = new ExtractTextPlugin('css/style.css');
 
 module.exports = {
 	entry: './src/js/main.ts',
+	mode: 'development',
 	output: {
 		filename: 'js/[name].bundle.js',
 		path: path.resolve('..', __dirname,'../', 'dist')
