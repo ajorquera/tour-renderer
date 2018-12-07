@@ -7,6 +7,9 @@ export default interface PannellumOpts {
 	autoRotate?: number;
 	preview?: string;
 	showControls?: boolean;
+	showZoomCtrl?: boolean;
+	keyboardZoom?: boolean;
+	mouseZoom?: boolean;
 	hfov?: number;
 	scenes: Table<PannellumPano>;
 	default?: {
@@ -14,5 +17,5 @@ export default interface PannellumOpts {
 		sceneFadeDuration?: number;
 		yaw?: number;
 		pitch?: number;
-	}
+	};
 }

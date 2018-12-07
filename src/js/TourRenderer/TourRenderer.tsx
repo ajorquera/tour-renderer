@@ -3,7 +3,7 @@ declare var window: any;
 
 import '../../less/tour-renderer.less';
 import 'pannellum';
-import { h, render, Component } from 'preact';
+import { h, render } from 'preact';
 import { generateId } from './helpers';
 import Defer from './models/Defer';
 import Image from './models/Image';
@@ -26,6 +26,10 @@ export default class TourRenderer {
 		CREATE_LINK: 'CREATE_LINK',
 		DELETE_LINK: 'DELETE_LINK'
 	});
+
+	public static CLASSES: Table<string> = {
+		DOM_ELEMENT: 'dom-element'
+	};
 
 	public static ERRORS: Table<string> = {
 		INVALID_TOUR: 'The properties of the tour are not valid'
@@ -52,16 +56,17 @@ export default class TourRenderer {
 	private          _pannellumPanos: Hashtable<PannellumPano>;
 	private          _selectPOVDeferred: Defer<POV>;
 	private          _isSelectingPOV: boolean;
+	private          _onLoad: () => {};
 
 	get panos(): Hashtable<Pano> {
 		return this._panos;
 	}
 
-	constructor(tour: Tour, dom: string | Element, options?: TourRendererOpts) {
+	constructor(tour: Tour, dom: string | Element, options: TourRendererOpts = {}) {
 		// not sure if we need to check for properties
 
 		this._tour = tour;
-		this._options = Object.assign(TourRenderer.DEFAULTS, options);
+		this._options = Object.assign({}, TourRenderer.DEFAULTS, options);
 		if (typeof dom === 'string') {
 			dom = document.querySelector(dom);
 		}
@@ -69,6 +74,7 @@ export default class TourRenderer {
 		this._validateTour();
 
 		this._dom = dom;
+		this._onLoad = options.onLoad;
 		this._init();
 	}
 
@@ -80,8 +86,6 @@ export default class TourRenderer {
 		if (!this._isLoaded) {
 			return Promise.reject(new Error('viewer not loaded'));
 		}
-
-		const that = this;
 
 		this._isSelectingPOV = true;
 		this._selectPOVDeferred = new Defer();
@@ -103,6 +107,7 @@ export default class TourRenderer {
 	}
 
 	public addDOM(elm: HTMLElement) {
+		elm.classList.add(TourRenderer.CLASSES.DOM_ELEMENT);
 		this._dom.appendChild(elm);
 	}
 
@@ -116,10 +121,14 @@ export default class TourRenderer {
 			pitch: pov.pitch,
 			yaw: pov.yaw,
 			type: 'info',
-			createTooltipFunc: (divParent) => render(elm, divParent)
+			createTooltipFunc: (divParent) => {
+				divParent.appendChild(elm);
+			}
 		};
 
 		this._viewer.addHotSpot(params);
+
+		return params;
 	}
 
 	public deleteOverlay(item: Info | string | number) {
@@ -173,6 +182,12 @@ export default class TourRenderer {
 		return this._panos.get(id);
 	}
 
+	public setPano(pano: Pano | string) {
+		let id = typeof pano === 'object' ? pano.id : pano;
+		
+		return this._viewer.loadScene(id);
+	}
+
 	/**
 	 * @deprecated Use get pano
 	 */
@@ -187,7 +202,7 @@ export default class TourRenderer {
 		};
 
 		if (this._viewer) {
-			pov.yaw = this._viewer.getYaw(),
+			pov.yaw = this._viewer.getYaw();
 			pov.pitch = this._viewer.getPitch();
 		}
 
@@ -197,15 +212,26 @@ export default class TourRenderer {
 	public deleteLink(link: Link | string): void {
 		const pano = this.getPano();
 
-		if(typeof link === 'string') {
+		if (typeof link === 'string') {
 			link = pano.links.get(link);
 		}
 
 		pano.links.delete(link.id);
-		this._viewer.removeHotSpot(link.id);
+		const isDeleted = this._viewer.removeHotSpot(link.id);
+
+		this.forceToRender();
 	}
 
-	public createLinkTo(pano: Pano | string, pov: POV = this.getPOV(), targetPOV: POV = {pitch: 0, yaw:0}): void {
+	public getLink(id) {
+		return this.getPano().links.get(id);
+	}
+
+	public createLinkTo(
+		pano: Pano | string,
+		pov: POV = this.getPOV(),
+		targetPOV: POV = {pitch: 0, yaw: 0},
+		id: string)
+	: Link  | void {
 		if (!this._isLoaded) return console.info('Viewer not loaded');
 
 		if (typeof pano !== 'object' ) {
@@ -216,7 +242,7 @@ export default class TourRenderer {
 
 		const link: Link = {
 			POV: pov,
-			id: generateId(),
+			id: id || generateId(),
 			targetPOV,
 			to: pano
 		};
@@ -228,6 +254,16 @@ export default class TourRenderer {
 
 		const event = new CustomEvent('newLink', {detail: link});
 		this._dom.dispatchEvent(event);
+
+		return link;
+	}
+
+	public isFirstPano() {
+		return this.getCurrentPano() === this._first;
+	}
+
+	public setFirstPano(pano: Pano) {
+		this._first = pano;
 	}
 
 	// ----------------------------------- PRIVATE ----------------------------------------------------------------
@@ -242,6 +278,8 @@ export default class TourRenderer {
 			autoLoad: this._options.autoLoad,
 			autoRotate: this._options.autoRotate,
 			showControls: this._options.showControls,
+			keyboardZoom: this._options.keyboardZoom,
+			mouseZoom: this._options.mouseZoom,
 
 			// zoom level 120, 100 default, 50 most
 			default: {
@@ -266,9 +304,9 @@ export default class TourRenderer {
 	}
 
 	private _processPanos(): void {
-
+		const panos = this._tour.panos || this._tour.photoSpheres;
 		// check to refactor this part
-		this._panos = new Hashtable(this._tour.photoSpheres.map((photoSphere) => {
+		this._panos = new Hashtable(panos.map((photoSphere) => {
 			return {
 				id: photoSphere.id,
 				infoElements: new Hashtable(photoSphere.infoElements),
@@ -278,7 +316,7 @@ export default class TourRenderer {
 			};
 		}));
 
-		this._tour.photoSpheres.forEach((photoSphere) => {
+		panos.forEach((photoSphere) => {
 			const pano = this._panos.get(photoSphere.id);
 			photoSphere.links = photoSphere.links || [];
 			photoSphere.infoElements = photoSphere.infoElements || [];
@@ -291,6 +329,12 @@ export default class TourRenderer {
 	}
 
 	private _validateTour(): void {
+		const panos = this._tour && (this._tour.panos || this._tour.photoSpheres);
+
+		if (!panos || !panos.length) {
+			throw new Error(TourRenderer.ERRORS.INVALID_TOUR);
+		}
+
 		const image = this._tour.images && this._tour.images[0];
 
 		if (image) {
@@ -304,9 +348,7 @@ export default class TourRenderer {
 			};
 		}
 
-		if (!this._tour.photoSpheres || !this._tour.photoSpheres.length || !this._tour.name) {
-			throw new Error(TourRenderer.ERRORS.INVALID_TOUR);
-		}
+		
 	}
 
 	private _processTour(): void {
@@ -367,13 +409,17 @@ export default class TourRenderer {
 
 	private _onLoadPano(id): void {
 		this._isLoaded = true;
-		this._setLinks();
+		if (!this._options.noLinks) {
+			this._setLinks();
+		}
 		this._setInfos();
 
 		// NOTE use CustomEvent to pass data
 		const event = new Event('load');
 
 		this._dom.dispatchEvent(event);
+
+		if (typeof this._onLoad === 'function') this._onLoad();
 	}
 
 	private _setLinks(): void {
@@ -394,11 +440,12 @@ export default class TourRenderer {
 		this._viewer.addHotSpot(this._transformToPannellumOverlay(info));
 	}
 	private _addLink(link: Link): void {
+		this._viewer.removeHotSpot(link.id);
 		this._viewer.addHotSpot(this._transformToPannellumLink(link));
 	}
 
 	private _transformToLink(link: any): Link {
-		const pano = this._panos.get(link.toPhotoSphereId);
+		const pano = this._panos.get(link.toPhotoSphereId || link.toId);
 
 		return {
 			POV: link.POV,
@@ -435,10 +482,10 @@ export default class TourRenderer {
 		return {
 			id: link.id,
 			pitch: link.POV.pitch,
-			sceneId: link.to.id,
+			sceneId: link.to && link.to.id,
 			targetPitch: link.targetPOV.pitch,
 			targetYaw: link.targetPOV.yaw,
-			text: link.to.name,
+			text: link.to && link.to.name,
 			type: 'scene',
 			yaw: link.POV.yaw
 		};
@@ -448,9 +495,12 @@ export default class TourRenderer {
 		const params: any = {
 			id: pano.id,
 			panorama: pano.url,
-			title: pano.name,
 			type: 'equirectangular'
 		};
+
+		if (!this._options.noTitle) {
+			params.title = pano.name;
+		}
 
 		if (pano.POV) {
 			params.pitch = pano.POV.pitch;

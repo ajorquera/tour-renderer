@@ -8,7 +8,7 @@ import { h, render, Component } from 'preact';
 
 const DOMPurify = createDOMPurify();
 
-export default class InfoElement extends Component<object, object> {
+export default class InfoElement extends Component<any, any> {
 	public static EVENTS = {
 		UPDATE_INFO_ELEMENT: 'UPDATE_INFO_ELEMENT',
 		TOGGLE_INFO_ELEMENT: 'TOGGLE_INFO_ELEMENT',

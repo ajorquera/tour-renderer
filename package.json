@@ -15,7 +15,7 @@
 		"less-loader": "^4.1.0",
 		"linkstate": "1.1.0",
 		"pannellum": "^2.4.1",
-		"preact": "8.2.7",
+		"preact": "8.3.1",
 		"raw-loader": "0.5.1",
 		"style-loader": "0.19.1",
 		"ts-loader": "5.3.1",

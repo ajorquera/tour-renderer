@@ -8,6 +8,14 @@
 	.pnlm-ui {
 		cursor: crosshair;
 	}
+
+	.dom-element {
+		display: none!important;
+	}
+}
+
+.dom-element {
+	z-index: 1;
 }
 
 .tr-info-element {
@@ -75,3 +83,17 @@
 		color: #6dbaea;
 	}
 }
+
+// override css
+.pnlm-hotspot.pnlm-info {
+	background-image: none;
+
+	&:hover {
+		background-color: inherit;
+	}
+}
+
+.pnlm-hotspot.pnlm-info {
+	width: initial;
+}
+

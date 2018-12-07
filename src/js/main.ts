@@ -4,7 +4,7 @@ import '../less/style.less';
 /**
  * Modules: single-pano, multiple-pano, create-links, create-info-elements all
  */
-const MODULE_NAME = 'all';
+const MODULE_NAME = 'create-info-elements';
 
 window.onload = () => {
 	const sections = document.querySelectorAll('section');
