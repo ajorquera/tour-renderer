@@ -1,4 +1,4 @@
-import TourRenderer from '../tourRenderer/TourRenderer';
+import TourRenderer from '../../../src/TourRenderer';
 import * as tour from '../mockData/create-links.json';
 
 const name = 'create-links';

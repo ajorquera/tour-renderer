@@ -1,6 +1,4 @@
 const path              = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractLESS       = new ExtractTextPlugin('css/style.css');
 
 module.exports = {
 	entry: './src/js/main.ts',
@@ -21,12 +19,8 @@ module.exports = {
 		rules: [{
 			test: /\.tsx?$/,
 			loader: 'ts-loader'
-		}, {
-			test: /\.less$/i,
-			use: extractLESS.extract([{loader: 'css-loader', options: {minimize: true}}, 'less-loader'])
-		}]
+    }]
 	},
 	plugins: [
-		extractLESS
 	]
 };

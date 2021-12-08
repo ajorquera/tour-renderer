@@ -1,15 +1,14 @@
 {
-	"compilerOptions": {
-		"target": "ES5",
-		"module": "commonjs",
-		"jsx": "react",
-		"jsxFactory": "h",
-		"sourceMap": true,
-		"lib": ["es6", "dom"]
-	},
-
-	"exclude": [
-		"node_modules",
-		"test"
-	]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "declaration": true,
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

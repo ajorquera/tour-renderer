@@ -1,14 +1,14 @@
 declare var pannellum: any;
 declare var window: any;
 
-import '../../less/tour-renderer.less';
+import '../examples/less/tour-renderer.less';
 import 'pannellum';
 import { h, render } from 'preact';
 import { generateId } from './helpers';
 import Defer from './models/Defer';
 import Image from './models/Image';
 import Link from './models/Link';
-import InfoElement from './models/InfoElement';
+import {InfoElement} from './components';
 import PannellumLink from './models/PannellumLink';
 import PannellumOpts from './models/PannellumOpts';
 import Hashtable, { Table } from './models/Hashtable';
@@ -21,7 +21,12 @@ import Tour from './models/Tour';
 import TourRendererOpts from './models/TourRendererOpts';
 
 export default class TourRenderer {
-	public static EVENTS: Table<string> = Object.assign({}, InfoElement.EVENTS, {
+	public static EVENTS: Table<string> = Object.assign({
+		UPDATE_INFO_ELEMENT: 'UPDATE_INFO_ELEMENT',
+		TOGGLE_INFO_ELEMENT: 'TOGGLE_INFO_ELEMENT',
+		DELETE_INFO_ELEMENT: 'DELETE_INFO_ELEMENT'
+	}, {
+    
 		CREATE_INFO_ELEMENT: 'CREATE_INFO_ELEMENT',
 		CREATE_LINK: 'CREATE_LINK',
 		DELETE_LINK: 'DELETE_LINK'
@@ -63,8 +68,7 @@ export default class TourRenderer {
 	}
 
 	constructor(tour: Tour, dom: string | Element, options: TourRendererOpts = {}) {
-		// not sure if we need to check for properties
-
+    
 		this._tour = tour;
 		this._options = Object.assign({}, TourRenderer.DEFAULTS, options);
 		if (typeof dom === 'string') {
@@ -144,14 +148,14 @@ export default class TourRenderer {
 	}
 
 	public forceToRender() {
-		this._viewer.setYaw(this._viewer.getYaw());
+		this._viewer.setPitch(this._viewer.getPitch() + 0.1);
 	}
 
 	public addInfoElement(obj: {id?: string, description?: string, title?: string, POV?: POV, isEdit?: boolean }) {
 		let {id, title, description, POV, isEdit} = obj;
 		id = id || generateId();
-		description = description || 'Description';
-		title = title || 'Title';
+		description = description || 'Descripción';
+		title = title || 'Título';
 		isEdit = typeof isEdit === 'boolean' ? isEdit : false;
 		const pano = this.getPano();
 		const info = {
@@ -160,7 +164,7 @@ export default class TourRenderer {
 			title,
 			description,
 			infoElement: (
-				<InfoElement isEdit={isEdit} classPrefix={this._classPrefix} title={title} description={description} id={id} />
+				<InfoElement isEdit={isEdit} title={title} description={description} id={id} />
 			)
 		};
 
@@ -280,6 +284,7 @@ export default class TourRenderer {
 			showControls: this._options.showControls,
 			keyboardZoom: this._options.keyboardZoom,
 			mouseZoom: this._options.mouseZoom,
+      disableKeyboardCtrl: true,
 
 			// zoom level 120, 100 default, 50 most
 			default: {
@@ -370,9 +375,9 @@ export default class TourRenderer {
 		this._viewer.on('load', this._onLoadPano.bind(this));
 		this._viewer.on('mousedown', this._onClick.bind(this));
 		this._viewer.on('touchstart', this._onClick.bind(this));
-		this._dom.addEventListener(InfoElement.EVENTS.TOGGLE_INFO_ELEMENT, this.forceToRender.bind(this));
-		this._dom.addEventListener(InfoElement.EVENTS.UPDATE_INFO_ELEMENT, this._updateInfoListener.bind(this));
-		this._dom.addEventListener(InfoElement.EVENTS.DELETE_INFO_ELEMENT, this._deleteInfoListener.bind(this));
+		this._dom.addEventListener('TOGGLE_INFO_ELEMENT', this.forceToRender.bind(this));
+		this._dom.addEventListener('UPDATE_INFO_ELEMENT', this._updateInfoListener.bind(this));
+		this._dom.addEventListener('DELETE_INFO_ELEMENT', this._deleteInfoListener.bind(this));
 	}
 
 	private _deleteInfoListener(ev) {
@@ -463,7 +468,7 @@ export default class TourRenderer {
 			description,
 			POV,
 			id,
-			infoElement: (<InfoElement classPrefix={this._classPrefix} id={id} title={name} description={description} />)
+			infoElement: (<InfoElement id={id} title={name} description={description} />)
 		};
 	}
 	private _transformToPannellumOverlay(info: Info): PannellumOverlay {

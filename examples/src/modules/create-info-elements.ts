@@ -1,4 +1,4 @@
-import TourRenderer from '../tourRenderer/TourRenderer';
+import TourRenderer from '../../../src';
 import * as tour from '../mockData/create-info-elements.json';
 import { buildList } from '../helpers';
 
@@ -12,7 +12,7 @@ export default {
 	init: (dom: HTMLElement) => {
 		DOM = dom;
 		getDomElement();
-		viewer = new TourRenderer(<any> tour, domViewer);
+		viewer = new TourRenderer(tour, domViewer, {autoLoad: true});
 		setListeners();
 		createListInfoElements();
 	},

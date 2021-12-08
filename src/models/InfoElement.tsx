@@ -1,10 +1,6 @@
-declare var window: any;
-
 import linkState from 'linkstate';
-import anchorme from 'anchorme';
 const createDOMPurify = require('dompurify');
-import { generateId } from '../helpers';
-import { h, render, Component } from 'preact';
+import { Component } from 'preact';
 
 const DOMPurify = createDOMPurify();
 
@@ -89,12 +85,7 @@ export default class InfoElement extends Component<any, any> {
 	}
 
 	public addAnyLink(text: string) {
-		return anchorme(text, {
-			attributes: [{
-				name: 'target',
-				value: '_blank'
-			}]
-		});
+		return text;
 	}
 
 	private _updateContent(e) {
@@ -148,5 +139,3 @@ export default class InfoElement extends Component<any, any> {
 	}
 }
 
-window.anchorme = anchorme;
-window.DOMPurify = DOMPurify;

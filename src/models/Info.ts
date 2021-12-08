@@ -6,5 +6,5 @@ export default interface Info {
 	id: string;
 	title: string;
 	description: string;
-	infoElement: JSX.Element;
+	infoElement: any;
 }

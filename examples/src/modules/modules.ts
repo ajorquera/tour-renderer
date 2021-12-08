@@ -23,10 +23,10 @@ const modules = (() => {
 	};
 
 	modules['all'] = mergeModules(
-		modules['single-pano'],
-		modules['multiple-pano'],
+	//	modules['single-pano'],
+	//	modules['multiple-pano'],
 		modules['create-info-elements'],
-		modules['using-query-params'],
+	//	modules['using-query-params'],
 		modules['create-links']
 	);
 

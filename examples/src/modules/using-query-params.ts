@@ -1,5 +1,5 @@
 import * as tour from '../mockData/multiple-pano.json';
-import TourRenderer from '../tourRenderer/TourRenderer';
+import TourRenderer from '../../../src/TourRenderer';
 import { Url } from 'url';
 
 let isAutoLoad: boolean;

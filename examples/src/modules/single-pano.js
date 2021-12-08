@@ -1,5 +1,5 @@
 import tour from '../mockData/single-pano.json'
-import TourRenderer from '../tourRenderer/TourRenderer'
+import TourRenderer from '../../../src/TourRenderer'
 
 export default {
 	tour: tour,

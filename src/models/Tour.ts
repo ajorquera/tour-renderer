@@ -3,11 +3,11 @@ import Pano from './Pano';
 import POV from './POV';
 
 export default interface Tour {
-	readonly id: number;
+	readonly id: string;
 	readonly name: string;
 	readonly description: string;
 	readonly firstPhotoSphereId?: number | string;
-	readonly POV?: {pitch: number, yaw: number};
-	readonly photoSpheres: object[];
-	readonly images: object[];
+	readonly POV?: POV;
+	readonly photoSpheres: any[];
+	readonly images: Image[];
 }

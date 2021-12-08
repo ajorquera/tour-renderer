@@ -8,12 +8,13 @@ export default interface PannellumOpts {
 	preview?: string;
 	showControls?: boolean;
 	showZoomCtrl?: boolean;
+  disableKeyboardCtrl?: boolean;
 	keyboardZoom?: boolean;
 	mouseZoom?: boolean;
 	hfov?: number;
 	scenes: Table<PannellumPano>;
 	default?: {
-		firstScene?: number;
+		firstScene?: string;
 		sceneFadeDuration?: number;
 		yaw?: number;
 		pitch?: number;
