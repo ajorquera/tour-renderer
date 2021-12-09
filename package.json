@@ -34,6 +34,7 @@
 		"start:pro": "webpack-dev-server --config webpack/webpack.test.prod",
 		"build": "tsc",
 		"build:dev": "webpack --display-modules --config webpack/webpack.dev",
-		"test": "karma start"
+		"test": "karma start",
+    "postinstall": "yarn build"
 	}
 }
