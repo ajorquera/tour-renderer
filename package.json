@@ -1,5 +1,5 @@
 {
-	"name": "tour-render",
+	"name": "tour-renderer",
 	"version": "1.0.0",
 	"description": "Pannellum wrapper to create virtual tours",
 	"license": "MIT",

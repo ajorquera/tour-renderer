@@ -62,6 +62,8 @@ export default class TourRenderer {
 	private          _selectPOVDeferred: Defer<POV>;
 	private          _isSelectingPOV: boolean;
 	private          _onLoad: () => {};
+  private          _onUpdateInfoListeners:((info: any) => void)[] = []
+  private          _onDeleteInfoListeners:((info: any) => void)[] = []
 
 	get panos(): Hashtable<Pano> {
 		return this._panos;
@@ -85,6 +87,15 @@ export default class TourRenderer {
 	public destroy() {
 		this._viewer.destroy();
 	}
+
+  public addInfoUpdateListener(fn) {
+    this._onUpdateInfoListeners.push(fn);
+  }
+
+
+  public addInfoDeleteListener(fn) {
+    this._onDeleteInfoListeners.push(fn);
+  }
 
 	public selectPOVInViewer(): Promise<POV> {
 		if (!this._isLoaded) {
@@ -152,11 +163,9 @@ export default class TourRenderer {
 	}
 
 	public addInfoElement(obj: {id?: string, description?: string, title?: string, POV?: POV, isEdit?: boolean }) {
-		let {id, title, description, POV, isEdit} = obj;
+		let {id, title, description, POV} = obj;
 		id = id || generateId();
-		description = description || 'Descripción';
-		title = title || 'Título';
-		isEdit = typeof isEdit === 'boolean' ? isEdit : false;
+		
 		const pano = this.getPano();
 		const info = {
 			id,
@@ -164,21 +173,21 @@ export default class TourRenderer {
 			title,
 			description,
 			infoElement: (
-				<InfoElement isEdit={isEdit} title={title} description={description} id={id} />
+				<InfoElement isEdit={this._options.editMode} title={title} description={description} id={id} />
 			)
 		};
 
-		pano.infos.add(info);
-		this._addInfo(info);
+		pano.infoElements.add(info);
+		this._addInfoToViewer(info);
 	}
 
 	public deleteInfoElement(elem: Info | string): void {
 		const pano = this.getPano();
 		if (typeof elem === 'string') {
-			elem = pano.infos.get(elem);
+			elem = pano.infoElements.get(elem);
 		}
 
-		pano.infos.delete(elem);
+		pano.infoElements.delete(elem);
 		this.deleteOverlay(elem);
 	}
 
@@ -327,7 +336,7 @@ export default class TourRenderer {
 			photoSphere.infoElements = photoSphere.infoElements || [];
 
 			pano.links = new Hashtable(photoSphere.links.map(this._transformToLink.bind(this)));
-			pano.infos = new Hashtable(photoSphere.infoElements.map(this._transformToInfo.bind(this)));
+			pano.infoElements = new Hashtable(photoSphere.infoElements.map(this._transformToInfo.bind(this)));
 		});
 
 		this._pannellumPanos = new Hashtable(this._panos.array.map(this._transformToPannellumPano.bind(this)));
@@ -383,13 +392,21 @@ export default class TourRenderer {
 	private _deleteInfoListener(ev) {
 		const data = ev.detail;
 		this.deleteInfoElement(data.id);
+
+    this._onDeleteInfoListeners.forEach(fn => {
+      fn(data);
+    });
 	}
 
 	private _updateInfoListener(ev) {
 		const data = ev.detail;
-		const info = this.getPano().infos.get(data.id);
+		const info = this.getPano().infoElements.get(data.id);
 		info.title = data.title;
-		info.description = data.title;
+		info.description = data.description;
+
+    this._onUpdateInfoListeners.forEach(fn => {
+      fn(info)
+    });
 	}
 
 	private _onClick(mouseEvent: any): void {
@@ -435,13 +452,13 @@ export default class TourRenderer {
 	}
 
 	private _setInfos(): void {
-		const infos = this.getCurrentPano().infos;
+		const infos = this.getPano().infoElements;
 		infos.array.forEach((info) => {
-			this._addInfo(info);
+			this._addInfoToViewer(info);
 		});
 	}
 
-	private _addInfo(info: Info): void {
+	private _addInfoToViewer(info: Info): void {
 		this._viewer.addHotSpot(this._transformToPannellumOverlay(info));
 	}
 	private _addLink(link: Link): void {
@@ -468,7 +485,7 @@ export default class TourRenderer {
 			description,
 			POV,
 			id,
-			infoElement: (<InfoElement id={id} title={name} description={description} />)
+			infoElement: (<InfoElement isEdit={this._options.editMode} id={id} title={name} description={description} />)
 		};
 	}
 	private _transformToPannellumOverlay(info: Info): PannellumOverlay {

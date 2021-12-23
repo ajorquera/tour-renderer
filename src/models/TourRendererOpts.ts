@@ -5,6 +5,7 @@ export default interface TourREndererOpts {
 	keyboardZoom?: boolean;
 	mouseZoom?: boolean;
 	noTitle?: boolean;
+  editMode?: boolean;
 	noLinks?: boolean;
 	onLoad?: () => {};
 }

@@ -49,5 +49,5 @@ const onClickDeleteInfo = (event, info) => {
 };
 
 const createListInfoElements = () => {
-	buildList(infoList, viewer.getPano().infos.array, onClickDeleteInfo);
+	buildList(infoList, viewer.getPano().infoElements.array, onClickDeleteInfo);
 };

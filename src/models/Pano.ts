@@ -5,7 +5,7 @@ import Hashtable from './Hashtable';
 import InfoElement from './Info';
 
 export default interface Pano extends Image {
-	infos?: Hashtable<InfoElement>;
+	infoElements?: Hashtable<InfoElement>;
 	links?: Hashtable<Link>;
 	POV?: POV;
 }

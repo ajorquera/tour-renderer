@@ -12,7 +12,7 @@ interface Props {
 
 const styles = {
   container: {
-    borderRadious: '17px',
+    borderRadius: '5%',
     backgroundColor: 'rgba(0,0,0,.7)',
 	  color: 'white',
     padding: '5px 10px',
@@ -31,15 +31,12 @@ const styles = {
     margin: 0,
     marginTop: 10
   },
-  closeButton: {
-    
-  },
   button: {
     backgroundColor: 'transparent',
     color: 'white',
     borderRadius: '15%',
-    
-    
+    borderStyle: 'outset',
+    padding: '2px 5px'
   },
   editContainer: {
     marginTop: 10,
@@ -101,7 +98,7 @@ const InfoElement: FunctionComponent<Props> = ({title, description, isEdit, sani
         <h4 contentEditable={isOpen && isEdit} style={styles.title} >{title}</h4>  
         {isOpen && <button style={styles.button} onClick={onClickClose}>X</button>}
       </div>
-      {isOpen && <p contentEditable={isEdit} style={styles.description} {...contentProps}></p>}
+      {<p contentEditable={isEdit} style={{...styles.description, display: isOpen ? 'block' : 'none'}} {...contentProps}></p>}
       {isEdit && isOpen && (
         <div style={styles.editContainer}>
           <button onClick={saveElement} style={styles.button}>
