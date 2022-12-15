@@ -4,6 +4,7 @@
     "target": "es2015",
     "declaration": true,
     "outDir": "./dist",
+    "moduleResolution": "node",
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "resolveJsonModule": true
