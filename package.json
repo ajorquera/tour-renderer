@@ -3,8 +3,9 @@
 	"version": "1.0.0",
 	"description": "Pannellum wrapper to create virtual tours",
 	"license": "MIT",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/TourRenderer.js",
+	"types": "dist/TourRenderer.d.ts",
+	"type": "module",
 	"files": [
 		"/dist"
 	],
@@ -15,6 +16,9 @@
 		"linkstate": "^2.0.1",
 		"pannellum": "^2.5.6",
 		"preact": "^10.6.2",
+		"rollup": "^3.7.4",
+		"rollup-plugin-dts": "^5.0.0",
+		"rollup-plugin-esbuild": "^5.0.0",
 		"typescript": "^4.5.2"
 	},
 	"devDependencies": {
@@ -32,9 +36,9 @@
 	"scripts": {
 		"start": "webpack-dev-server --config examples/webpack",
 		"start:pro": "webpack-dev-server --config webpack/webpack.test.prod",
-		"build": "tsc",
+		"build": "rollup -c rollup.config.js",
 		"build:dev": "webpack --display-modules --config webpack/webpack.dev",
 		"test": "karma start",
-    "postinstall": "yarn build"
+		"postinstall": "yarn build"
 	}
 }

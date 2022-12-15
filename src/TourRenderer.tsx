@@ -1,7 +1,7 @@
 declare var pannellum: any;
 declare var window: any;
 
-import '../examples/less/tour-renderer.less';
+
 import 'pannellum';
 import { h, render } from 'preact';
 import { generateId } from './helpers';
