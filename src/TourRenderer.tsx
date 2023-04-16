@@ -294,9 +294,9 @@ export default class TourRenderer {
       // zoom level 120, 100 default, 50 most
       default: {
         firstScene: this._first.id,
-        pitch: this._first.POV.pitch,
+        pitch: this._first.POV?.pitch,
         sceneFadeDuration: 1000,
-        yaw: this._first.POV.yaw,
+        yaw: this._first.POV?.yaw,
       },
       hfov: 120,
       scenes: this._pannellumPanos.table,

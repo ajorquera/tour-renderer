@@ -456,6 +456,7 @@ const _TourRenderer = class {
     this._setListeners();
   }
   _initViewer() {
+    var _a, _b;
     const params = {
       autoLoad: this._options.autoLoad,
       autoRotate: this._options.autoRotate,
@@ -465,9 +466,9 @@ const _TourRenderer = class {
       disableKeyboardCtrl: true,
       default: {
         firstScene: this._first.id,
-        pitch: this._first.POV.pitch,
+        pitch: (_a = this._first.POV) == null ? void 0 : _a.pitch,
         sceneFadeDuration: 1e3,
-        yaw: this._first.POV.yaw
+        yaw: (_b = this._first.POV) == null ? void 0 : _b.yaw
       },
       hfov: 120,
       scenes: this._pannellumPanos.table
