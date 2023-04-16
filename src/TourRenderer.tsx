@@ -374,10 +374,12 @@ export default class TourRenderer {
 		if (this._tour.firstPhotoSphereId) {
 			this._first = this._panos.get(this._tour.firstPhotoSphereId);
 		} else {
-			this._first = this._panos.get();
+			this._first = this._panos.get(); 
 		}
 
-		this._first.POV = this._tour.POV;
+		if(this._first) {
+			this._first.POV = this._tour.POV;
+		}
 	}
 
 	private _setListeners(): void {

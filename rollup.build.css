@@ -1,0 +1,80 @@
+@import '../../node_modules/tachyons/css/tachyons.min.css';
+@import '../../node_modules/pannellum/build/pannellum.css';
+.tr-hide {
+  visibility: hidden;
+}
+.tr-selecting-pov .pnlm-ui {
+  cursor: crosshair;
+}
+.tr-selecting-pov .dom-element {
+  display: none!important;
+}
+.dom-element {
+  z-index: 1;
+}
+.tr-info-element {
+  padding: 0;
+  margin: 0;
+  border-radius: 17px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+.tr-info-element .tr-info-element-header {
+  margin: 0;
+  padding: 10px;
+  max-width: 500px;
+}
+.tr-info-element .tr-info-element-header:focus {
+  outline: 0;
+}
+.tr-info-element .tr-info-element-body {
+  min-width: 200px;
+  max-width: 400px;
+  word-wrap: break-word;
+  padding: 10px;
+  padding-top: 0;
+  margin: 0;
+  text-align: justify;
+}
+.tr-info-element .tr-info-element-body:focus {
+  outline: 0;
+}
+.tr-info-element .tr-info-element-footer {
+  text-align: center;
+  padding-bottom: 10px;
+}
+.tr-info-element .tr-info-element-footer button {
+  background-color: transparent;
+  color: white;
+  border-radius: 15%;
+  cursor: pointer;
+}
+.tr-info-element .tr-info-element-footer button:focus {
+  outline: 0;
+}
+.tr-info-element .tr-info-element-close {
+  float: right;
+  border-radius: 50%;
+  padding: 3px 7px;
+  background-color: black;
+  color: white;
+  border-width: 2px;
+}
+.tr-info-element .tr-info-element-clickable {
+  cursor: pointer;
+}
+.tr-info-element .tr-info-element-editable {
+  cursor: text;
+}
+.tr-info-element a {
+  color: #6dbaea;
+}
+.pnlm-hotspot.pnlm-info {
+  background-image: none;
+}
+.pnlm-hotspot.pnlm-info:hover {
+  background-color: inherit;
+}
+.pnlm-hotspot.pnlm-info {
+  width: initial;
+}

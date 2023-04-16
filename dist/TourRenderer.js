@@ -525,7 +525,9 @@ const _TourRenderer = class {
     } else {
       this._first = this._panos.get();
     }
-    this._first.POV = this._tour.POV;
+    if (this._first) {
+      this._first.POV = this._tour.POV;
+    }
   }
   _setListeners() {
     this._viewer.on("load", this._onLoadPano.bind(this));
