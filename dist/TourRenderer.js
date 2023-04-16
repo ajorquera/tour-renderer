@@ -482,15 +482,17 @@ const _TourRenderer = class {
   }
   _processPanos() {
     const panos = this._tour.panos || this._tour.photoSpheres;
-    this._panos = new HashTable(panos.map((photoSphere) => {
-      return {
-        id: photoSphere.id,
-        infoElements: new HashTable(photoSphere.infoElements),
-        name: photoSphere.name,
-        POV: photoSphere.POV,
-        url: photoSphere.link
-      };
-    }));
+    this._panos = new HashTable(
+      panos.map((photoSphere) => {
+        return {
+          id: photoSphere.id,
+          infoElements: new HashTable(photoSphere.infoElements),
+          name: photoSphere.name,
+          POV: photoSphere.POV,
+          url: photoSphere.link
+        };
+      })
+    );
     panos.forEach((photoSphere) => {
       const pano = this._panos.get(photoSphere.id);
       photoSphere.links = photoSphere.links || [];
@@ -521,12 +523,9 @@ const _TourRenderer = class {
     this._description = this._tour.description;
     this._processPanos();
     if (this._tour.firstPhotoSphereId) {
-      this._first = this._panos.get(this._tour.firstPhotoSphereId);
+      this._first = this._panos.get(this._tour.firstPhotoSphereId) || this._panos.get();
     } else {
       this._first = this._panos.get();
-    }
-    if (this._first) {
-      this._first.POV = this._tour.POV;
     }
   }
   _setListeners() {
@@ -656,15 +655,18 @@ const _TourRenderer = class {
   }
 };
 let TourRenderer = _TourRenderer;
-TourRenderer.EVENTS = Object.assign({
-  UPDATE_INFO_ELEMENT: "UPDATE_INFO_ELEMENT",
-  TOGGLE_INFO_ELEMENT: "TOGGLE_INFO_ELEMENT",
-  DELETE_INFO_ELEMENT: "DELETE_INFO_ELEMENT"
-}, {
-  CREATE_INFO_ELEMENT: "CREATE_INFO_ELEMENT",
-  CREATE_LINK: "CREATE_LINK",
-  DELETE_LINK: "DELETE_LINK"
-});
+TourRenderer.EVENTS = Object.assign(
+  {
+    UPDATE_INFO_ELEMENT: "UPDATE_INFO_ELEMENT",
+    TOGGLE_INFO_ELEMENT: "TOGGLE_INFO_ELEMENT",
+    DELETE_INFO_ELEMENT: "DELETE_INFO_ELEMENT"
+  },
+  {
+    CREATE_INFO_ELEMENT: "CREATE_INFO_ELEMENT",
+    CREATE_LINK: "CREATE_LINK",
+    DELETE_LINK: "DELETE_LINK"
+  }
+);
 TourRenderer.CLASSES = {
   DOM_ELEMENT: "dom-element"
 };

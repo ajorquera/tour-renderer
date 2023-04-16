@@ -369,6 +369,8 @@ export default class TourRenderer {
 
     if (this._tour.firstPhotoSphereId) {
       this._first = this._panos.get(this._tour.firstPhotoSphereId) || this._panos.get();
+    } else {
+      this._first = this._panos.get();
     }
   }
 
