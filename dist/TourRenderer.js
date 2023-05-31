@@ -3600,3 +3600,5 @@ window.onload = ()=>{
     })
 }
 ;
+export default qt;
+
