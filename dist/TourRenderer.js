@@ -3592,13 +3592,5 @@ qt.DEFAULTS = {
     showControls: !0
 };
 window.TourRenderer = qt;
-var eo = qt;
-window.onload = ()=>{
-    new eo(window.tour,document.getElementById("tour"),{
-        ...tourOptions,
-        autoLoad: tourOptions.autoLoad !== "false"
-    })
-}
-;
 export default qt;
 
