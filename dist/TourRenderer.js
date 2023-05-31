@@ -471,9 +471,9 @@ const _TourRenderer = class {
       // zoom level 120, 100 default, 50 most
       default: {
         firstScene: this._first.id,
-        pitch: (_a = this._first.POV) == null ? void 0 : _a.pitch,
-        sceneFadeDuration: 1e3,
-        yaw: (_b = this._first.POV) == null ? void 0 : _b.yaw
+        pitch: ((_a = this._first.POV) == null ? void 0 : _a.pitch) || 0,
+        yaw: ((_b = this._first.POV) == null ? void 0 : _b.yaw) || 0,
+        sceneFadeDuration: 1e3
       },
       hfov: 120,
       scenes: this._pannellumPanos.table
