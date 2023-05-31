@@ -1,4 +1,3 @@
-@import '../../node_modules/tachyons/css/tachyons.min.css';
 @import '../../node_modules/pannellum/build/pannellum.css';
 .tr-hide {
   visibility: hidden;

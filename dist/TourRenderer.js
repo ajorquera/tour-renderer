@@ -1,3596 +1,690 @@
 'use strict';
-var Ee, A, hn, oe, He, ve = {}, un = [], Tn = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
-function Ht(t, e) {
-    for (var i in e)
-        t[i] = e[i];
-    return t
-}
-function dn(t) {
-    var e = t.parentNode;
-    e && e.removeChild(t)
-}
-function Se(t, e, i) {
-    var c, _, l, w = {};
-    for (l in e)
-        l == "key" ? c = e[l] : l == "ref" ? _ = e[l] : w[l] = e[l];
-    if (arguments.length > 2 && (w.children = arguments.length > 3 ? Ee.call(arguments, 2) : i),
-    typeof t == "function" && t.defaultProps != null)
-        for (l in t.defaultProps)
-            w[l] === void 0 && (w[l] = t.defaultProps[l]);
-    return _e(t, w, c, _, null)
-}
-function _e(t, e, i, c, _) {
-    var l = {
-        type: t,
-        props: e,
-        key: i,
-        ref: c,
-        __k: null,
-        __: null,
-        __b: 0,
-        __e: null,
-        __d: void 0,
-        __c: null,
-        __h: null,
-        constructor: void 0,
-        __v: _ ?? ++hn
-    };
-    return _ == null && A.vnode != null && A.vnode(l),
-    l
-}
-function $t(t) {
-    return t.children
-}
-function At(t, e) {
-    this.props = t,
-    this.context = e
-}
-function ie(t, e) {
-    if (e == null)
-        return t.__ ? ie(t.__, t.__.__k.indexOf(t) + 1) : null;
-    for (var i; e < t.__k.length; e++)
-        if ((i = t.__k[e]) != null && i.__e != null)
-            return i.__e;
-    return typeof t.type == "function" ? ie(t) : null
-}
-function _n(t) {
-    var e, i;
-    if ((t = t.__) != null && t.__c != null) {
-        for (t.__e = t.__c.base = null,
-        e = 0; e < t.__k.length; e++)
-            if ((i = t.__k[e]) != null && i.__e != null) {
-                t.__e = t.__c.base = i.__e;
-                break
-            }
-        return _n(t)
-    }
-}
-function Be(t) {
-    (!t.__d && (t.__d = !0) && oe.push(t) && !ye.__r++ || He !== A.debounceRendering) && ((He = A.debounceRendering) || setTimeout)(ye)
-}
-function ye() {
-    for (var t; ye.__r = oe.length; )
-        t = oe.sort(function(e, i) {
-            return e.__v.__b - i.__v.__b
-        }),
-        oe = [],
-        t.some(function(e) {
-            var i, c, _, l, w, I;
-            e.__d && (w = (l = (i = e).__v).__e,
-            (I = i.__P) && (c = [],
-            (_ = Ht({}, l)).__v = l.__v + 1,
-            Ae(I, l, _, i.__n, I.ownerSVGElement !== void 0, l.__h != null ? [w] : null, c, w ?? ie(l), l.__h),
-            vn(c, l),
-            l.__e != w && _n(l)))
-        })
-}
-function fn(t, e, i, c, _, l, w, I, H, W) {
-    var u, Y, D, b, B, at, X, Q = c && c.__k || un, ht = Q.length;
-    for (i.__k = [],
-    u = 0; u < e.length; u++)
-        if ((b = i.__k[u] = (b = e[u]) == null || typeof b == "boolean" ? null : typeof b == "string" || typeof b == "number" || typeof b == "bigint" ? _e(null, b, null, null, b) : Array.isArray(b) ? _e($t, {
-            children: b
-        }, null, null, null) : b.__b > 0 ? _e(b.type, b.props, b.key, b.ref ? b.ref : null, b.__v) : b) != null) {
-            if (b.__ = i,
-            b.__b = i.__b + 1,
-            (D = Q[u]) === null || D && b.key == D.key && b.type === D.type)
-                Q[u] = void 0;
-            else
-                for (Y = 0; Y < ht; Y++) {
-                    if ((D = Q[Y]) && b.key == D.key && b.type === D.type) {
-                        Q[Y] = void 0;
-                        break
-                    }
-                    D = null
-                }
-            Ae(t, b, D = D || ve, _, l, w, I, H, W),
-            B = b.__e,
-            (Y = b.ref) && D.ref != Y && (X || (X = []),
-            D.ref && X.push(D.ref, null, b),
-            X.push(Y, b.__c || B, b)),
-            B != null ? (at == null && (at = B),
-            typeof b.type == "function" && b.__k === D.__k ? b.__d = H = pn(b, H, t) : H = mn(t, b, D, Q, B, H),
-            typeof i.type == "function" && (i.__d = H)) : H && D.__e == H && H.parentNode != t && (H = ie(D))
-        }
-    for (i.__e = at,
-    u = ht; u--; )
-        Q[u] != null && gn(Q[u], Q[u]);
-    if (X)
-        for (u = 0; u < X.length; u++)
-            yn(X[u], X[++u], X[++u])
-}
-function pn(t, e, i) {
-    for (var c, _ = t.__k, l = 0; _ && l < _.length; l++)
-        (c = _[l]) && (c.__ = t,
-        e = typeof c.type == "function" ? pn(c, e, i) : mn(i, c, c, _, c.__e, e));
-    return e
-}
-function ge(t, e) {
-    return e = e || [],
-    t == null || typeof t == "boolean" || (Array.isArray(t) ? t.some(function(i) {
-        ge(i, e)
-    }) : e.push(t)),
-    e
-}
-function mn(t, e, i, c, _, l) {
-    var w, I, H;
-    if (e.__d !== void 0)
-        w = e.__d,
-        e.__d = void 0;
-    else if (i == null || _ != l || _.parentNode == null)
-        t: if (l == null || l.parentNode !== t)
-            t.appendChild(_),
-            w = null;
-        else {
-            for (I = l,
-            H = 0; (I = I.nextSibling) && H < c.length; H += 1)
-                if (I == _)
-                    break t;
-            t.insertBefore(_, l),
-            w = l
-        }
-    return w !== void 0 ? w : _.nextSibling
-}
-function Ln(t, e, i, c, _) {
-    var l;
-    for (l in i)
-        l === "children" || l === "key" || l in e || we(t, l, null, i[l], c);
-    for (l in e)
-        _ && typeof e[l] != "function" || l === "children" || l === "key" || l === "value" || l === "checked" || i[l] === e[l] || we(t, l, e[l], i[l], c)
-}
-function ze(t, e, i) {
-    e[0] === "-" ? t.setProperty(e, i) : t[e] = i == null ? "" : typeof i != "number" || Tn.test(e) ? i : i + "px"
-}
-function we(t, e, i, c, _) {
-    var l;
-    t: if (e === "style")
-        if (typeof i == "string")
-            t.style.cssText = i;
-        else {
-            if (typeof c == "string" && (t.style.cssText = c = ""),
-            c)
-                for (e in c)
-                    i && e in i || ze(t.style, e, "");
-            if (i)
-                for (e in i)
-                    c && i[e] === c[e] || ze(t.style, e, i[e])
-        }
-    else if (e[0] === "o" && e[1] === "n")
-        l = e !== (e = e.replace(/Capture$/, "")),
-        e = e.toLowerCase()in t ? e.toLowerCase().slice(2) : e.slice(2),
-        t.l || (t.l = {}),
-        t.l[e + l] = i,
-        i ? c || t.addEventListener(e, l ? Ve : Ge, l) : t.removeEventListener(e, l ? Ve : Ge, l);
-    else if (e !== "dangerouslySetInnerHTML") {
-        if (_)
-            e = e.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
-        else if (e !== "href" && e !== "list" && e !== "form" && e !== "tabIndex" && e !== "download" && e in t)
-            try {
-                t[e] = i ?? "";
-                break t
-            } catch {}
-        typeof i == "function" || (i == null || i === !1 && e.indexOf("-") == -1 ? t.removeAttribute(e) : t.setAttribute(e, i))
-    }
-}
-function Ge(t) {
-    this.l[t.type + !1](A.event ? A.event(t) : t)
-}
-function Ve(t) {
-    this.l[t.type + !0](A.event ? A.event(t) : t)
-}
-function Ae(t, e, i, c, _, l, w, I, H) {
-    var W, u, Y, D, b, B, at, X, Q, ht, yt, wt, K, m, a, J = e.type;
-    if (e.constructor !== void 0)
-        return null;
-    i.__h != null && (H = i.__h,
-    I = e.__e = i.__e,
-    e.__h = null,
-    l = [I]),
-    (W = A.__b) && W(e);
-    try {
-        t: if (typeof J == "function") {
-            if (X = e.props,
-            Q = (W = J.contextType) && c[W.__c],
-            ht = W ? Q ? Q.props.value : W.__ : c,
-            i.__c ? at = (u = e.__c = i.__c).__ = u.__E : ("prototype"in J && J.prototype.render ? e.__c = u = new J(X,ht) : (e.__c = u = new At(X,ht),
-            u.constructor = J,
-            u.render = Cn),
-            Q && Q.sub(u),
-            u.props = X,
-            u.state || (u.state = {}),
-            u.context = ht,
-            u.__n = c,
-            Y = u.__d = !0,
-            u.__h = [],
-            u._sb = []),
-            u.__s == null && (u.__s = u.state),
-            J.getDerivedStateFromProps != null && (u.__s == u.state && (u.__s = Ht({}, u.__s)),
-            Ht(u.__s, J.getDerivedStateFromProps(X, u.__s))),
-            D = u.props,
-            b = u.state,
-            Y)
-                J.getDerivedStateFromProps == null && u.componentWillMount != null && u.componentWillMount(),
-                u.componentDidMount != null && u.__h.push(u.componentDidMount);
-            else {
-                if (J.getDerivedStateFromProps == null && X !== D && u.componentWillReceiveProps != null && u.componentWillReceiveProps(X, ht),
-                !u.__e && u.shouldComponentUpdate != null && u.shouldComponentUpdate(X, u.__s, ht) === !1 || e.__v === i.__v) {
-                    for (u.props = X,
-                    u.state = u.__s,
-                    e.__v !== i.__v && (u.__d = !1),
-                    u.__v = e,
-                    e.__e = i.__e,
-                    e.__k = i.__k,
-                    e.__k.forEach(function(st) {
-                        st && (st.__ = e)
-                    }),
-                    yt = 0; yt < u._sb.length; yt++)
-                        u.__h.push(u._sb[yt]);
-                    u._sb = [],
-                    u.__h.length && w.push(u);
-                    break t
-                }
-                u.componentWillUpdate != null && u.componentWillUpdate(X, u.__s, ht),
-                u.componentDidUpdate != null && u.__h.push(function() {
-                    u.componentDidUpdate(D, b, B)
-                })
-            }
-            if (u.context = ht,
-            u.props = X,
-            u.__v = e,
-            u.__P = t,
-            wt = A.__r,
-            K = 0,
-            "prototype"in J && J.prototype.render) {
-                for (u.state = u.__s,
-                u.__d = !1,
-                wt && wt(e),
-                W = u.render(u.props, u.state, u.context),
-                m = 0; m < u._sb.length; m++)
-                    u.__h.push(u._sb[m]);
-                u._sb = []
-            } else
-                do
-                    u.__d = !1,
-                    wt && wt(e),
-                    W = u.render(u.props, u.state, u.context),
-                    u.state = u.__s;
-                while (u.__d && ++K < 25);
-            u.state = u.__s,
-            u.getChildContext != null && (c = Ht(Ht({}, c), u.getChildContext())),
-            Y || u.getSnapshotBeforeUpdate == null || (B = u.getSnapshotBeforeUpdate(D, b)),
-            a = W != null && W.type === $t && W.key == null ? W.props.children : W,
-            fn(t, Array.isArray(a) ? a : [a], e, i, c, _, l, w, I, H),
-            u.base = e.__e,
-            e.__h = null,
-            u.__h.length && w.push(u),
-            at && (u.__E = u.__ = null),
-            u.__e = !1
-        } else
-            l == null && e.__v === i.__v ? (e.__k = i.__k,
-            e.__e = i.__e) : e.__e = Rn(i.__e, e, i, c, _, l, w, H);
-        (W = A.diffed) && W(e)
-    } catch (st) {
-        e.__v = null,
-        (H || l != null) && (e.__e = I,
-        e.__h = !!H,
-        l[l.indexOf(I)] = null),
-        A.__e(st, e, i)
-    }
-}
-function vn(t, e) {
-    A.__c && A.__c(e, t),
-    t.some(function(i) {
-        try {
-            t = i.__h,
-            i.__h = [],
-            t.some(function(c) {
-                c.call(i)
-            })
-        } catch (c) {
-            A.__e(c, i.__v)
-        }
-    })
-}
-function Rn(t, e, i, c, _, l, w, I) {
-    var H, W, u, Y = i.props, D = e.props, b = e.type, B = 0;
-    if (b === "svg" && (_ = !0),
-    l != null) {
-        for (; B < l.length; B++)
-            if ((H = l[B]) && "setAttribute"in H == !!b && (b ? H.localName === b : H.nodeType === 3)) {
-                t = H,
-                l[B] = null;
-                break
-            }
-    }
-    if (t == null) {
-        if (b === null)
-            return document.createTextNode(D);
-        t = _ ? document.createElementNS("http://www.w3.org/2000/svg", b) : document.createElement(b, D.is && D),
-        l = null,
-        I = !1
-    }
-    if (b === null)
-        Y === D || I && t.data === D || (t.data = D);
-    else {
-        if (l = l && Ee.call(t.childNodes),
-        W = (Y = i.props || ve).dangerouslySetInnerHTML,
-        u = D.dangerouslySetInnerHTML,
-        !I) {
-            if (l != null)
-                for (Y = {},
-                B = 0; B < t.attributes.length; B++)
-                    Y[t.attributes[B].name] = t.attributes[B].value;
-            (u || W) && (u && (W && u.__html == W.__html || u.__html === t.innerHTML) || (t.innerHTML = u && u.__html || ""))
-        }
-        if (Ln(t, D, Y, _, I),
-        u)
-            e.__k = [];
-        else if (B = e.props.children,
-        fn(t, Array.isArray(B) ? B : [B], e, i, c, _ && b !== "foreignObject", l, w, l ? l[0] : i.__k && ie(i, 0), I),
-        l != null)
-            for (B = l.length; B--; )
-                l[B] != null && dn(l[B]);
-        I || ("value"in D && (B = D.value) !== void 0 && (B !== t.value || b === "progress" && !B || b === "option" && B !== Y.value) && we(t, "value", B, Y.value, !1),
-        "checked"in D && (B = D.checked) !== void 0 && B !== t.checked && we(t, "checked", B, Y.checked, !1))
-    }
-    return t
-}
-function yn(t, e, i) {
-    try {
-        typeof t == "function" ? t(e) : t.current = e
-    } catch (c) {
-        A.__e(c, i)
-    }
-}
-function gn(t, e, i) {
-    var c, _;
-    if (A.unmount && A.unmount(t),
-    (c = t.ref) && (c.current && c.current !== t.__e || yn(c, null, e)),
-    (c = t.__c) != null) {
-        if (c.componentWillUnmount)
-            try {
-                c.componentWillUnmount()
-            } catch (l) {
-                A.__e(l, e)
-            }
-        c.base = c.__P = null,
-        t.__c = void 0
-    }
-    if (c = t.__k)
-        for (_ = 0; _ < c.length; _++)
-            c[_] && gn(c[_], e, i || typeof t.type != "function");
-    i || t.__e == null || dn(t.__e),
-    t.__ = t.__e = t.__d = void 0
-}
-function Cn(t, e, i) {
-    return this.constructor(t, i)
-}
-function In(t, e, i) {
-    var c, _, l;
-    A.__ && A.__(t, e),
-    _ = (c = typeof i == "function") ? null : i && i.__k || e.__k,
-    l = [],
-    Ae(e, t = (!c && i || e).__k = Se($t, null, [t]), _ || ve, ve, e.ownerSVGElement !== void 0, !c && i ? [i] : _ ? null : e.firstChild ? Ee.call(e.childNodes) : null, l, !c && i ? i : _ ? _.__e : e.firstChild, c),
-    vn(l, t)
-}
-Ee = un.slice,
-A = {
-    __e: function(t, e, i, c) {
-        for (var _, l, w; e = e.__; )
-            if ((_ = e.__c) && !_.__)
-                try {
-                    if ((l = _.constructor) && l.getDerivedStateFromError != null && (_.setState(l.getDerivedStateFromError(t)),
-                    w = _.__d),
-                    _.componentDidCatch != null && (_.componentDidCatch(t, c || {}),
-                    w = _.__d),
-                    w)
-                        return _.__E = _
-                } catch (I) {
-                    t = I
-                }
-        throw t
-    }
-},
-hn = 0,
-At.prototype.setState = function(t, e) {
-    var i;
-    i = this.__s != null && this.__s !== this.state ? this.__s : this.__s = Ht({}, this.state),
-    typeof t == "function" && (t = t(Ht({}, i), this.props)),
-    t && Ht(i, t),
-    t != null && this.__v && (e && this._sb.push(e),
-    Be(this))
-}
-,
-At.prototype.forceUpdate = function(t) {
-    this.__v && (this.__e = !0,
-    t && this.__h.push(t),
-    Be(this))
-}
-,
-At.prototype.render = $t,
-oe = [],
-ye.__r = 0;
-var De, rt, Re, We, re = 0, wn = [], fe = [], Ye = A.__b, Xe = A.__r, $e = A.diffed, qe = A.__c, je = A.unmount;
-function En(t, e) {
-    A.__h && A.__h(rt, t, re || e),
-    re = 0;
-    var i = rt.__H || (rt.__H = {
-        __: [],
-        __h: []
+
+var n,l$1,u$1,t$1,o$2,r$1,f$1,c$1={},s$1=[],a$1=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i,v$1=Array.isArray;function h$1(n,l){for(var u in l)n[u]=l[u];return n}function p(n){var l=n.parentNode;l&&l.removeChild(n);}function y(l,u,i){var t,o,r,f={};for(r in u)"key"==r?t=u[r]:"ref"==r?o=u[r]:f[r]=u[r];if(arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),"function"==typeof l&&null!=l.defaultProps)for(r in l.defaultProps)void 0===f[r]&&(f[r]=l.defaultProps[r]);return d$1(l,f,t,o,null)}function d$1(n,i,t,o,r){var f={type:n,props:i,key:t,ref:o,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==r?++u$1:r};return null==r&&null!=l$1.vnode&&l$1.vnode(f),f}function k$1(n){return n.children}function b$1(n,l){this.props=n,this.context=l;}function g$2(n,l){if(null==l)return n.__?g$2(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return "function"==typeof n.type?g$2(n):null}function m$1(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return m$1(n)}}function w$2(n){(!n.__d&&(n.__d=!0)&&t$1.push(n)&&!x.__r++||o$2!==l$1.debounceRendering)&&((o$2=l$1.debounceRendering)||r$1)(x);}function x(){var n,l,u,i,o,r,e,c;for(t$1.sort(f$1);n=t$1.shift();)n.__d&&(l=t$1.length,i=void 0,o=void 0,e=(r=(u=n).__v).__e,(c=u.__P)&&(i=[],(o=h$1({},r)).__v=r.__v+1,L$1(c,r,o,u.__n,void 0!==c.ownerSVGElement,null!=r.__h?[e]:null,i,null==e?g$2(r):e,r.__h),M(i,r),r.__e!=e&&m$1(r)),t$1.length>l&&t$1.sort(f$1));x.__r=0;}function P(n,l,u,i,t,o,r,f,e,a){var h,p,y,_,b,m,w,x=i&&i.__k||s$1,P=x.length;for(u.__k=[],h=0;h<l.length;h++)if(null!=(_=u.__k[h]=null==(_=l[h])||"boolean"==typeof _||"function"==typeof _?null:"string"==typeof _||"number"==typeof _||"bigint"==typeof _?d$1(null,_,null,null,_):v$1(_)?d$1(k$1,{children:_},null,null,null):_.__b>0?d$1(_.type,_.props,_.key,_.ref?_.ref:null,_.__v):_)){if(_.__=u,_.__b=u.__b+1,null===(y=x[h])||y&&_.key==y.key&&_.type===y.type)x[h]=void 0;else for(p=0;p<P;p++){if((y=x[p])&&_.key==y.key&&_.type===y.type){x[p]=void 0;break}y=null;}L$1(n,_,y=y||c$1,t,o,r,f,e,a),b=_.__e,(p=_.ref)&&y.ref!=p&&(w||(w=[]),y.ref&&w.push(y.ref,null,_),w.push(p,_.__c||b,_)),null!=b?(null==m&&(m=b),"function"==typeof _.type&&_.__k===y.__k?_.__d=e=C$1(_,e,n):e=$$1(n,_,y,x,b,e),"function"==typeof u.type&&(u.__d=e)):e&&y.__e==e&&e.parentNode!=n&&(e=g$2(y));}for(u.__e=m,h=P;h--;)null!=x[h]&&("function"==typeof u.type&&null!=x[h].__e&&x[h].__e==u.__d&&(u.__d=A(i).nextSibling),q$1(x[h],x[h]));if(w)for(h=0;h<w.length;h++)O(w[h],w[++h],w[++h]);}function C$1(n,l,u){for(var i,t=n.__k,o=0;t&&o<t.length;o++)(i=t[o])&&(i.__=n,l="function"==typeof i.type?C$1(i,l,u):$$1(u,i,i,t,i.__e,l));return l}function S(n,l){return l=l||[],null==n||"boolean"==typeof n||(v$1(n)?n.some(function(n){S(n,l);}):l.push(n)),l}function $$1(n,l,u,i,t,o){var r,f,e;if(void 0!==l.__d)r=l.__d,l.__d=void 0;else if(null==u||t!=o||null==t.parentNode)n:if(null==o||o.parentNode!==n)n.appendChild(t),r=null;else {for(f=o,e=0;(f=f.nextSibling)&&e<i.length;e+=1)if(f==t)break n;n.insertBefore(t,o),r=o;}return void 0!==r?r:t.nextSibling}function A(n){var l,u,i;if(null==n.type||"string"==typeof n.type)return n.__e;if(n.__k)for(l=n.__k.length-1;l>=0;l--)if((u=n.__k[l])&&(i=A(u)))return i;return null}function H$1(n,l,u,i,t){var o;for(o in u)"children"===o||"key"===o||o in l||T$2(n,o,null,u[o],i);for(o in l)t&&"function"!=typeof l[o]||"children"===o||"key"===o||"value"===o||"checked"===o||u[o]===l[o]||T$2(n,o,l[o],u[o],i);}function I$1(n,l,u){"-"===l[0]?n.setProperty(l,null==u?"":u):n[l]=null==u?"":"number"!=typeof u||a$1.test(l)?u:u+"px";}function T$2(n,l,u,i,t){var o;n:if("style"===l)if("string"==typeof u)n.style.cssText=u;else {if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||I$1(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||I$1(n.style,l,u[l]);}else if("o"===l[0]&&"n"===l[1])o=l!==(l=l.replace(/Capture$/,"")),l=l.toLowerCase()in n?l.toLowerCase().slice(2):l.slice(2),n.l||(n.l={}),n.l[l+o]=u,u?i||n.addEventListener(l,o?z$1:j$1,o):n.removeEventListener(l,o?z$1:j$1,o);else if("dangerouslySetInnerHTML"!==l){if(t)l=l.replace(/xlink(H|:h)/,"h").replace(/sName$/,"s");else if("width"!==l&&"height"!==l&&"href"!==l&&"list"!==l&&"form"!==l&&"tabIndex"!==l&&"download"!==l&&"rowSpan"!==l&&"colSpan"!==l&&l in n)try{n[l]=null==u?"":u;break n}catch(n){}"function"==typeof u||(null==u||!1===u&&"-"!==l[4]?n.removeAttribute(l):n.setAttribute(l,u));}}function j$1(n){return this.l[n.type+!1](l$1.event?l$1.event(n):n)}function z$1(n){return this.l[n.type+!0](l$1.event?l$1.event(n):n)}function L$1(n,u,i,t,o,r,f,e,c){var s,a,p,y,d,_,g,m,w,x,C,S,$,A,H,I=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,r=[e]),(s=l$1.__b)&&s(u);try{n:if("function"==typeof I){if(m=u.props,w=(s=I.contextType)&&t[s.__c],x=s?w?w.props.value:s.__:t,i.__c?g=(a=u.__c=i.__c).__=a.__E:("prototype"in I&&I.prototype.render?u.__c=a=new I(m,x):(u.__c=a=new b$1(m,x),a.constructor=I,a.render=B$2),w&&w.sub(a),a.props=m,a.state||(a.state={}),a.context=x,a.__n=t,p=a.__d=!0,a.__h=[],a._sb=[]),null==a.__s&&(a.__s=a.state),null!=I.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=h$1({},a.__s)),h$1(a.__s,I.getDerivedStateFromProps(m,a.__s))),y=a.props,d=a.state,a.__v=u,p)null==I.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else {if(null==I.getDerivedStateFromProps&&m!==y&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(m,x),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(m,a.__s,x)||u.__v===i.__v){for(u.__v!==i.__v&&(a.props=m,a.state=a.__s,a.__d=!1),a.__e=!1,u.__e=i.__e,u.__k=i.__k,u.__k.forEach(function(n){n&&(n.__=u);}),C=0;C<a._sb.length;C++)a.__h.push(a._sb[C]);a._sb=[],a.__h.length&&f.push(a);break n}null!=a.componentWillUpdate&&a.componentWillUpdate(m,a.__s,x),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(y,d,_);});}if(a.context=x,a.props=m,a.__P=n,S=l$1.__r,$=0,"prototype"in I&&I.prototype.render){for(a.state=a.__s,a.__d=!1,S&&S(u),s=a.render(a.props,a.state,a.context),A=0;A<a._sb.length;A++)a.__h.push(a._sb[A]);a._sb=[];}else do{a.__d=!1,S&&S(u),s=a.render(a.props,a.state,a.context),a.state=a.__s;}while(a.__d&&++$<25);a.state=a.__s,null!=a.getChildContext&&(t=h$1(h$1({},t),a.getChildContext())),p||null==a.getSnapshotBeforeUpdate||(_=a.getSnapshotBeforeUpdate(y,d)),P(n,v$1(H=null!=s&&s.type===k$1&&null==s.key?s.props.children:s)?H:[H],u,i,t,o,r,f,e,c),a.base=u.__e,u.__h=null,a.__h.length&&f.push(a),g&&(a.__E=a.__=null),a.__e=!1;}else null==r&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=N(i.__e,u,i,t,o,r,f,c);(s=l$1.diffed)&&s(u);}catch(n){u.__v=null,(c||null!=r)&&(u.__e=e,u.__h=!!c,r[r.indexOf(e)]=null),l$1.__e(n,u,i);}}function M(n,u){l$1.__c&&l$1.__c(u,n),n.some(function(u){try{n=u.__h,u.__h=[],n.some(function(n){n.call(u);});}catch(n){l$1.__e(n,u.__v);}});}function N(l,u,i,t,o,r,f,e){var s,a,h,y=i.props,d=u.props,_=u.type,k=0;if("svg"===_&&(o=!0),null!=r)for(;k<r.length;k++)if((s=r[k])&&"setAttribute"in s==!!_&&(_?s.localName===_:3===s.nodeType)){l=s,r[k]=null;break}if(null==l){if(null===_)return document.createTextNode(d);l=o?document.createElementNS("http://www.w3.org/2000/svg",_):document.createElement(_,d.is&&d),r=null,e=!1;}if(null===_)y===d||e&&l.data===d||(l.data=d);else {if(r=r&&n.call(l.childNodes),a=(y=i.props||c$1).dangerouslySetInnerHTML,h=d.dangerouslySetInnerHTML,!e){if(null!=r)for(y={},k=0;k<l.attributes.length;k++)y[l.attributes[k].name]=l.attributes[k].value;(h||a)&&(h&&(a&&h.__html==a.__html||h.__html===l.innerHTML)||(l.innerHTML=h&&h.__html||""));}if(H$1(l,d,y,o,e),h)u.__k=[];else if(P(l,v$1(k=u.props.children)?k:[k],u,i,t,o&&"foreignObject"!==_,r,f,r?r[0]:i.__k&&g$2(i,0),e),null!=r)for(k=r.length;k--;)null!=r[k]&&p(r[k]);e||("value"in d&&void 0!==(k=d.value)&&(k!==l.value||"progress"===_&&!k||"option"===_&&k!==y.value)&&T$2(l,"value",k,y.value,!1),"checked"in d&&void 0!==(k=d.checked)&&k!==l.checked&&T$2(l,"checked",k,y.checked,!1));}return l}function O(n,u,i){try{"function"==typeof n?n(u):n.current=u;}catch(n){l$1.__e(n,i);}}function q$1(n,u,i){var t,o;if(l$1.unmount&&l$1.unmount(n),(t=n.ref)&&(t.current&&t.current!==n.__e||O(t,null,u)),null!=(t=n.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount();}catch(n){l$1.__e(n,u);}t.base=t.__P=null,n.__c=void 0;}if(t=n.__k)for(o=0;o<t.length;o++)t[o]&&q$1(t[o],u,i||"function"!=typeof n.type);i||null==n.__e||p(n.__e),n.__=n.__e=n.__d=void 0;}function B$2(n,l,u){return this.constructor(n,u)}function D$1(u,i,t){var o,r,f;l$1.__&&l$1.__(u,i),r=(o="function"==typeof t)?null:t&&t.__k||i.__k,f=[],L$1(i,u=(!o&&t||i).__k=y(k$1,null,[u]),r||c$1,c$1,void 0!==i.ownerSVGElement,!o&&t?[t]:r?null:i.firstChild?n.call(i.childNodes):null,f,!o&&t?t:r?r.__e:i.firstChild,o),M(f,u);}n=s$1.slice,l$1={__e:function(n,l,u,i){for(var t,o,r;l=l.__;)if((t=l.__c)&&!t.__)try{if((o=t.constructor)&&null!=o.getDerivedStateFromError&&(t.setState(o.getDerivedStateFromError(n)),r=t.__d),null!=t.componentDidCatch&&(t.componentDidCatch(n,i||{}),r=t.__d),r)return t.__E=t}catch(l){n=l;}throw n}},u$1=0,b$1.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=h$1({},this.state),"function"==typeof n&&(n=n(h$1({},u),this.props)),n&&h$1(u,n),null!=n&&this.__v&&(l&&this._sb.push(l),w$2(this));},b$1.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),w$2(this));},b$1.prototype.render=k$1,t$1=[],r$1="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,f$1=function(n,l){return n.__v.__b-l.__v.__b},x.__r=0;
+
+var t,r,u,i,o$1=0,f=[],c=[],e=l$1.__b,a=l$1.__r,v=l$1.diffed,l=l$1.__c,m=l$1.unmount;function d(t,u){l$1.__h&&l$1.__h(r,t,o$1||u),o$1=0;var i=r.__H||(r.__H={__:[],__h:[]});return t>=i.__.length&&i.__.push({__V:c}),i.__[t]}function h(n){return o$1=1,s(B$1,n)}function s(n,u,i){var o=d(t++,2);if(o.t=n,!o.__c&&(o.__=[i?i(u):B$1(void 0,u),function(n){var t=o.__N?o.__N[0]:o.__[0],r=o.t(t,n);t!==r&&(o.__N=[r,o.__[1]],o.__c.setState({}));}],o.__c=r,!r.u)){var f=function(n,t,r){if(!o.__c.__H)return !0;var u=o.__c.__H.__.filter(function(n){return n.__c});if(u.every(function(n){return !n.__N}))return !c||c.call(this,n,t,r);var i=!1;return u.forEach(function(n){if(n.__N){var t=n.__[0];n.__=n.__N,n.__N=void 0,t!==n.__[0]&&(i=!0);}}),!(!i&&o.__c.props===n)&&(!c||c.call(this,n,t,r))};r.u=!0;var c=r.shouldComponentUpdate,e=r.componentWillUpdate;r.componentWillUpdate=function(n,t,r){if(this.__e){var u=c;c=void 0,f(n,t,r),c=u;}e&&e.call(this,n,t,r);},r.shouldComponentUpdate=f;}return o.__N||o.__}function _$1(n){return o$1=5,F$1(function(){return {current:n}},[])}function F$1(n,r){var u=d(t++,7);return z(u.__H,r)?(u.__V=n(),u.i=r,u.__h=n,u.__V):u.__}function T$1(n,t){return o$1=8,F$1(function(){return n},t)}function b(){for(var t;t=f.shift();)if(t.__P&&t.__H)try{t.__H.__h.forEach(k),t.__H.__h.forEach(w$1),t.__H.__h=[];}catch(r){t.__H.__h=[],l$1.__e(r,t.__v);}}l$1.__b=function(n){r=null,e&&e(n);},l$1.__r=function(n){a&&a(n),t=0;var i=(r=n.__c).__H;i&&(u===r?(i.__h=[],r.__h=[],i.__.forEach(function(n){n.__N&&(n.__=n.__N),n.__V=c,n.__N=n.i=void 0;})):(i.__h.forEach(k),i.__h.forEach(w$1),i.__h=[],t=0)),u=r;},l$1.diffed=function(t){v&&v(t);var o=t.__c;o&&o.__H&&(o.__H.__h.length&&(1!==f.push(o)&&i===l$1.requestAnimationFrame||((i=l$1.requestAnimationFrame)||j)(b)),o.__H.__.forEach(function(n){n.i&&(n.__H=n.i),n.__V!==c&&(n.__=n.__V),n.i=void 0,n.__V=c;})),u=r=null;},l$1.__c=function(t,r){r.some(function(t){try{t.__h.forEach(k),t.__h=t.__h.filter(function(n){return !n.__||w$1(n)});}catch(u){r.some(function(n){n.__h&&(n.__h=[]);}),r=[],l$1.__e(u,t.__v);}}),l&&l(t,r);},l$1.unmount=function(t){m&&m(t);var r,u=t.__c;u&&u.__H&&(u.__H.__.forEach(function(n){try{k(n);}catch(n){r=n;}}),u.__H=void 0,r&&l$1.__e(r,u.__v));};var g$1="function"==typeof requestAnimationFrame;function j(n){var t,r=function(){clearTimeout(u),g$1&&cancelAnimationFrame(t),setTimeout(n);},u=setTimeout(r,100);g$1&&(t=requestAnimationFrame(r));}function k(n){var t=r,u=n.__c;"function"==typeof u&&(n.__c=void 0,u()),r=t;}function w$1(n){var t=r;n.__c=n.__(),r=t;}function z(n,t){return !n||n.length!==t.length||t.some(function(t,r){return t!==n[r]})}function B$1(n,t){return "function"==typeof t?t(n):t}
+
+function g(n,t){for(var e in t)n[e]=t[e];return n}function C(n,t){for(var e in n)if("__source"!==e&&!(e in t))return !0;for(var r in t)if("__source"!==r&&n[r]!==t[r])return !0;return !1}function w(n){this.props=n;}(w.prototype=new b$1).isPureReactComponent=!0,w.prototype.shouldComponentUpdate=function(n,t){return C(this.props,n)||C(this.state,t)};var R=l$1.__b;l$1.__b=function(n){n.type&&n.type.__f&&n.ref&&(n.props.ref=n.ref,n.ref=null),R&&R(n);};var T=l$1.__e;l$1.__e=function(n,t,e,r){if(n.then)for(var u,o=t;o=o.__;)if((u=o.__c)&&u.__c)return null==t.__e&&(t.__e=e.__e,t.__k=e.__k),u.__c(n,t);T(n,t,e,r);};var I=l$1.unmount;function L(n,t,e){return n&&(n.__c&&n.__c.__H&&(n.__c.__H.__.forEach(function(n){"function"==typeof n.__c&&n.__c();}),n.__c.__H=null),null!=(n=g({},n)).__c&&(n.__c.__P===e&&(n.__c.__P=t),n.__c=null),n.__k=n.__k&&n.__k.map(function(n){return L(n,t,e)})),n}function U(n,t,e){return n&&(n.__v=null,n.__k=n.__k&&n.__k.map(function(n){return U(n,t,e)}),n.__c&&n.__c.__P===t&&(n.__e&&e.insertBefore(n.__e,n.__d),n.__c.__e=!0,n.__c.__P=e)),n}function D(){this.__u=0,this.t=null,this.__b=null;}function F(n){var t=n.__.__c;return t&&t.__a&&t.__a(n)}function V(){this.u=null,this.o=null;}l$1.unmount=function(n){var t=n.__c;t&&t.__R&&t.__R(),t&&!0===n.__h&&(n.type=null),I&&I(n);},(D.prototype=new b$1).__c=function(n,t){var e=t.__c,r=this;null==r.t&&(r.t=[]),r.t.push(e);var u=F(r.__v),o=!1,i=function(){o||(o=!0,e.__R=null,u?u(l):l());};e.__R=i;var l=function(){if(!--r.__u){if(r.state.__a){var n=r.state.__a;r.__v.__k[0]=U(n,n.__c.__P,n.__c.__O);}var t;for(r.setState({__a:r.__b=null});t=r.t.pop();)t.forceUpdate();}},c=!0===t.__h;r.__u++||c||r.setState({__a:r.__b=r.__v.__k[0]}),n.then(i,i);},D.prototype.componentWillUnmount=function(){this.t=[];},D.prototype.render=function(n,e){if(this.__b){if(this.__v.__k){var r=document.createElement("div"),o=this.__v.__k[0].__c;this.__v.__k[0]=L(this.__b,r,o.__O=o.__P);}this.__b=null;}var i=e.__a&&y(k$1,null,n.fallback);return i&&(i.__h=null),[y(k$1,null,e.__a?null:n.children),i]};var W=function(n,t,e){if(++e[1]===e[0]&&n.o.delete(t),n.props.revealOrder&&("t"!==n.props.revealOrder[0]||!n.o.size))for(e=n.u;e;){for(;e.length>3;)e.pop()();if(e[1]<e[0])break;n.u=e=e[2];}};(V.prototype=new b$1).__a=function(n){var t=this,e=F(t.__v),r=t.o.get(n);return r[0]++,function(u){var o=function(){t.props.revealOrder?(r.push(u),W(t,n,r)):u();};e?e(o):o();}},V.prototype.render=function(n){this.u=null,this.o=new Map;var t=S(n.children);n.revealOrder&&"b"===n.revealOrder[0]&&t.reverse();for(var e=t.length;e--;)this.o.set(t[e],this.u=[1,0,this.u]);return n.children},V.prototype.componentDidUpdate=V.prototype.componentDidMount=function(){var n=this;this.o.forEach(function(t,e){W(n,e,t);});};var B="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103,H=/^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|image(!S)|letter|lighting|marker(?!H|W|U)|overline|paint|pointer|shape|stop|strikethrough|stroke|text(?!L)|transform|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,Z=/^on(Ani|Tra|Tou|BeforeInp|Compo)/,Y=/[A-Z0-9]/g,$="undefined"!=typeof document,q=function(n){return ("undefined"!=typeof Symbol&&"symbol"==typeof Symbol()?/fil|che|rad/:/fil|che|ra/).test(n)};b$1.prototype.isReactComponent={},["componentWillMount","componentWillReceiveProps","componentWillUpdate"].forEach(function(t){Object.defineProperty(b$1.prototype,t,{configurable:!0,get:function(){return this["UNSAFE_"+t]},set:function(n){Object.defineProperty(this,t,{configurable:!0,writable:!0,value:n});}});});var K=l$1.event;function Q(){}function X(){return this.cancelBubble}function nn(){return this.defaultPrevented}l$1.event=function(n){return K&&(n=K(n)),n.persist=Q,n.isPropagationStopped=X,n.isDefaultPrevented=nn,n.nativeEvent=n};var en={enumerable:!1,configurable:!0,get:function(){return this.class}},rn=l$1.vnode;l$1.vnode=function(n){"string"==typeof n.type&&function(n){var t=n.props,e=n.type,u={};for(var o in t){var i=t[o];if(!("value"===o&&"defaultValue"in t&&null==i||$&&"children"===o&&"noscript"===e||"class"===o||"className"===o)){var l=o.toLowerCase();"defaultValue"===o&&"value"in t&&null==t.value?o="value":"download"===o&&!0===i?i="":"ondoubleclick"===l?o="ondblclick":"onchange"!==l||"input"!==e&&"textarea"!==e||q(t.type)?"onfocus"===l?o="onfocusin":"onblur"===l?o="onfocusout":Z.test(o)?o=l:-1===e.indexOf("-")&&H.test(o)?o=o.replace(Y,"-$&").toLowerCase():null===i&&(i=void 0):l=o="oninput","oninput"===l&&u[o=l]&&(o="oninputCapture"),u[o]=i;}}"select"==e&&u.multiple&&Array.isArray(u.value)&&(u.value=S(t.children).forEach(function(n){n.props.selected=-1!=u.value.indexOf(n.props.value);})),"select"==e&&null!=u.defaultValue&&(u.value=S(t.children).forEach(function(n){n.props.selected=u.multiple?-1!=u.defaultValue.indexOf(n.props.value):u.defaultValue==n.props.value;})),t.class&&!t.className?(u.class=t.class,Object.defineProperty(u,"className",en)):(t.className&&!t.class||t.class&&t.className)&&(u.class=u.className=t.className),n.props=u;}(n),n.$$typeof=B,rn&&rn(n);};var un=l$1.__r;l$1.__r=function(n){un&&un(n),n.__c;};var on=l$1.diffed;l$1.diffed=function(n){on&&on(n);var t=n.props,e=n.__e;null!=e&&"textarea"===n.type&&"value"in t&&t.value!==e.value&&(e.value=null==t.value?"":t.value);};
+
+var _=0;function o(o,e,n,t,f,l){var s,u,a={};for(u in e)"ref"==u?s=e[u]:a[u]=e[u];var i={type:o,props:a,key:n,ref:s,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:--_,__source:f,__self:l};if("function"==typeof o&&(s=o.defaultProps))for(u in s)void 0===a[u]&&(a[u]=s[u]);return l$1.vnode&&l$1.vnode(i),i}
+
+// Pannellum 2.5.6, https://github.com/mpetroff/pannellum
+window.libpannellum=function(E,g,p){function Ba(K){function ja(a,e){return 1==a.level&&1!=e.level?-1:1==e.level&&1!=a.level?1:e.timestamp-a.timestamp}function Q(a,e){return a.level!=e.level?a.level-e.level:a.diff-e.diff}function ka(a,e,c,g,l,h){this.vertices=a;this.side=e;this.level=c;this.x=g;this.y=l;this.path=h.replace("%s",e).replace("%l",c).replace("%x",g).replace("%y",l);}function Ja(a,e,g,p,l){var h;var d=e.vertices;h=la(a,d.slice(0,3));var u=la(a,d.slice(3,6)),x=la(a,d.slice(6,9)),d=la(a,d.slice(9,
+12)),t=h[0]+u[0]+x[0]+d[0];-4==t||4==t?h=!1:(t=h[1]+u[1]+x[1]+d[1],h=-4==t||4==t?!1:4!=h[2]+u[2]+x[2]+d[2]);if(h){h=e.vertices;u=h[0]+h[3]+h[6]+h[9];x=h[1]+h[4]+h[7]+h[10];d=h[2]+h[5]+h[8]+h[11];t=Math.sqrt(u*u+x*x+d*d);d=Math.asin(d/t);u=Math.atan2(x,u)-p;u+=u>Math.PI?-2*Math.PI:u<-Math.PI?2*Math.PI:0;u=Math.abs(u);e.diff=Math.acos(Math.sin(g)*Math.sin(d)+Math.cos(g)*Math.cos(d)*Math.cos(u));u=!1;for(x=0;x<c.nodeCache.length;x++)if(c.nodeCache[x].path==e.path){u=!0;c.nodeCache[x].timestamp=c.nodeCacheTimestamp++;
+c.nodeCache[x].diff=e.diff;c.currentNodes.push(c.nodeCache[x]);break}u||(e.timestamp=c.nodeCacheTimestamp++,c.currentNodes.push(e),c.nodeCache.push(e));if(e.level<c.level){var d=m.cubeResolution*Math.pow(2,e.level-m.maxLevel),u=Math.ceil(d*m.invTileResolution)-1,x=d%m.tileResolution*2,k=2*d%m.tileResolution;0===k&&(k=m.tileResolution);0===x&&(x=2*m.tileResolution);t=0.5;if(e.x==u||e.y==u)t=1-m.tileResolution/(m.tileResolution+k);var y=1-t,d=[],s=t,z=t,D=t,I=y,A=y,B=y;if(k<m.tileResolution)if(e.x==
+u&&e.y!=u){if(A=z=0.5,"d"==e.side||"u"==e.side)B=D=0.5;}else e.x!=u&&e.y==u&&(I=s=0.5,"l"==e.side||"r"==e.side)&&(B=D=0.5);x<=m.tileResolution&&(e.x==u&&(s=0,I=1,"l"==e.side||"r"==e.side)&&(D=0,B=1),e.y==u&&(z=0,A=1,"d"==e.side||"u"==e.side)&&(D=0,B=1));k=[h[0],h[1],h[2],h[0]*s+h[3]*I,h[1]*t+h[4]*y,h[2]*D+h[5]*B,h[0]*s+h[6]*I,h[1]*z+h[7]*A,h[2]*D+h[8]*B,h[0]*t+h[9]*y,h[1]*z+h[10]*A,h[2]*D+h[11]*B];k=new ka(k,e.side,e.level+1,2*e.x,2*e.y,m.fullpath);d.push(k);e.x==u&&x<=m.tileResolution||(k=[h[0]*s+
+h[3]*I,h[1]*t+h[4]*y,h[2]*D+h[5]*B,h[3],h[4],h[5],h[3]*t+h[6]*y,h[4]*z+h[7]*A,h[5]*D+h[8]*B,h[0]*s+h[6]*I,h[1]*z+h[7]*A,h[2]*D+h[8]*B],k=new ka(k,e.side,e.level+1,2*e.x+1,2*e.y,m.fullpath),d.push(k));e.x==u&&x<=m.tileResolution||e.y==u&&x<=m.tileResolution||(k=[h[0]*s+h[6]*I,h[1]*z+h[7]*A,h[2]*D+h[8]*B,h[3]*t+h[6]*y,h[4]*z+h[7]*A,h[5]*D+h[8]*B,h[6],h[7],h[8],h[9]*s+h[6]*I,h[10]*t+h[7]*y,h[11]*D+h[8]*B],k=new ka(k,e.side,e.level+1,2*e.x+1,2*e.y+1,m.fullpath),d.push(k));e.y==u&&x<=m.tileResolution||
+(k=[h[0]*t+h[9]*y,h[1]*z+h[10]*A,h[2]*D+h[11]*B,h[0]*s+h[6]*I,h[1]*z+h[7]*A,h[2]*D+h[8]*B,h[9]*s+h[6]*I,h[10]*t+h[7]*y,h[11]*D+h[8]*B,h[9],h[10],h[11]],k=new ka(k,e.side,e.level+1,2*e.x,2*e.y+1,m.fullpath),d.push(k));for(e=0;e<d.length;e++)Ja(a,d[e],g,p);}}}function ta(){return [-1,1,-1,1,1,-1,1,-1,-1,-1,-1,-1,1,1,1,-1,1,1,-1,-1,1,1,-1,1,-1,1,1,1,1,1,1,1,-1,-1,1,-1,-1,-1,-1,1,-1,-1,1,-1,1,-1,-1,1,-1,1,1,-1,1,-1,-1,-1,-1,-1,-1,1,1,1,-1,1,1,1,1,-1,1,1,-1,-1]}function ua(a,e,c){var g=Math.sin(e);e=Math.cos(e);
+if("x"==c)return [a[0],e*a[1]+g*a[2],e*a[2]-g*a[1],a[3],e*a[4]+g*a[5],e*a[5]-g*a[4],a[6],e*a[7]+g*a[8],e*a[8]-g*a[7]];if("y"==c)return [e*a[0]-g*a[2],a[1],e*a[2]+g*a[0],e*a[3]-g*a[5],a[4],e*a[5]+g*a[3],e*a[6]-g*a[8],a[7],e*a[8]+g*a[6]];if("z"==c)return [e*a[0]+g*a[1],e*a[1]-g*a[0],a[2],e*a[3]+g*a[4],e*a[4]-g*a[3],a[5],e*a[6]+g*a[7],e*a[7]-g*a[6],a[8]]}function ma(a){return [a[0],a[4],a[8],a[12],a[1],a[5],a[9],a[13],a[2],a[6],a[10],a[14],a[3],a[7],a[11],a[15]]}function Ka(a){La(a,a.path+"."+m.extension,
+function(e,c){a.texture=e;a.textureLoaded=c?2:1;},va.crossOrigin);}function la(a,e){var c=[a[0]*e[0]+a[1]*e[1]+a[2]*e[2],a[4]*e[0]+a[5]*e[1]+a[6]*e[2],a[11]+a[8]*e[0]+a[9]*e[1]+a[10]*e[2],1/(a[12]*e[0]+a[13]*e[1]+a[14]*e[2])],g=c[0]*c[3],l=c[1]*c[3],c=c[2]*c[3],h=[0,0,0];-1>g&&(h[0]=-1);1<g&&(h[0]=1);-1>l&&(h[1]=-1);1<l&&(h[1]=1);if(-1>c||1<c)h[2]=1;return h}function Ea(){console.log("Reducing canvas size due to error 1286!");A.width=Math.round(A.width/2);A.height=Math.round(A.height/2);}var A=g.createElement("canvas");
+A.style.width=A.style.height="100%";K.appendChild(A);var c,a,U,V,$,R,wa,ga,m,z,F,ca,Fa,Y,na,va;this.init=function(L,e,Ca,H,l,h,d,u){function x(a){if(E){var e=a*a*4,h=new Uint8ClampedArray(e),c=u.backgroundColor?u.backgroundColor:[0,0,0];c[0]*=255;c[1]*=255;c[2]*=255;for(var b=0;b<e;b++)h[b++]=c[0],h[b++]=c[1],h[b++]=c[2];a=new ImageData(h,a,a);for(t=0;6>t;t++)0==m[t].width&&(m[t]=a);}}e===p&&(e="equirectangular");if("equirectangular"!=e&&"cubemap"!=e&&"multires"!=e)throw console.log("Error: invalid image type specified!"),
+{type:"config error"};z=e;m=L;F=Ca;va=u||{};if(c){U&&(a.detachShader(c,U),a.deleteShader(U));V&&(a.detachShader(c,V),a.deleteShader(V));a.bindBuffer(a.ARRAY_BUFFER,null);a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,null);c.texture&&a.deleteTexture(c.texture);if(c.nodeCache)for(L=0;L<c.nodeCache.length;L++)a.deleteTexture(c.nodeCache[L].texture);a.deleteProgram(c);c=p;}ga=p;var t,E=!1,y;if("cubemap"==z)for(t=0;6>t;t++)0<m[t].width?(y===p&&(y=m[t].width),y!=m[t].width&&console.log("Cube faces have inconsistent widths: "+
+y+" vs. "+m[t].width)):E=!0;"cubemap"==z&&0!==(y&y-1)&&(navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 8_/)||navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 9_/)||navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 10_/)||navigator.userAgent.match(/Trident.*rv[ :]*11\./))||(a||(a=A.getContext("experimental-webgl",{alpha:!1,depth:!1})),a&&1286==a.getError()&&Ea());if(!a&&("multires"==z&&m.hasOwnProperty("fallbackPath")||"cubemap"==z)&&("WebkitAppearance"in
+g.documentElement.style||navigator.userAgent.match(/Trident.*rv[ :]*11\./)||-1!==navigator.appVersion.indexOf("MSIE 10"))){R&&K.removeChild(R);R=g.createElement("div");R.className="pnlm-world";H=m.basePath?m.basePath+m.fallbackPath:m.fallbackPath;var Q="frblud".split(""),S=0;l=function(){var a=g.createElement("canvas");a.className="pnlm-face pnlm-"+Q[this.side]+"face";R.appendChild(a);var e=a.getContext("2d");a.style.width=this.width+4+"px";a.style.height=this.height+4+"px";a.width=this.width+4;a.height=
+this.height+4;e.drawImage(this,2,2);var h=e.getImageData(0,0,a.width,a.height),c=h.data,b,d;for(b=2;b<a.width-2;b++)for(d=0;4>d;d++)c[4*(b+a.width)+d]=c[4*(b+2*a.width)+d],c[4*(b+a.width*(a.height-2))+d]=c[4*(b+a.width*(a.height-3))+d];for(b=2;b<a.height-2;b++)for(d=0;4>d;d++)c[4*(b*a.width+1)+d]=c[4*(b*a.width+2)+d],c[4*((b+1)*a.width-2)+d]=c[4*((b+1)*a.width-3)+d];for(d=0;4>d;d++)c[4*(a.width+1)+d]=c[4*(2*a.width+2)+d],c[4*(2*a.width-2)+d]=c[4*(3*a.width-3)+d],c[4*(a.width*(a.height-2)+1)+d]=c[4*
+(a.width*(a.height-3)+2)+d],c[4*(a.width*(a.height-1)-2)+d]=c[4*(a.width*(a.height-2)-3)+d];for(b=1;b<a.width-1;b++)for(d=0;4>d;d++)c[4*b+d]=c[4*(b+a.width)+d],c[4*(b+a.width*(a.height-1))+d]=c[4*(b+a.width*(a.height-2))+d];for(b=1;b<a.height-1;b++)for(d=0;4>d;d++)c[b*a.width*4+d]=c[4*(b*a.width+1)+d],c[4*((b+1)*a.width-1)+d]=c[4*((b+1)*a.width-2)+d];for(d=0;4>d;d++)c[d]=c[4*(a.width+1)+d],c[4*(a.width-1)+d]=c[4*(2*a.width-2)+d],c[a.width*(a.height-1)*4+d]=c[4*(a.width*(a.height-2)+1)+d],c[4*(a.width*
+a.height-1)+d]=c[4*(a.width*(a.height-1)-2)+d];e.putImageData(h,0,0);D.call(this);};var D=function(){0<this.width?($===p&&($=this.width),$!=this.width&&console.log("Fallback faces have inconsistent widths: "+$+" vs. "+this.width)):E=!0;S++;6==S&&($=this.width,K.appendChild(R),d());},E=!1;for(t=0;6>t;t++)h=new Image,h.crossOrigin=va.crossOrigin?va.crossOrigin:"anonymous",h.side=t,h.onload=l,h.onerror=D,h.src="multires"==z?H.replace("%s",Q[t])+"."+m.extension:m[t].src;x($);}else {if(!a)throw console.log("Error: no WebGL support detected!"),
+{type:"no webgl"};"cubemap"==z&&x(y);m.fullpath=m.basePath?m.basePath+m.path:m.path;m.invTileResolution=1/m.tileResolution;L=ta();wa=[];for(t=0;6>t;t++)wa[t]=L.slice(12*t,12*t+12),L=ta();L=0;if("equirectangular"==z){if(L=a.getParameter(a.MAX_TEXTURE_SIZE),Math.max(m.width/2,m.height)>L)throw console.log("Error: The image is too big; it's "+m.width+"px wide, but this device's maximum supported size is "+2*L+"px."),{type:"webgl size error",width:m.width,maxWidth:2*L};}else if("cubemap"==z&&y>a.getParameter(a.MAX_CUBE_MAP_TEXTURE_SIZE))throw console.log("Error: The image is too big; it's "+
+y+"px wide, but this device's maximum supported size is "+L+"px."),{type:"webgl size error",width:y,maxWidth:L};u===p||u.horizonPitch===p&&u.horizonRoll===p||(ga=[u.horizonPitch==p?0:u.horizonPitch,u.horizonRoll==p?0:u.horizonRoll]);y=a.TEXTURE_2D;a.viewport(0,0,a.drawingBufferWidth,a.drawingBufferHeight);a.getShaderPrecisionFormat&&(e=a.getShaderPrecisionFormat(a.FRAGMENT_SHADER,a.HIGH_FLOAT))&&1>e.precision&&(oa=oa.replace("highp","mediump"));U=a.createShader(a.VERTEX_SHADER);e=s;"multires"==z&&
+(e=k);a.shaderSource(U,e);a.compileShader(U);V=a.createShader(a.FRAGMENT_SHADER);e=pa;"cubemap"==z?(y=a.TEXTURE_CUBE_MAP,e=qa):"multires"==z&&(e=bb);a.shaderSource(V,e);a.compileShader(V);c=a.createProgram();a.attachShader(c,U);a.attachShader(c,V);a.linkProgram(c);a.getShaderParameter(U,a.COMPILE_STATUS)||console.log(a.getShaderInfoLog(U));a.getShaderParameter(V,a.COMPILE_STATUS)||console.log(a.getShaderInfoLog(V));a.getProgramParameter(c,a.LINK_STATUS)||console.log(a.getProgramInfoLog(c));a.useProgram(c);
+c.drawInProgress=!1;e=u.backgroundColor?u.backgroundColor:[0,0,0];a.clearColor(e[0],e[1],e[2],1);a.clear(a.COLOR_BUFFER_BIT);c.texCoordLocation=a.getAttribLocation(c,"a_texCoord");a.enableVertexAttribArray(c.texCoordLocation);"multires"!=z?(ca||(ca=a.createBuffer()),a.bindBuffer(a.ARRAY_BUFFER,ca),a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,1,-1,-1,1,1,-1,-1,-1]),a.STATIC_DRAW),a.vertexAttribPointer(c.texCoordLocation,2,a.FLOAT,!1,0,0),c.aspectRatio=a.getUniformLocation(c,"u_aspectRatio"),
+a.uniform1f(c.aspectRatio,a.drawingBufferWidth/a.drawingBufferHeight),c.psi=a.getUniformLocation(c,"u_psi"),c.theta=a.getUniformLocation(c,"u_theta"),c.f=a.getUniformLocation(c,"u_f"),c.h=a.getUniformLocation(c,"u_h"),c.v=a.getUniformLocation(c,"u_v"),c.vo=a.getUniformLocation(c,"u_vo"),c.rot=a.getUniformLocation(c,"u_rot"),a.uniform1f(c.h,H/(2*Math.PI)),a.uniform1f(c.v,l/Math.PI),a.uniform1f(c.vo,h/Math.PI*2),"equirectangular"==z&&(c.backgroundColor=a.getUniformLocation(c,"u_backgroundColor"),a.uniform4fv(c.backgroundColor,
+e.concat([1]))),c.texture=a.createTexture(),a.bindTexture(y,c.texture),"cubemap"==z?(a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_X,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[1]),a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_X,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[3]),a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_Y,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[4]),a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_Y,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[5]),a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_Z,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[0]),a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m[2])):m.width<=L?(a.uniform1i(a.getUniformLocation(c,"u_splitImage"),0),a.texImage2D(y,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m)):(a.uniform1i(a.getUniformLocation(c,"u_splitImage"),1),H=g.createElement("canvas"),H.width=m.width/2,H.height=m.height,H=H.getContext("2d"),H.drawImage(m,0,0),l=H.getImageData(0,0,m.width/2,m.height),a.texImage2D(y,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,l),c.texture2=a.createTexture(),a.activeTexture(a.TEXTURE1),a.bindTexture(y,c.texture2),a.uniform1i(a.getUniformLocation(c,
+"u_image1"),1),H.drawImage(m,-m.width/2,0),l=H.getImageData(0,0,m.width/2,m.height),a.texImage2D(y,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,l),a.texParameteri(y,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE),a.texParameteri(y,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE),a.texParameteri(y,a.TEXTURE_MIN_FILTER,a.LINEAR),a.texParameteri(y,a.TEXTURE_MAG_FILTER,a.LINEAR),a.activeTexture(a.TEXTURE0)),a.texParameteri(y,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE),a.texParameteri(y,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE),a.texParameteri(y,a.TEXTURE_MIN_FILTER,
+a.LINEAR),a.texParameteri(y,a.TEXTURE_MAG_FILTER,a.LINEAR)):(c.vertPosLocation=a.getAttribLocation(c,"a_vertCoord"),a.enableVertexAttribArray(c.vertPosLocation),Fa||(Fa=a.createBuffer()),Y||(Y=a.createBuffer()),na||(na=a.createBuffer()),a.bindBuffer(a.ARRAY_BUFFER,Y),a.bufferData(a.ARRAY_BUFFER,new Float32Array([0,0,1,0,1,1,0,1]),a.STATIC_DRAW),a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,na),a.bufferData(a.ELEMENT_ARRAY_BUFFER,new Uint16Array([0,1,2,0,2,3]),a.STATIC_DRAW),c.perspUniform=a.getUniformLocation(c,
+"u_perspMatrix"),c.cubeUniform=a.getUniformLocation(c,"u_cubeMatrix"),c.level=-1,c.currentNodes=[],c.nodeCache=[],c.nodeCacheTimestamp=0);H=a.getError();if(0!==H)throw console.log("Error: Something went wrong with WebGL!",H),{type:"webgl error"};d();}};this.destroy=function(){K!==p&&(A!==p&&K.contains(A)&&K.removeChild(A),R!==p&&K.contains(R)&&K.removeChild(R));if(a){var c=a.getExtension("WEBGL_lose_context");c&&c.loseContext();}};this.resize=function(){var g=E.devicePixelRatio||1;A.width=A.clientWidth*
+g;A.height=A.clientHeight*g;a&&(1286==a.getError()&&Ea(),a.viewport(0,0,a.drawingBufferWidth,a.drawingBufferHeight),"multires"!=z&&a.uniform1f(c.aspectRatio,A.clientWidth/A.clientHeight));};this.resize();this.setPose=function(a,c){ga=[a,c];};this.render=function(g,e,k,s){var l,h=0;s===p&&(s={});s.roll&&(h=s.roll);if(ga!==p){l=ga[0];var d=ga[1],u=g,x=e,t=Math.cos(d)*Math.sin(g)*Math.sin(l)+Math.cos(g)*(Math.cos(l)*Math.cos(e)+Math.sin(d)*Math.sin(l)*Math.sin(e)),E=-Math.sin(g)*Math.sin(d)+Math.cos(g)*
+Math.cos(d)*Math.sin(e);g=Math.cos(d)*Math.cos(l)*Math.sin(g)+Math.cos(g)*(-Math.cos(e)*Math.sin(l)+Math.cos(l)*Math.sin(d)*Math.sin(e));g=Math.asin(Math.max(Math.min(g,1),-1));e=Math.atan2(E,t);l=[Math.cos(u)*(Math.sin(d)*Math.sin(l)*Math.cos(x)-Math.cos(l)*Math.sin(x)),Math.cos(u)*Math.cos(d)*Math.cos(x),Math.cos(u)*(Math.cos(l)*Math.sin(d)*Math.cos(x)+Math.sin(x)*Math.sin(l))];d=[-Math.cos(g)*Math.sin(e),Math.cos(g)*Math.cos(e)];d=Math.acos(Math.max(Math.min((l[0]*d[0]+l[1]*d[1])/(Math.sqrt(l[0]*
+l[0]+l[1]*l[1]+l[2]*l[2])*Math.sqrt(d[0]*d[0]+d[1]*d[1])),1),-1));0>l[2]&&(d=2*Math.PI-d);h+=d;}if(a||"multires"!=z&&"cubemap"!=z){if("multires"!=z)k=2*Math.atan(Math.tan(0.5*k)/(a.drawingBufferWidth/a.drawingBufferHeight)),k=1/Math.tan(0.5*k),a.uniform1f(c.psi,e),a.uniform1f(c.theta,g),a.uniform1f(c.rot,h),a.uniform1f(c.f,k),!0===F&&"equirectangular"==z&&(a.bindTexture(a.TEXTURE_2D,c.texture),a.texImage2D(a.TEXTURE_2D,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,m)),a.drawArrays(a.TRIANGLES,0,6);else {l=a.drawingBufferWidth/
+a.drawingBufferHeight;d=2*Math.atan(Math.tan(k/2)*a.drawingBufferHeight/a.drawingBufferWidth);d=1/Math.tan(d/2);l=[d/l,0,0,0,0,d,0,0,0,0,100.1/-99.9,20/-99.9,0,0,-1,0];for(d=1;d<m.maxLevel&&a.drawingBufferWidth>m.tileResolution*Math.pow(2,d-1)*Math.tan(k/2)*0.707;)d++;c.level=d;d=[1,0,0,0,1,0,0,0,1];d=ua(d,-h,"z");d=ua(d,-g,"x");d=ua(d,e,"y");d=[d[0],d[1],d[2],0,d[3],d[4],d[5],0,d[6],d[7],d[8],0,0,0,0,1];a.uniformMatrix4fv(c.perspUniform,!1,new Float32Array(ma(l)));a.uniformMatrix4fv(c.cubeUniform,
+!1,new Float32Array(ma(d)));h=[l[0]*d[0],l[0]*d[1],l[0]*d[2],0,l[5]*d[4],l[5]*d[5],l[5]*d[6],0,l[10]*d[8],l[10]*d[9],l[10]*d[10],l[11],-d[8],-d[9],-d[10],0];c.nodeCache.sort(ja);if(200<c.nodeCache.length&&c.nodeCache.length>c.currentNodes.length+50)for(l=c.nodeCache.splice(200,c.nodeCache.length-200),d=0;d<l.length;d++)a.deleteTexture(l[d].texture);c.currentNodes=[];d="fbudlr".split("");for(l=0;6>l;l++)u=new ka(wa[l],d[l],1,0,0,m.fullpath),Ja(h,u,g,e);c.currentNodes.sort(Q);for(g=S.length-1;0<=
+g;g--)-1===c.currentNodes.indexOf(S[g].node)&&(S[g].node.textureLoad=!1,S.splice(g,1));if(0===S.length)for(g=0;g<c.currentNodes.length;g++)if(e=c.currentNodes[g],!e.texture&&!e.textureLoad){e.textureLoad=!0;setTimeout(Ka,0,e);break}if(!c.drawInProgress){c.drawInProgress=!0;a.clear(a.COLOR_BUFFER_BIT);for(g=0;g<c.currentNodes.length;g++)1<c.currentNodes[g].textureLoaded&&(a.bindBuffer(a.ARRAY_BUFFER,Fa),a.bufferData(a.ARRAY_BUFFER,new Float32Array(c.currentNodes[g].vertices),a.STATIC_DRAW),a.vertexAttribPointer(c.vertPosLocation,
+3,a.FLOAT,!1,0,0),a.bindBuffer(a.ARRAY_BUFFER,Y),a.vertexAttribPointer(c.texCoordLocation,2,a.FLOAT,!1,0,0),a.bindTexture(a.TEXTURE_2D,c.currentNodes[g].texture),a.drawElements(a.TRIANGLES,6,a.UNSIGNED_SHORT,0));c.drawInProgress=!1;}}if(s.returnImage!==p)return A.toDataURL("image/png")}else for(l=$/2,s={f:"translate3d(-"+(l+2)+"px, -"+(l+2)+"px, -"+l+"px)",b:"translate3d("+(l+2)+"px, -"+(l+2)+"px, "+l+"px) rotateX(180deg) rotateZ(180deg)",u:"translate3d(-"+(l+2)+"px, -"+l+"px, "+(l+2)+"px) rotateX(270deg)",
+d:"translate3d(-"+(l+2)+"px, "+l+"px, -"+(l+2)+"px) rotateX(90deg)",l:"translate3d(-"+l+"px, -"+(l+2)+"px, "+(l+2)+"px) rotateX(180deg) rotateY(90deg) rotateZ(180deg)",r:"translate3d("+l+"px, -"+(l+2)+"px, -"+(l+2)+"px) rotateY(270deg)"},k=1/Math.tan(k/2),k=k*A.clientWidth/2+"px",e="perspective("+k+") translateZ("+k+") rotateX("+g+"rad) rotateY("+e+"rad) ",k=Object.keys(s),g=0;6>g;g++)if(h=R.querySelector(".pnlm-"+k[g]+"face"))h.style.webkitTransform=e+s[k[g]],h.style.transform=e+s[k[g]];};this.isLoading=
+function(){if(a&&"multires"==z)for(var g=0;g<c.currentNodes.length;g++)if(!c.currentNodes[g].textureLoaded)return !0;return !1};this.getCanvas=function(){return A};var S=[],La=function(){function c(){var d=this;this.texture=this.callback=null;this.image=new Image;this.image.crossOrigin=l?l:"anonymous";var e=function(){if(0<d.image.width&&0<d.image.height){var c=d.image;a.bindTexture(a.TEXTURE_2D,d.texture);a.texImage2D(a.TEXTURE_2D,0,a.RGB,a.RGB,a.UNSIGNED_BYTE,c);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,
+a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);a.bindTexture(a.TEXTURE_2D,null);d.callback(d.texture,!0);}else d.callback(d.texture,!1);S.length?(c=S.shift(),d.loadTexture(c.src,c.texture,c.callback)):k[g++]=d;};this.image.addEventListener("load",e);this.image.addEventListener("error",e);}function e(a,c,e,g){this.node=a;this.src=c;this.texture=e;this.callback=
+g;}var g=4,k={},l;c.prototype.loadTexture=function(a,c,e){this.texture=c;this.callback=e;this.image.src=a;};for(var h=0;h<g;h++)k[h]=new c;return function(c,h,m,p){l=p;p=a.createTexture();g?k[--g].loadTexture(h,p,m):S.push(new e(c,h,p,m));return p}}();}var s="attribute vec2 a_texCoord;varying vec2 v_texCoord;void main() {gl_Position = vec4(a_texCoord, 0.0, 1.0);v_texCoord = a_texCoord;}",k="attribute vec3 a_vertCoord;attribute vec2 a_texCoord;uniform mat4 u_cubeMatrix;uniform mat4 u_perspMatrix;varying mediump vec2 v_texCoord;void main(void) {gl_Position = u_perspMatrix * u_cubeMatrix * vec4(a_vertCoord, 1.0);v_texCoord = a_texCoord;}",
+oa="precision highp float;\nuniform float u_aspectRatio;\nuniform float u_psi;\nuniform float u_theta;\nuniform float u_f;\nuniform float u_h;\nuniform float u_v;\nuniform float u_vo;\nuniform float u_rot;\nconst float PI = 3.14159265358979323846264;\nuniform sampler2D u_image0;\nuniform sampler2D u_image1;\nuniform bool u_splitImage;\nuniform samplerCube u_imageCube;\nvarying vec2 v_texCoord;\nuniform vec4 u_backgroundColor;\nvoid main() {\nfloat x = v_texCoord.x * u_aspectRatio;\nfloat y = v_texCoord.y;\nfloat sinrot = sin(u_rot);\nfloat cosrot = cos(u_rot);\nfloat rot_x = x * cosrot - y * sinrot;\nfloat rot_y = x * sinrot + y * cosrot;\nfloat sintheta = sin(u_theta);\nfloat costheta = cos(u_theta);\nfloat a = u_f * costheta - rot_y * sintheta;\nfloat root = sqrt(rot_x * rot_x + a * a);\nfloat lambda = atan(rot_x / root, a / root) + u_psi;\nfloat phi = atan((rot_y * costheta + u_f * sintheta) / root);",
+qa=oa+"float cosphi = cos(phi);\ngl_FragColor = textureCube(u_imageCube, vec3(cosphi*sin(lambda), sin(phi), cosphi*cos(lambda)));\n}",pa=oa+"lambda = mod(lambda + PI, PI * 2.0) - PI;\nvec2 coord = vec2(lambda / PI, phi / (PI / 2.0));\nif(coord.x < -u_h || coord.x > u_h || coord.y < -u_v + u_vo || coord.y > u_v + u_vo)\ngl_FragColor = u_backgroundColor;\nelse {\nif(u_splitImage) {\nif(coord.x < 0.0)\ngl_FragColor = texture2D(u_image0, vec2((coord.x + u_h) / u_h, (-coord.y + u_v + u_vo) / (u_v * 2.0)));\nelse\ngl_FragColor = texture2D(u_image1, vec2((coord.x + u_h) / u_h - 1.0, (-coord.y + u_v + u_vo) / (u_v * 2.0)));\n} else {\ngl_FragColor = texture2D(u_image0, vec2((coord.x + u_h) / (u_h * 2.0), (-coord.y + u_v + u_vo) / (u_v * 2.0)));\n}\n}\n}",
+bb="varying mediump vec2 v_texCoord;uniform sampler2D u_sampler;void main(void) {gl_FragColor = texture2D(u_sampler, v_texCoord);}";return {renderer:function(g,k,p,s){return new Ba(g)}}}(window,document);
+window.pannellum=function(E,g,p){function Ba(s,k){function oa(){var a=g.createElement("div");a.innerHTML="\x3c!--[if lte IE 9]><i></i><![endif]--\x3e";if(1==a.getElementsByTagName("i").length)K();else {ra=b.hfov;Ga=b.pitch;var f;if("cubemap"==b.type){P=[];for(a=0;6>a;a++)P.push(new Image),P[a].crossOrigin=b.crossOrigin;q.load.lbox.style.display="block";q.load.lbar.style.display="none";}else if("multires"==b.type)a=JSON.parse(JSON.stringify(b.multiRes)),b.basePath&&b.multiRes.basePath&&!/^(?:[a-z]+:)?\/\//i.test(b.multiRes.basePath)?
+a.basePath=b.basePath+b.multiRes.basePath:b.multiRes.basePath?a.basePath=b.multiRes.basePath:b.basePath&&(a.basePath=b.basePath),P=a;else if(!0===b.dynamic)P=b.panorama;else {if(b.panorama===p){K(b.strings.noPanoramaError);return}P=new Image;}if("cubemap"==b.type)for(var n=6,c=function(){n--;0===n&&pa();},d=function(a){var ea=g.createElement("a");ea.href=a.target.src;ea.textContent=ea.href;K(b.strings.fileAccessError.replace("%s",ea.outerHTML));},a=0;a<P.length;a++)f=b.cubeMap[a],"null"==f?(console.log("Will use background instead of missing cubemap face "+
+a),c()):(b.basePath&&!qa(f)&&(f=b.basePath+f),P[a].onload=c,P[a].onerror=d,P[a].src=I(f));else if("multires"==b.type)pa();else if(f="",b.basePath&&(f=b.basePath),!0!==b.dynamic){f=qa(b.panorama)?b.panorama:f+b.panorama;P.onload=function(){E.URL.revokeObjectURL(this.src);pa();};var e=new XMLHttpRequest;e.onloadend=function(){if(200!=e.status){var a=g.createElement("a");a.href=f;a.textContent=a.href;K(b.strings.fileAccessError.replace("%s",a.outerHTML));}Ba(this.response);q.load.msg.innerHTML="";};e.onprogress=
+function(a){if(a.lengthComputable){q.load.lbarFill.style.width=a.loaded/a.total*100+"%";var b,ea;1E6<a.total?(b="MB",ea=(a.loaded/1E6).toFixed(2),a=(a.total/1E6).toFixed(2)):1E3<a.total?(b="kB",ea=(a.loaded/1E3).toFixed(1),a=(a.total/1E3).toFixed(1)):(b="B",ea=a.loaded,a=a.total);q.load.msg.innerHTML=ea+" / "+a+" "+b;}else q.load.lbox.style.display="block",q.load.lbar.style.display="none";};try{e.open("GET",f,!0);}catch(h){K(b.strings.malformedURLError);}e.responseType="blob";e.setRequestHeader("Accept",
+"image/*,*/*;q=0.9");e.withCredentials="use-credentials"===b.crossOrigin;e.send();}b.draggable&&J.classList.add("pnlm-grab");J.classList.remove("pnlm-grabbing");Ma=!0===b.dynamicUpdate;b.dynamic&&Ma&&(P=b.panorama,pa());}}function qa(a){return /^(?:[a-z]+:)?\/\//i.test(a)||"/"==a[0]||"blob:"==a.slice(0,5)}function pa(){C||(C=new libpannellum.renderer(M));Sa||(Sa=!0,W.addEventListener("mousedown",ka,!1),g.addEventListener("mousemove",ua,!1),g.addEventListener("mouseup",ma,!1),b.mouseZoom&&(J.addEventListener("mousewheel",
+U,!1),J.addEventListener("DOMMouseScroll",U,!1)),b.doubleClickZoom&&W.addEventListener("dblclick",Ja,!1),s.addEventListener("mozfullscreenchange",d,!1),s.addEventListener("webkitfullscreenchange",d,!1),s.addEventListener("msfullscreenchange",d,!1),s.addEventListener("fullscreenchange",d,!1),E.addEventListener("resize",z,!1),E.addEventListener("orientationchange",z,!1),b.disableKeyboardCtrl||(s.addEventListener("keydown",V,!1),s.addEventListener("keyup",R,!1),s.addEventListener("blur",$,!1)),g.addEventListener("mouseleave",
+ma,!1),""===g.documentElement.style.pointerAction&&""===g.documentElement.style.touchAction?(W.addEventListener("pointerdown",A,!1),W.addEventListener("pointermove",c,!1),W.addEventListener("pointerup",a,!1),W.addEventListener("pointerleave",a,!1)):(W.addEventListener("touchstart",Ka,!1),W.addEventListener("touchmove",la,!1),W.addEventListener("touchend",Ea,!1)),E.navigator.pointerEnabled&&(s.style.touchAction="none"));va();x(b.hfov);setTimeout(function(){},500);}function Ba(a){var f=new FileReader;
+f.addEventListener("loadend",function(){var n=f.result;if(navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 8_/)){var c=n.indexOf("\u00ff\u00c2");(0>c||65536<c)&&K(b.strings.iOS8WebGLError);}c=n.indexOf("<x:xmpmeta");if(-1<c&&!0!==b.ignoreGPanoXMP){var d=n.substring(c,n.indexOf("</x:xmpmeta>")+12),e=function(a){var b;0<=d.indexOf(a+'="')?(b=d.substring(d.indexOf(a+'="')+a.length+2),b=b.substring(0,b.indexOf('"'))):0<=d.indexOf(a+">")&&(b=d.substring(d.indexOf(a+">")+a.length+1),b=b.substring(0,
+b.indexOf("<")));return b!==p?Number(b):null},n=e("GPano:FullPanoWidthPixels"),c=e("GPano:CroppedAreaImageWidthPixels"),g=e("GPano:FullPanoHeightPixels"),h=e("GPano:CroppedAreaImageHeightPixels"),l=e("GPano:CroppedAreaTopPixels"),k=e("GPano:PoseHeadingDegrees"),m=e("GPano:PosePitchDegrees"),e=e("GPano:PoseRollDegrees");null!==n&&null!==c&&null!==g&&null!==h&&null!==l&&(0>aa.indexOf("haov")&&(b.haov=c/n*360),0>aa.indexOf("vaov")&&(b.vaov=h/g*180),0>aa.indexOf("vOffset")&&(b.vOffset=-180*((l+h/2)/g-
+0.5)),null!==k&&0>aa.indexOf("northOffset")&&(b.northOffset=k,!1!==b.compass&&(b.compass=!0)),null!==m&&null!==e&&(0>aa.indexOf("horizonPitch")&&(b.horizonPitch=m),0>aa.indexOf("horizonRoll")&&(b.horizonRoll=e)));}P.src=E.URL.createObjectURL(a);});f.readAsBinaryString!==p?f.readAsBinaryString(a):f.readAsText(a);}function K(a){a===p&&(a=b.strings.genericWebGLError);q.errorMsg.innerHTML="<p>"+a+"</p>";v.load.style.display="none";q.load.box.style.display="none";q.errorMsg.style.display="table";Na=!0;G=
+p;M.style.display="none";B("error",a);}function ja(a){var b=Q(a);fa.style.left=b.x+"px";fa.style.top=b.y+"px";clearTimeout(ja.t1);clearTimeout(ja.t2);fa.style.display="block";fa.style.opacity=1;ja.t1=setTimeout(function(){fa.style.opacity=0;},2E3);ja.t2=setTimeout(function(){fa.style.display="none";},2500);a.preventDefault();}function Q(a){var b=s.getBoundingClientRect(),n={};n.x=(a.clientX||a.pageX)-b.left;n.y=(a.clientY||a.pageY)-b.top;return n}function ka(a){a.preventDefault();s.focus();if(G&&b.draggable){var f=
+Q(a);if(b.hotSpotDebug){var n=ta(a);console.log("Pitch: "+n[0]+", Yaw: "+n[1]+", Center Pitch: "+b.pitch+", Center Yaw: "+b.yaw+", HFOV: "+b.hfov);}t();Da();b.roll=0;w.hfov=0;ha=!0;N=Date.now();xa=f.x;ya=f.y;Oa=b.yaw;Pa=b.pitch;J.classList.add("pnlm-grabbing");J.classList.remove("pnlm-grab");B("mousedown",a);F();}}function Ja(a){b.minHfov===b.hfov?da.setHfov(ra,1E3):(a=ta(a),da.lookAt(a[0],a[1],b.minHfov,1E3));}function ta(a){var f=Q(a);a=C.getCanvas();var n=a.clientWidth,c=a.clientHeight;a=f.x/n*2-
+1;var c=(1-f.y/c*2)*c/n,e=1/Math.tan(b.hfov*Math.PI/360),d=Math.sin(b.pitch*Math.PI/180),g=Math.cos(b.pitch*Math.PI/180),f=e*g-c*d,n=Math.sqrt(a*a+f*f),c=180*Math.atan((c*g+e*d)/n)/Math.PI;a=180*Math.atan2(a/n,f/n)/Math.PI+b.yaw;-180>a&&(a+=360);180<a&&(a-=360);return [c,a]}function ua(a){if(ha&&G){N=Date.now();var f=C.getCanvas(),n=f.clientWidth,f=f.clientHeight;a=Q(a);var c=180*(Math.atan(xa/n*2-1)-Math.atan(a.x/n*2-1))/Math.PI*b.hfov/90+Oa;w.yaw=(c-b.yaw)%360*0.2;b.yaw=c;n=360*Math.atan(Math.tan(b.hfov/
+360*Math.PI)*f/n)/Math.PI;n=180*(Math.atan(a.y/f*2-1)-Math.atan(ya/f*2-1))/Math.PI*n/90+Pa;w.pitch=0.2*(n-b.pitch);b.pitch=n;}}function ma(a){ha&&(ha=!1,15<Date.now()-N&&(w.pitch=w.yaw=0),J.classList.add("pnlm-grab"),J.classList.remove("pnlm-grabbing"),N=Date.now(),B("mouseup",a));}function Ka(a){if(G&&b.draggable){t();Da();b.roll=0;w.hfov=0;var f=Q(a.targetTouches[0]);xa=f.x;ya=f.y;if(2==a.targetTouches.length){var n=Q(a.targetTouches[1]);xa+=0.5*(n.x-f.x);ya+=0.5*(n.y-f.y);Ha=Math.sqrt((f.x-n.x)*
+(f.x-n.x)+(f.y-n.y)*(f.y-n.y));}ha=!0;N=Date.now();Oa=b.yaw;Pa=b.pitch;B("touchstart",a);F();}}function la(a){if(b.draggable&&(a.preventDefault(),G&&(N=Date.now()),ha&&G)){var f=Q(a.targetTouches[0]),n=f.x,c=f.y;2==a.targetTouches.length&&-1!=Ha&&(a=Q(a.targetTouches[1]),n+=0.5*(a.x-f.x),c+=0.5*(a.y-f.y),f=Math.sqrt((f.x-a.x)*(f.x-a.x)+(f.y-a.y)*(f.y-a.y)),x(b.hfov+0.1*(Ha-f)),Ha=f);f=b.hfov/360*b.touchPanSpeedCoeffFactor;n=(xa-n)*f+Oa;w.yaw=(n-b.yaw)%360*0.2;b.yaw=n;c=(c-ya)*f+Pa;w.pitch=0.2*(c-b.pitch);
+b.pitch=c;}}function Ea(){ha=!1;150<Date.now()-N&&(w.pitch=w.yaw=0);Ha=-1;N=Date.now();B("touchend",event);}function A(a){"touch"==a.pointerType&&G&&b.draggable&&(ia.push(a.pointerId),za.push({clientX:a.clientX,clientY:a.clientY}),a.targetTouches=za,Ka(a),a.preventDefault());}function c(a){if("touch"==a.pointerType&&b.draggable)for(var f=0;f<ia.length;f++)if(a.pointerId==ia[f]){za[f].clientX=a.clientX;za[f].clientY=a.clientY;a.targetTouches=za;la(a);a.preventDefault();break}}function a(a){if("touch"==
+a.pointerType){for(var b=!1,n=0;n<ia.length;n++)a.pointerId==ia[n]&&(ia[n]=p),ia[n]&&(b=!0);b||(ia=[],za=[],Ea());a.preventDefault();}}function U(a){G&&("fullscreenonly"!=b.mouseZoom||Aa)&&(a.preventDefault(),t(),N=Date.now(),a.wheelDeltaY?(x(b.hfov-0.05*a.wheelDeltaY),w.hfov=0>a.wheelDelta?1:-1):a.wheelDelta?(x(b.hfov-0.05*a.wheelDelta),w.hfov=0>a.wheelDelta?1:-1):a.detail&&(x(b.hfov+1.5*a.detail),w.hfov=0<a.detail?1:-1),F());}function V(a){t();N=Date.now();Da();b.roll=0;var f=a.which||a.keycode;0>
+b.capturedKeyNumbers.indexOf(f)||(a.preventDefault(),27==f?Aa&&h():wa(f,!0));}function $(){for(var a=0;10>a;a++)r[a]=!1;}function R(a){var f=a.which||a.keycode;0>b.capturedKeyNumbers.indexOf(f)||(a.preventDefault(),wa(f,!1));}function wa(a,b){var n=!1;switch(a){case 109:case 189:case 17:case 173:r[0]!=b&&(n=!0);r[0]=b;break;case 107:case 187:case 16:case 61:r[1]!=b&&(n=!0);r[1]=b;break;case 38:r[2]!=b&&(n=!0);r[2]=b;break;case 87:r[6]!=b&&(n=!0);r[6]=b;break;case 40:r[3]!=b&&(n=!0);r[3]=b;break;case 83:r[7]!=
+b&&(n=!0);r[7]=b;break;case 37:r[4]!=b&&(n=!0);r[4]=b;break;case 65:r[8]!=b&&(n=!0);r[8]=b;break;case 39:r[5]!=b&&(n=!0);r[5]=b;break;case 68:r[9]!=b&&(n=!0),r[9]=b;}n&&b&&(ba="undefined"!==typeof performance&&performance.now()?performance.now():Date.now(),F());}function ga(){if(G){var a=!1,f=b.pitch,n=b.yaw,c=b.hfov,e;e="undefined"!==typeof performance&&performance.now()?performance.now():Date.now();ba===p&&(ba=e);var d=(e-ba)*b.hfov/1700,d=Math.min(d,1);r[0]&&!0===b.keyboardZoom&&(x(b.hfov+(0.8*w.hfov+
+0.5)*d),a=!0);r[1]&&!0===b.keyboardZoom&&(x(b.hfov+(0.8*w.hfov-0.2)*d),a=!0);if(r[2]||r[6])b.pitch+=(0.8*w.pitch+0.2)*d,a=!0;if(r[3]||r[7])b.pitch+=(0.8*w.pitch-0.2)*d,a=!0;if(r[4]||r[8])b.yaw+=(0.8*w.yaw-0.2)*d,a=!0;if(r[5]||r[9])b.yaw+=(0.8*w.yaw+0.2)*d,a=!0;a&&(N=Date.now());if(b.autoRotate){if(0.001<e-ba){var a=(e-ba)/1E3,g=(w.yaw/a*d-0.2*b.autoRotate)*a,g=(0<-b.autoRotate?1:-1)*Math.min(Math.abs(b.autoRotate*a),Math.abs(g));b.yaw+=g;}b.autoRotateStopDelay&&(b.autoRotateStopDelay-=e-ba,0>=b.autoRotateStopDelay&&
+(b.autoRotateStopDelay=!1,Z=b.autoRotate,b.autoRotate=0));}O.pitch&&(m("pitch"),f=b.pitch);O.yaw&&(m("yaw"),n=b.yaw);O.hfov&&(m("hfov"),c=b.hfov);0<d&&!b.autoRotate&&(a=1-b.friction,r[4]||r[5]||r[8]||r[9]||O.yaw||(b.yaw+=w.yaw*d*a),r[2]||r[3]||r[6]||r[7]||O.pitch||(b.pitch+=w.pitch*d*a),r[0]||r[1]||O.hfov||x(b.hfov+w.hfov*d*a));ba=e;0<d&&(w.yaw=0.8*w.yaw+(b.yaw-n)/d*0.2,w.pitch=0.8*w.pitch+(b.pitch-f)/d*0.2,w.hfov=0.8*w.hfov+(b.hfov-c)/d*0.2,f=b.autoRotate?Math.abs(b.autoRotate):5,w.yaw=Math.min(f,
+Math.max(w.yaw,-f)),w.pitch=Math.min(f,Math.max(w.pitch,-f)),w.hfov=Math.min(f,Math.max(w.hfov,-f)));r[0]&&r[1]&&(w.hfov=0);(r[2]||r[6])&&(r[3]||r[7])&&(w.pitch=0);(r[4]||r[8])&&(r[5]||r[9])&&(w.yaw=0);}}function m(a){var f=O[a],n=Math.min(1,Math.max((Date.now()-f.startTime)/1E3/(f.duration/1E3),0)),n=f.startPosition+b.animationTimingFunction(n)*(f.endPosition-f.startPosition);if(f.endPosition>f.startPosition&&n>=f.endPosition||f.endPosition<f.startPosition&&n<=f.endPosition||f.endPosition===f.startPosition)n=
+f.endPosition,w[a]=0,delete O[a];b[a]=n;}function z(){d("resize");}function F(){Ta||(Ta=!0,ca());}function ca(){if(!Za)if(Fa(),Qa&&clearTimeout(Qa),ha||!0===X)requestAnimationFrame(ca);else if(r[0]||r[1]||r[2]||r[3]||r[4]||r[5]||r[6]||r[7]||r[8]||r[9]||b.autoRotate||O.pitch||O.yaw||O.hfov||0.01<Math.abs(w.yaw)||0.01<Math.abs(w.pitch)||0.01<Math.abs(w.hfov))ga(),0<=b.autoRotateInactivityDelay&&Z&&Date.now()-N>b.autoRotateInactivityDelay&&!b.autoRotate&&(b.autoRotate=Z,da.lookAt(Ga,p,ra,3E3)),requestAnimationFrame(ca);
+else if(C&&(C.isLoading()||!0===b.dynamic&&Ma))requestAnimationFrame(ca);else {B("animatefinished",{pitch:da.getPitch(),yaw:da.getYaw(),hfov:da.getHfov()});Ta=!1;ba=p;var a=b.autoRotateInactivityDelay-(Date.now()-N);0<a?Qa=setTimeout(function(){b.autoRotate=Z;da.lookAt(Ga,p,ra,3E3);F();},a):0<=b.autoRotateInactivityDelay&&Z&&(b.autoRotate=Z,da.lookAt(Ga,p,ra,3E3),F());}}function Fa(){var a;if(G){var f=C.getCanvas();!1!==b.autoRotate&&(360<b.yaw?b.yaw-=360:-360>b.yaw&&(b.yaw+=360));a=b.yaw;var n=0;if(b.avoidShowingBackground){var c=
+b.hfov/2,d=180*Math.atan2(Math.tan(c/180*Math.PI),f.width/f.height)/Math.PI;b.vaov>b.haov?Math.min(Math.cos((b.pitch-c)/180*Math.PI),Math.cos((b.pitch+c)/180*Math.PI)):n=c*(1-Math.min(Math.cos((b.pitch-d)/180*Math.PI),Math.cos((b.pitch+d)/180*Math.PI)));}var c=b.maxYaw-b.minYaw,d=-180,e=180;360>c&&(d=b.minYaw+b.hfov/2+n,e=b.maxYaw-b.hfov/2-n,c<b.hfov&&(d=e=(d+e)/2),b.yaw=Math.max(d,Math.min(e,b.yaw)));!1===b.autoRotate&&(360<b.yaw?b.yaw-=360:-360>b.yaw&&(b.yaw+=360));!1!==b.autoRotate&&a!=b.yaw&&ba!==
+p&&(b.autoRotate*=-1);a=2*Math.atan(Math.tan(b.hfov/180*Math.PI*0.5)/(f.width/f.height))/Math.PI*180;f=b.minPitch+a/2;n=b.maxPitch-a/2;b.maxPitch-b.minPitch<a&&(f=n=(f+n)/2);isNaN(f)&&(f=-90);isNaN(n)&&(n=90);b.pitch=Math.max(f,Math.min(n,b.pitch));C.render(b.pitch*Math.PI/180,b.yaw*Math.PI/180,b.hfov*Math.PI/180,{roll:b.roll*Math.PI/180});b.hotSpots.forEach(Ca);b.compass&&(Ia.style.transform="rotate("+(-b.yaw-b.northOffset)+"deg)",Ia.style.webkitTransform="rotate("+(-b.yaw-b.northOffset)+"deg)");}}
+function Y(a,b,c,d){this.w=a;this.x=b;this.y=c;this.z=d;}function na(a){var f;f=a.alpha;var c=a.beta;a=a.gamma;c=[c?c*Math.PI/180/2:0,a?a*Math.PI/180/2:0,f?f*Math.PI/180/2:0];f=[Math.cos(c[0]),Math.cos(c[1]),Math.cos(c[2])];c=[Math.sin(c[0]),Math.sin(c[1]),Math.sin(c[2])];f=new Y(f[0]*f[1]*f[2]-c[0]*c[1]*c[2],c[0]*f[1]*f[2]-f[0]*c[1]*c[2],f[0]*c[1]*f[2]+c[0]*f[1]*c[2],f[0]*f[1]*c[2]+c[0]*c[1]*f[2]);f=f.multiply(new Y(Math.sqrt(0.5),-Math.sqrt(0.5),0,0));c=E.orientation?-E.orientation*Math.PI/180/2:
+0;f=f.multiply(new Y(Math.cos(c),0,-Math.sin(c),0)).toEulerAngles();"number"==typeof X&&10>X?X+=1:10===X?($a=f[2]/Math.PI*180+b.yaw,X=!0,requestAnimationFrame(ca)):(b.pitch=f[0]/Math.PI*180,b.roll=-f[1]/Math.PI*180,b.yaw=-f[2]/Math.PI*180+$a);}function va(){try{var a={};b.horizonPitch!==p&&(a.horizonPitch=b.horizonPitch*Math.PI/180);b.horizonRoll!==p&&(a.horizonRoll=b.horizonRoll*Math.PI/180);b.backgroundColor!==p&&(a.backgroundColor=b.backgroundColor);C.init(P,b.type,b.dynamic,b.haov*Math.PI/180,
+b.vaov*Math.PI/180,b.vOffset*Math.PI/180,S,a);!0!==b.dynamic&&(P=p);}catch(f){if("webgl error"==f.type||"no webgl"==f.type)K();else if("webgl size error"==f.type)K(b.strings.textureSizeError.replace("%s",f.width).replace("%s",f.maxWidth));else throw K(b.strings.unknownError),f;}}function S(){if(b.sceneFadeDuration&&C.fadeImg!==p){C.fadeImg.style.opacity=0;var a=C.fadeImg;delete C.fadeImg;setTimeout(function(){M.removeChild(a);B("scenechangefadedone");},b.sceneFadeDuration);}Ia.style.display=b.compass?
+"inline":"none";L();q.load.box.style.display="none";sa!==p&&(M.removeChild(sa),sa=p);G=!0;B("load");F();}function La(a){a.pitch=Number(a.pitch)||0;a.yaw=Number(a.yaw)||0;var f=g.createElement("div");f.className="pnlm-hotspot-base";f.className=a.cssClass?f.className+(" "+a.cssClass):f.className+(" pnlm-hotspot pnlm-sprite pnlm-"+D(a.type));var c=g.createElement("span");a.text&&(c.innerHTML=D(a.text));var d;if(a.video){d=g.createElement("video");var e=a.video;b.basePath&&!qa(e)&&(e=b.basePath+e);d.src=
+I(e);d.controls=!0;d.style.width=a.width+"px";M.appendChild(f);c.appendChild(d);}else if(a.image){e=a.image;b.basePath&&!qa(e)&&(e=b.basePath+e);d=g.createElement("a");d.href=I(a.URL?a.URL:e,!0);d.target="_blank";c.appendChild(d);var h=g.createElement("img");h.src=I(e);h.style.width=a.width+"px";h.style.paddingTop="5px";M.appendChild(f);d.appendChild(h);c.style.maxWidth="initial";}else if(a.URL){d=g.createElement("a");d.href=I(a.URL,!0);if(a.attributes)for(e in a.attributes)d.setAttribute(e,a.attributes[e]);
+else d.target="_blank";M.appendChild(d);f.className+=" pnlm-pointer";c.className+=" pnlm-pointer";d.appendChild(f);}else a.sceneId&&(f.onclick=f.ontouchend=function(){f.clicked||(f.clicked=!0,y(a.sceneId,a.targetPitch,a.targetYaw,a.targetHfov));return !1},f.className+=" pnlm-pointer",c.className+=" pnlm-pointer"),M.appendChild(f);if(a.createTooltipFunc)a.createTooltipFunc(f,a.createTooltipArgs);else if(a.text||a.video||a.image)f.classList.add("pnlm-tooltip"),f.appendChild(c),c.style.width=c.scrollWidth-
+20+"px",c.style.marginLeft=-(c.scrollWidth-f.offsetWidth)/2+"px",c.style.marginTop=-c.scrollHeight-12+"px";a.clickHandlerFunc&&(f.addEventListener("click",function(b){a.clickHandlerFunc(b,a.clickHandlerArgs);},"false"),f.className+=" pnlm-pointer",c.className+=" pnlm-pointer");a.div=f;}function L(){Ua||(b.hotSpots?(b.hotSpots=b.hotSpots.sort(function(a,b){return a.pitch<b.pitch}),b.hotSpots.forEach(La)):b.hotSpots=[],Ua=!0,b.hotSpots.forEach(Ca));}function e(){var a=b.hotSpots;Ua=!1;delete b.hotSpots;
+if(a)for(var f=0;f<a.length;f++){var c=a[f].div;if(c){for(;c.parentNode&&c.parentNode!=M;)c=c.parentNode;M.removeChild(c);}delete a[f].div;}}function Ca(a){var f=Math.sin(a.pitch*Math.PI/180),c=Math.cos(a.pitch*Math.PI/180),d=Math.sin(b.pitch*Math.PI/180),e=Math.cos(b.pitch*Math.PI/180),g=Math.cos((-a.yaw+b.yaw)*Math.PI/180),h=f*d+c*g*e;if(90>=a.yaw&&-90<a.yaw&&0>=h||(90<a.yaw||-90>=a.yaw)&&0>=h)a.div.style.visibility="hidden";else {var l=Math.sin((-a.yaw+b.yaw)*Math.PI/180),k=Math.tan(b.hfov*Math.PI/
+360);a.div.style.visibility="visible";var m=C.getCanvas(),p=m.clientWidth,m=m.clientHeight,f=[-p/k*l*c/h/2,-p/k*(f*e-c*g*d)/h/2],c=Math.sin(b.roll*Math.PI/180),d=Math.cos(b.roll*Math.PI/180),f=[f[0]*d-f[1]*c,f[0]*c+f[1]*d];f[0]+=(p-a.div.offsetWidth)/2;f[1]+=(m-a.div.offsetHeight)/2;p="translate("+f[0]+"px, "+f[1]+"px) translateZ(9999px) rotate("+b.roll+"deg)";a.scale&&(p+=" scale("+ra/b.hfov/h+")");a.div.style.webkitTransform=p;a.div.style.MozTransform=p;a.div.style.transform=p;}}function H(a){b=
+{};var f,c,d="haov vaov vOffset northOffset horizonPitch horizonRoll".split(" ");aa=[];for(f in Va)Va.hasOwnProperty(f)&&(b[f]=Va[f]);for(f in k.default)if(k.default.hasOwnProperty(f))if("strings"==f)for(c in k.default.strings)k.default.strings.hasOwnProperty(c)&&(b.strings[c]=D(k.default.strings[c]));else b[f]=k.default[f],0<=d.indexOf(f)&&aa.push(f);if(null!==a&&""!==a&&k.scenes&&k.scenes[a]){var e=k.scenes[a];for(f in e)if(e.hasOwnProperty(f))if("strings"==f)for(c in e.strings)e.strings.hasOwnProperty(c)&&
+(b.strings[c]=D(e.strings[c]));else b[f]=e[f],0<=d.indexOf(f)&&aa.push(f);b.scene=a;}for(f in k)if(k.hasOwnProperty(f))if("strings"==f)for(c in k.strings)k.strings.hasOwnProperty(c)&&(b.strings[c]=D(k.strings[c]));else b[f]=k[f],0<=d.indexOf(f)&&aa.push(f);}function l(a){if((a=a?a:!1)&&"preview"in b){var c=b.preview;b.basePath&&!qa(c)&&(c=b.basePath+c);sa=g.createElement("div");sa.className="pnlm-preview-img";sa.style.backgroundImage="url('"+I(c).replace(/"/g,"%22").replace(/'/g,"%27")+"')";M.appendChild(sa);}var c=
+b.title,d=b.author;a&&("previewTitle"in b&&(b.title=b.previewTitle),"previewAuthor"in b&&(b.author=b.previewAuthor));b.hasOwnProperty("title")||(q.title.innerHTML="");b.hasOwnProperty("author")||(q.author.innerHTML="");b.hasOwnProperty("title")||b.hasOwnProperty("author")||(q.container.style.display="none");v.load.innerHTML="<p>"+b.strings.loadButtonLabel+"</p>";q.load.boxp.innerHTML=b.strings.loadingLabel;for(var e in b)if(b.hasOwnProperty(e))switch(e){case "title":q.title.innerHTML=D(b[e]);q.container.style.display=
+"inline";break;case "author":var h=D(b[e]);b.authorURL&&(h=g.createElement("a"),h.href=I(b.authorURL,!0),h.target="_blank",h.innerHTML=D(b[e]),h=h.outerHTML);q.author.innerHTML=b.strings.bylineLabel.replace("%s",h);q.container.style.display="inline";break;case "fallback":h=g.createElement("a");h.href=I(b[e],!0);h.target="_blank";h.textContent="Click here to view this panorama in an alternative viewer.";var k=g.createElement("p");k.textContent="Your browser does not support WebGL.";k.appendChild(g.createElement("br"));
+k.appendChild(h);q.errorMsg.innerHTML="";q.errorMsg.appendChild(k);break;case "hfov":x(Number(b[e]));break;case "autoLoad":!0===b[e]&&C===p&&(q.load.box.style.display="inline",v.load.style.display="none",oa());break;case "showZoomCtrl":v.zoom.style.display=b[e]&&!1!=b.showControls?"block":"none";break;case "showFullscreenCtrl":v.fullscreen.style.display=b[e]&&!1!=b.showControls&&("fullscreen"in g||"mozFullScreen"in g||"webkitIsFullScreen"in g||"msFullscreenElement"in g)?"block":"none";break;case "hotSpotDebug":Wa.style.display=
+b[e]?"block":"none";break;case "showControls":b[e]||(v.orientation.style.display="none",v.zoom.style.display="none",v.fullscreen.style.display="none");break;case "orientationOnByDefault":b[e]&&Ra();}a&&(c?b.title=c:delete b.title,d?b.author=d:delete b.author);}function h(){if(G&&!Na)if(Aa)g.exitFullscreen?g.exitFullscreen():g.mozCancelFullScreen?g.mozCancelFullScreen():g.webkitCancelFullScreen?g.webkitCancelFullScreen():g.msExitFullscreen&&g.msExitFullscreen();else try{s.requestFullscreen?s.requestFullscreen():
+s.mozRequestFullScreen?s.mozRequestFullScreen():s.msRequestFullscreen?s.msRequestFullscreen():s.webkitRequestFullScreen();}catch(a){}}function d(a){g.fullscreenElement||g.fullscreen||g.mozFullScreen||g.webkitIsFullScreen||g.msFullscreenElement?(v.fullscreen.classList.add("pnlm-fullscreen-toggle-button-active"),Aa=!0):(v.fullscreen.classList.remove("pnlm-fullscreen-toggle-button-active"),Aa=!1);"resize"!==a&&B("fullscreenchange",Aa);C.resize();x(b.hfov);F();}function u(a){var c=b.minHfov;"multires"==
+b.type&&C&&!b.multiResMinHfov&&(c=Math.min(c,C.getCanvas().width/(b.multiRes.cubeResolution/90*0.9)));if(c>b.maxHfov)return console.log("HFOV bounds do not make sense (minHfov > maxHfov)."),b.hfov;var d=b.hfov,d=a<c?c:a>b.maxHfov?b.maxHfov:a;b.avoidShowingBackground&&C&&(a=C.getCanvas(),d=Math.min(d,360*Math.atan(Math.tan((b.maxPitch-b.minPitch)/360*Math.PI)/a.height*a.width)/Math.PI));return d}function x(a){b.hfov=u(a);B("zoomchange",b.hfov);}function t(){O={};Z=b.autoRotate?b.autoRotate:Z;b.autoRotate=
+!1;}function Ya(){Na&&(q.load.box.style.display="none",q.errorMsg.style.display="none",Na=!1,M.style.display="block",B("errorcleared"));G=!1;v.load.style.display="none";q.load.box.style.display="inline";oa();}function y(a,c,d,h,g){G||(g=!0);G=!1;O={};var m,q;if(b.sceneFadeDuration&&!g&&(m=C.render(b.pitch*Math.PI/180,b.yaw*Math.PI/180,b.hfov*Math.PI/180,{returnImage:!0}),m!==p)){g=new Image;g.className="pnlm-fade-img";g.style.transition="opacity "+b.sceneFadeDuration/1E3+"s";g.style.width="100%";g.style.height=
+"100%";g.onload=function(){y(a,c,d,h,!0);};g.src=m;M.appendChild(g);C.fadeImg=g;return}g="same"===c?b.pitch:c;m="same"===d?b.yaw:"sameAzimuth"===d?b.yaw+(b.northOffset||0)-(k.scenes[a].northOffset||0):d;q="same"===h?b.hfov:h;e();H(a);w.yaw=w.pitch=w.hfov=0;l();g!==p&&(b.pitch=g);m!==p&&(b.yaw=m);q!==p&&(b.hfov=q);B("scenechange",a);Ya();}function Da(){E.removeEventListener("deviceorientation",na);v.orientation.classList.remove("pnlm-orientation-button-active");X=!1;}function Ra(){"function"===typeof DeviceMotionEvent.requestPermission?
+DeviceOrientationEvent.requestPermission().then(function(a){"granted"==a&&(X=1,E.addEventListener("deviceorientation",na),v.orientation.classList.add("pnlm-orientation-button-active"));}):(X=1,E.addEventListener("deviceorientation",na),v.orientation.classList.add("pnlm-orientation-button-active"));}function D(a){return k.escapeHTML?String(a).split(/&/g).join("&amp;").split('"').join("&quot;").split("'").join("&#39;").split("<").join("&lt;").split(">").join("&gt;").split("/").join("&#x2f;").split("\n").join("<br>"):
+String(a).split("\n").join("<br>")}function I(a,b){try{var c=decodeURIComponent(ab(a)).replace(/[^\w:]/g,"").toLowerCase();}catch(d){return "about:blank"}return 0===c.indexOf("javascript:")||0===c.indexOf("vbscript:")?(console.log("Script URL removed."),"about:blank"):b&&0===c.indexOf("data:")?(console.log("Data URI removed from link."),"about:blank"):a}function ab(a){return a.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig,function(a,b){b=b.toLowerCase();return "colon"===b?":":"#"===b.charAt(0)?
+"x"===b.charAt(1)?String.fromCharCode(parseInt(b.substring(2),16)):String.fromCharCode(+b.substring(1)):""})}function B(a){if(a in T)for(var b=T[a].length;0<b;b--)T[a][T[a].length-b].apply(null,[].slice.call(arguments,1));}var da=this,b,C,sa,ha=!1,N=Date.now(),xa=0,ya=0,Ha=-1,Oa=0,Pa=0,r=Array(10),Aa=!1,G,Na=!1,Sa=!1,P,ba,w={yaw:0,pitch:0,hfov:0},Ta=!1,X=!1,$a=0,Qa,Z=0,ra,Ga,O={},T={},aa=[],Ma=!1,Ua=!1,Za=!1,Va={hfov:100,minHfov:50,multiResMinHfov:!1,maxHfov:120,pitch:0,minPitch:p,maxPitch:p,yaw:0,
+minYaw:-180,maxYaw:180,roll:0,haov:360,vaov:180,vOffset:0,autoRotate:!1,autoRotateInactivityDelay:-1,autoRotateStopDelay:p,type:"equirectangular",northOffset:0,showFullscreenCtrl:!0,dynamic:!1,dynamicUpdate:!1,doubleClickZoom:!0,keyboardZoom:!0,mouseZoom:!0,showZoomCtrl:!0,autoLoad:!1,showControls:!0,orientationOnByDefault:!1,hotSpotDebug:!1,backgroundColor:[0,0,0],avoidShowingBackground:!1,animationTimingFunction:function(a){return 0.5>a?2*a*a:-1+(4-2*a)*a},draggable:!0,disableKeyboardCtrl:!1,crossOrigin:"anonymous",
+touchPanSpeedCoeffFactor:1,capturedKeyNumbers:[16,17,27,37,38,39,40,61,65,68,83,87,107,109,173,187,189],friction:0.15,strings:{loadButtonLabel:"Click to<br>Load<br>Panorama",loadingLabel:"Loading...",bylineLabel:"by %s",noPanoramaError:"No panorama image was specified.",fileAccessError:"The file %s could not be accessed.",malformedURLError:"There is something wrong with the panorama URL.",iOS8WebGLError:"Due to iOS 8's broken WebGL implementation, only progressive encoded JPEGs work for your device (this panorama uses standard encoding).",
+genericWebGLError:"Your browser does not have the necessary WebGL support to display this panorama.",textureSizeError:"This panorama is too big for your device! It's %spx wide, but your device only supports images up to %spx wide. Try another device. (If you're the author, try scaling down the image.)",unknownError:"Unknown error. Check developer console."}};s="string"===typeof s?g.getElementById(s):s;s.classList.add("pnlm-container");s.tabIndex=0;var J=g.createElement("div");J.className="pnlm-ui";
+s.appendChild(J);var M=g.createElement("div");M.className="pnlm-render-container";s.appendChild(M);var W=g.createElement("div");W.className="pnlm-dragfix";J.appendChild(W);var fa=g.createElement("span");fa.className="pnlm-about-msg";fa.innerHTML='<a href="https://pannellum.org/" target="_blank">Pannellum</a> 2.5.6';J.appendChild(fa);W.addEventListener("contextmenu",ja);var q={},Wa=g.createElement("div");Wa.className="pnlm-sprite pnlm-hot-spot-debug-indicator";J.appendChild(Wa);q.container=g.createElement("div");
+q.container.className="pnlm-panorama-info";q.title=g.createElement("div");q.title.className="pnlm-title-box";q.container.appendChild(q.title);q.author=g.createElement("div");q.author.className="pnlm-author-box";q.container.appendChild(q.author);J.appendChild(q.container);q.load={};q.load.box=g.createElement("div");q.load.box.className="pnlm-load-box";q.load.boxp=g.createElement("p");q.load.box.appendChild(q.load.boxp);q.load.lbox=g.createElement("div");q.load.lbox.className="pnlm-lbox";q.load.lbox.innerHTML=
+'<div class="pnlm-loading"></div>';q.load.box.appendChild(q.load.lbox);q.load.lbar=g.createElement("div");q.load.lbar.className="pnlm-lbar";q.load.lbarFill=g.createElement("div");q.load.lbarFill.className="pnlm-lbar-fill";q.load.lbar.appendChild(q.load.lbarFill);q.load.box.appendChild(q.load.lbar);q.load.msg=g.createElement("p");q.load.msg.className="pnlm-lmsg";q.load.box.appendChild(q.load.msg);J.appendChild(q.load.box);q.errorMsg=g.createElement("div");q.errorMsg.className="pnlm-error-msg pnlm-info-box";
+J.appendChild(q.errorMsg);var v={};v.container=g.createElement("div");v.container.className="pnlm-controls-container";J.appendChild(v.container);v.load=g.createElement("div");v.load.className="pnlm-load-button";v.load.addEventListener("click",function(){l();Ya();});J.appendChild(v.load);v.zoom=g.createElement("div");v.zoom.className="pnlm-zoom-controls pnlm-controls";v.zoomIn=g.createElement("div");v.zoomIn.className="pnlm-zoom-in pnlm-sprite pnlm-control";v.zoomIn.addEventListener("click",function(){G&&
+(x(b.hfov-5),F());});v.zoom.appendChild(v.zoomIn);v.zoomOut=g.createElement("div");v.zoomOut.className="pnlm-zoom-out pnlm-sprite pnlm-control";v.zoomOut.addEventListener("click",function(){G&&(x(b.hfov+5),F());});v.zoom.appendChild(v.zoomOut);v.container.appendChild(v.zoom);v.fullscreen=g.createElement("div");v.fullscreen.addEventListener("click",h);v.fullscreen.className="pnlm-fullscreen-toggle-button pnlm-sprite pnlm-fullscreen-toggle-button-inactive pnlm-controls pnlm-control";(g.fullscreenEnabled||
+g.mozFullScreenEnabled||g.webkitFullscreenEnabled||g.msFullscreenEnabled)&&v.container.appendChild(v.fullscreen);v.orientation=g.createElement("div");v.orientation.addEventListener("click",function(a){X?Da():Ra();});v.orientation.addEventListener("mousedown",function(a){a.stopPropagation();});v.orientation.addEventListener("touchstart",function(a){a.stopPropagation();});v.orientation.addEventListener("pointerdown",function(a){a.stopPropagation();});v.orientation.className="pnlm-orientation-button pnlm-orientation-button-inactive pnlm-sprite pnlm-controls pnlm-control";
+var Xa=!1;E.DeviceOrientationEvent&&"https:"==location.protocol&&0<=navigator.userAgent.toLowerCase().indexOf("mobi")&&(v.container.appendChild(v.orientation),Xa=!0);var Ia=g.createElement("div");Ia.className="pnlm-compass pnlm-controls pnlm-control";J.appendChild(Ia);k.firstScene?H(k.firstScene):k.default&&k.default.firstScene?H(k.default.firstScene):H(null);l(!0);var ia=[],za=[];Y.prototype.multiply=function(a){return new Y(this.w*a.w-this.x*a.x-this.y*a.y-this.z*a.z,this.x*a.w+this.w*a.x+this.y*
+a.z-this.z*a.y,this.y*a.w+this.w*a.y+this.z*a.x-this.x*a.z,this.z*a.w+this.w*a.z+this.x*a.y-this.y*a.x)};Y.prototype.toEulerAngles=function(){var a=Math.atan2(2*(this.w*this.x+this.y*this.z),1-2*(this.x*this.x+this.y*this.y)),b=Math.asin(2*(this.w*this.y-this.z*this.x)),c=Math.atan2(2*(this.w*this.z+this.x*this.y),1-2*(this.y*this.y+this.z*this.z));return [a,b,c]};this.isLoaded=function(){return Boolean(G)};this.getPitch=function(){return b.pitch};this.setPitch=function(a,c,d,e){N=Date.now();if(1E-6>=
+Math.abs(a-b.pitch))return "function"==typeof d&&d(e),this;(c=c==p?1E3:Number(c))?(O.pitch={startTime:Date.now(),startPosition:b.pitch,endPosition:a,duration:c},"function"==typeof d&&setTimeout(function(){d(e);},c)):b.pitch=a;F();return this};this.getPitchBounds=function(){return [b.minPitch,b.maxPitch]};this.setPitchBounds=function(a){b.minPitch=Math.max(-90,Math.min(a[0],90));b.maxPitch=Math.max(-90,Math.min(a[1],90));return this};this.getYaw=function(){return (b.yaw+540)%360-180};this.setYaw=function(a,
+c,d,e){N=Date.now();if(1E-6>=Math.abs(a-b.yaw))return "function"==typeof d&&d(e),this;c=c==p?1E3:Number(c);a=(a+180)%360-180;c?(180<b.yaw-a?a+=360:180<a-b.yaw&&(a-=360),O.yaw={startTime:Date.now(),startPosition:b.yaw,endPosition:a,duration:c},"function"==typeof d&&setTimeout(function(){d(e);},c)):b.yaw=a;F();return this};this.getYawBounds=function(){return [b.minYaw,b.maxYaw]};this.setYawBounds=function(a){b.minYaw=Math.max(-360,Math.min(a[0],360));b.maxYaw=Math.max(-360,Math.min(a[1],360));return this};
+this.getHfov=function(){return b.hfov};this.setHfov=function(a,c,d,e){N=Date.now();if(1E-6>=Math.abs(a-b.hfov))return "function"==typeof d&&d(e),this;(c=c==p?1E3:Number(c))?(O.hfov={startTime:Date.now(),startPosition:b.hfov,endPosition:u(a),duration:c},"function"==typeof d&&setTimeout(function(){d(e);},c)):x(a);F();return this};this.getHfovBounds=function(){return [b.minHfov,b.maxHfov]};this.setHfovBounds=function(a){b.minHfov=Math.max(0,a[0]);b.maxHfov=Math.max(0,a[1]);return this};this.lookAt=function(a,
+c,d,e,g,h){e=e==p?1E3:Number(e);a!==p&&1E-6<Math.abs(a-b.pitch)&&(this.setPitch(a,e,g,h),g=p);c!==p&&1E-6<Math.abs(c-b.yaw)&&(this.setYaw(c,e,g,h),g=p);d!==p&&1E-6<Math.abs(d-b.hfov)&&(this.setHfov(d,e,g,h),g=p);"function"==typeof g&&g(h);return this};this.getNorthOffset=function(){return b.northOffset};this.setNorthOffset=function(a){b.northOffset=Math.min(360,Math.max(0,a));F();return this};this.getHorizonRoll=function(){return b.horizonRoll};this.setHorizonRoll=function(a){b.horizonRoll=Math.min(90,
+Math.max(-90,a));C.setPose(b.horizonPitch*Math.PI/180,b.horizonRoll*Math.PI/180);F();return this};this.getHorizonPitch=function(){return b.horizonPitch};this.setHorizonPitch=function(a){b.horizonPitch=Math.min(90,Math.max(-90,a));C.setPose(b.horizonPitch*Math.PI/180,b.horizonRoll*Math.PI/180);F();return this};this.startAutoRotate=function(a,c){a=a||Z||1;c=c===p?Ga:c;b.autoRotate=a;da.lookAt(c,p,ra,3E3);F();return this};this.stopAutoRotate=function(){Z=b.autoRotate?b.autoRotate:Z;b.autoRotate=!1;b.autoRotateInactivityDelay=
+-1;return this};this.stopMovement=function(){t();w={yaw:0,pitch:0,hfov:0};};this.getRenderer=function(){return C};this.setUpdate=function(a){Ma=!0===a;C===p?pa():F();return this};this.mouseEventToCoords=function(a){return ta(a)};this.loadScene=function(a,b,c,d){!1!==G&&y(a,b,c,d);return this};this.getScene=function(){return b.scene};this.addScene=function(a,b){k.scenes[a]=b;return this};this.removeScene=function(a){if(b.scene===a||!k.scenes.hasOwnProperty(a))return !1;delete k.scenes[a];return !0};this.toggleFullscreen=
+function(){h();return this};this.getConfig=function(){return b};this.getContainer=function(){return s};this.addHotSpot=function(a,c){if(c===p&&b.scene===p)b.hotSpots.push(a);else {var d=c!==p?c:b.scene;if(k.scenes.hasOwnProperty(d))k.scenes[d].hasOwnProperty("hotSpots")||(k.scenes[d].hotSpots=[],d==b.scene&&(b.hotSpots=k.scenes[d].hotSpots)),k.scenes[d].hotSpots.push(a);else throw "Invalid scene ID!";}if(c===p||b.scene==c)La(a),G&&Ca(a);return this};this.removeHotSpot=function(a,c){if(c===p||b.scene==
+c){if(!b.hotSpots)return !1;for(var d=0;d<b.hotSpots.length;d++)if(b.hotSpots[d].hasOwnProperty("id")&&b.hotSpots[d].id===a){for(var e=b.hotSpots[d].div;e.parentNode!=M;)e=e.parentNode;M.removeChild(e);delete b.hotSpots[d].div;b.hotSpots.splice(d,1);return !0}}else if(k.scenes.hasOwnProperty(c)){if(!k.scenes[c].hasOwnProperty("hotSpots"))return !1;for(d=0;d<k.scenes[c].hotSpots.length;d++)if(k.scenes[c].hotSpots[d].hasOwnProperty("id")&&k.scenes[c].hotSpots[d].id===a)return k.scenes[c].hotSpots.splice(d,
+1),!0}else return !1};this.resize=function(){C&&z();};this.isLoaded=function(){return G};this.isOrientationSupported=function(){return Xa||!1};this.stopOrientation=function(){Da();};this.startOrientation=function(){Xa&&Ra();};this.isOrientationActive=function(){return Boolean(X)};this.on=function(a,b){T[a]=T[a]||[];T[a].push(b);return this};this.off=function(a,b){if(!a)return T={},this;if(b){var c=T[a].indexOf(b);0<=c&&T[a].splice(c,1);0==T[a].length&&delete T[a];}else delete T[a];return this};this.destroy=
+function(){Za=!0;clearTimeout(Qa);C&&C.destroy();Sa&&(g.removeEventListener("mousemove",ua,!1),g.removeEventListener("mouseup",ma,!1),s.removeEventListener("mozfullscreenchange",d,!1),s.removeEventListener("webkitfullscreenchange",d,!1),s.removeEventListener("msfullscreenchange",d,!1),s.removeEventListener("fullscreenchange",d,!1),E.removeEventListener("resize",z,!1),E.removeEventListener("orientationchange",z,!1),s.removeEventListener("keydown",V,!1),s.removeEventListener("keyup",R,!1),s.removeEventListener("blur",
+$,!1),g.removeEventListener("mouseleave",ma,!1));s.innerHTML="";s.classList.remove("pnlm-container");};}return {viewer:function(g,k){return new Ba(g,k)}}}(window,document);
+
+const generateId = () => {
+  return new Date().valueOf().toString();
+};
+
+class Defer {
+  constructor() {
+    const promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
     });
-    return t >= i.__.length && i.__.push({
-        __V: fe
-    }),
-    i.__[t]
+    this.promise = promise;
+  }
 }
-function On(t) {
-    return re = 1,
-    Sn(bn, t)
-}
-function Sn(t, e, i) {
-    var c = En(De++, 2);
-    if (c.t = t,
-    !c.__c && (c.__ = [i ? i(e) : bn(void 0, e), function(l) {
-        var w = c.__N ? c.__N[0] : c.__[0]
-          , I = c.t(w, l);
-        w !== I && (c.__N = [I, c.__[1]],
-        c.__c.setState({}))
+
+const useToggle = (initVal) => {
+  const [val, setVal] = h(initVal);
+  const toggleFn = T$1((force) => {
+    if (typeof force === "boolean") {
+      setVal(force);
+    } else {
+      setVal(!val);
     }
-    ],
-    c.__c = rt,
-    !rt.u)) {
-        rt.u = !0;
-        var _ = rt.shouldComponentUpdate;
-        rt.shouldComponentUpdate = function(l, w, I) {
-            if (!c.__c.__H)
-                return !0;
-            var H = c.__c.__H.__.filter(function(u) {
-                return u.__c
-            });
-            if (H.every(function(u) {
-                return !u.__N
-            }))
-                return !_ || _.call(this, l, w, I);
-            var W = !1;
-            return H.forEach(function(u) {
-                if (u.__N) {
-                    var Y = u.__[0];
-                    u.__ = u.__N,
-                    u.__N = void 0,
-                    Y !== u.__[0] && (W = !0)
-                }
-            }),
-            !(!W && c.__c.props === l) && (!_ || _.call(this, l, w, I))
-        }
-    }
-    return c.__N || c.__
-}
-function Nn(t) {
-    return re = 5,
-    Fe(function() {
-        return {
-            current: t
-        }
-    }, [])
-}
-function Fe(t, e) {
-    var i = En(De++, 7);
-    return Fn(i.__H, e) ? (i.__V = t(),
-    i.i = e,
-    i.__h = t,
-    i.__V) : i.__
-}
-function ne(t, e) {
-    return re = 8,
-    Fe(function() {
-        return t
-    }, e)
-}
-function An() {
-    for (var t; t = wn.shift(); )
-        if (t.__P && t.__H)
-            try {
-                t.__H.__h.forEach(pe),
-                t.__H.__h.forEach(Ne),
-                t.__H.__h = []
-            } catch (e) {
-                t.__H.__h = [],
-                A.__e(e, t.__v)
-            }
-}
-A.__b = function(t) {
-    rt = null,
-    Ye && Ye(t)
-}
-,
-A.__r = function(t) {
-    Xe && Xe(t),
-    De = 0;
-    var e = (rt = t.__c).__H;
-    e && (Re === rt ? (e.__h = [],
-    rt.__h = [],
-    e.__.forEach(function(i) {
-        i.__N && (i.__ = i.__N),
-        i.__V = fe,
-        i.__N = i.i = void 0
-    })) : (e.__h.forEach(pe),
-    e.__h.forEach(Ne),
-    e.__h = [])),
-    Re = rt
-}
-,
-A.diffed = function(t) {
-    $e && $e(t);
-    var e = t.__c;
-    e && e.__H && (e.__H.__h.length && (wn.push(e) !== 1 && We === A.requestAnimationFrame || ((We = A.requestAnimationFrame) || Dn)(An)),
-    e.__H.__.forEach(function(i) {
-        i.i && (i.__H = i.i),
-        i.__V !== fe && (i.__ = i.__V),
-        i.i = void 0,
-        i.__V = fe
-    })),
-    Re = rt = null
-}
-,
-A.__c = function(t, e) {
-    e.some(function(i) {
-        try {
-            i.__h.forEach(pe),
-            i.__h = i.__h.filter(function(c) {
-                return !c.__ || Ne(c)
-            })
-        } catch (c) {
-            e.some(function(_) {
-                _.__h && (_.__h = [])
-            }),
-            e = [],
-            A.__e(c, i.__v)
-        }
-    }),
-    qe && qe(t, e)
-}
-,
-A.unmount = function(t) {
-    je && je(t);
-    var e, i = t.__c;
-    i && i.__H && (i.__H.__.forEach(function(c) {
-        try {
-            pe(c)
-        } catch (_) {
-            e = _
-        }
-    }),
-    i.__H = void 0,
-    e && A.__e(e, i.__v))
-}
-;
-var Ze = typeof requestAnimationFrame == "function";
-function Dn(t) {
-    var e, i = function() {
-        clearTimeout(c),
-        Ze && cancelAnimationFrame(e),
-        setTimeout(t)
-    }, c = setTimeout(i, 100);
-    Ze && (e = requestAnimationFrame(i))
-}
-function pe(t) {
-    var e = rt
-      , i = t.__c;
-    typeof i == "function" && (t.__c = void 0,
-    i()),
-    rt = e
-}
-function Ne(t) {
-    var e = rt;
-    t.__c = t.__(),
-    rt = e
-}
-function Fn(t, e) {
-    return !t || t.length !== e.length || e.some(function(i, c) {
-        return i !== t[c]
-    })
-}
-function bn(t, e) {
-    return typeof e == "function" ? e(t) : e
-}
-function kn(t, e) {
-    for (var i in e)
-        t[i] = e[i];
-    return t
-}
-function Ke(t, e) {
-    for (var i in t)
-        if (i !== "__source" && !(i in e))
-            return !0;
-    for (var c in e)
-        if (c !== "__source" && t[c] !== e[c])
-            return !0;
-    return !1
-}
-function Je(t) {
-    this.props = t
-}
-(Je.prototype = new At).isPureReactComponent = !0,
-Je.prototype.shouldComponentUpdate = function(t, e) {
-    return Ke(this.props, t) || Ke(this.state, e)
-}
-;
-var Qe = A.__b;
-A.__b = function(t) {
-    t.type && t.type.__f && t.ref && (t.props.ref = t.ref,
-    t.ref = null),
-    Qe && Qe(t)
-}
-;
-var Un = A.__e;
-A.__e = function(t, e, i, c) {
-    if (t.then) {
-        for (var _, l = e; l = l.__; )
-            if ((_ = l.__c) && _.__c)
-                return e.__e == null && (e.__e = i.__e,
-                e.__k = i.__k),
-                _.__c(t, e)
-    }
-    Un(t, e, i, c)
-}
-;
-var tn = A.unmount;
-function Pn(t, e, i) {
-    return t && (t.__c && t.__c.__H && (t.__c.__H.__.forEach(function(c) {
-        typeof c.__c == "function" && c.__c()
-    }),
-    t.__c.__H = null),
-    (t = kn({}, t)).__c != null && (t.__c.__P === i && (t.__c.__P = e),
-    t.__c = null),
-    t.__k = t.__k && t.__k.map(function(c) {
-        return Pn(c, e, i)
-    })),
-    t
-}
-function xn(t, e, i) {
-    return t && (t.__v = null,
-    t.__k = t.__k && t.__k.map(function(c) {
-        return xn(c, e, i)
-    }),
-    t.__c && t.__c.__P === e && (t.__e && i.insertBefore(t.__e, t.__d),
-    t.__c.__e = !0,
-    t.__c.__P = i)),
-    t
-}
-function Ce() {
-    this.__u = 0,
-    this.t = null,
-    this.__b = null
-}
-function Mn(t) {
-    var e = t.__.__c;
-    return e && e.__a && e.__a(t)
-}
-function de() {
-    this.u = null,
-    this.o = null
-}
-A.unmount = function(t) {
-    var e = t.__c;
-    e && e.__R && e.__R(),
-    e && t.__h === !0 && (t.type = null),
-    tn && tn(t)
-}
-,
-(Ce.prototype = new At).__c = function(t, e) {
-    var i = e.__c
-      , c = this;
-    c.t == null && (c.t = []),
-    c.t.push(i);
-    var _ = Mn(c.__v)
-      , l = !1
-      , w = function() {
-        l || (l = !0,
-        i.__R = null,
-        _ ? _(I) : I())
-    };
-    i.__R = w;
-    var I = function() {
-        if (!--c.__u) {
-            if (c.state.__a) {
-                var W = c.state.__a;
-                c.__v.__k[0] = xn(W, W.__c.__P, W.__c.__O)
-            }
-            var u;
-            for (c.setState({
-                __a: c.__b = null
-            }); u = c.t.pop(); )
-                u.forceUpdate()
-        }
-    }
-      , H = e.__h === !0;
-    c.__u++ || H || c.setState({
-        __a: c.__b = c.__v.__k[0]
-    }),
-    t.then(w, w)
-}
-,
-Ce.prototype.componentWillUnmount = function() {
-    this.t = []
-}
-,
-Ce.prototype.render = function(t, e) {
-    if (this.__b) {
-        if (this.__v.__k) {
-            var i = document.createElement("div")
-              , c = this.__v.__k[0].__c;
-            this.__v.__k[0] = Pn(this.__b, i, c.__O = c.__P)
-        }
-        this.__b = null
-    }
-    var _ = e.__a && Se($t, null, t.fallback);
-    return _ && (_.__h = null),
-    [Se($t, null, e.__a ? null : t.children), _]
-}
-;
-var en = function(t, e, i) {
-    if (++i[1] === i[0] && t.o.delete(e),
-    t.props.revealOrder && (t.props.revealOrder[0] !== "t" || !t.o.size))
-        for (i = t.u; i; ) {
-            for (; i.length > 3; )
-                i.pop()();
-            if (i[1] < i[0])
-                break;
-            t.u = i = i[2]
-        }
+  }, []);
+  return [val, toggleFn];
 };
-(de.prototype = new At).__a = function(t) {
-    var e = this
-      , i = Mn(e.__v)
-      , c = e.o.get(t);
-    return c[0]++,
-    function(_) {
-        var l = function() {
-            e.props.revealOrder ? (c.push(_),
-            en(e, t, c)) : _()
-        };
-        i ? i(l) : l()
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
     }
-}
-,
-de.prototype.render = function(t) {
-    this.u = null,
-    this.o = new Map;
-    var e = ge(t.children);
-    t.revealOrder && t.revealOrder[0] === "b" && e.reverse();
-    for (var i = e.length; i--; )
-        this.o.set(e[i], this.u = [1, 0, this.u]);
-    return t.children
-}
-,
-de.prototype.componentDidUpdate = de.prototype.componentDidMount = function() {
-    var t = this;
-    this.o.forEach(function(e, i) {
-        en(t, i, e)
-    })
-}
-;
-var Hn = typeof Symbol < "u" && Symbol.for && Symbol.for("react.element") || 60103
-  , Bn = /^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|image|letter|lighting|marker(?!H|W|U)|overline|paint|pointer|shape|stop|strikethrough|stroke|text(?!L)|transform|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/
-  , zn = typeof document < "u"
-  , Gn = function(t) {
-    return (typeof Symbol < "u" && typeof Symbol() == "symbol" ? /fil|che|rad/i : /fil|che|ra/i).test(t)
+  return a;
 };
-At.prototype.isReactComponent = {},
-["componentWillMount", "componentWillReceiveProps", "componentWillUpdate"].forEach(function(t) {
-    Object.defineProperty(At.prototype, t, {
-        configurable: !0,
-        get: function() {
-            return this["UNSAFE_" + t]
-        },
-        set: function(e) {
-            Object.defineProperty(this, t, {
-                configurable: !0,
-                writable: !0,
-                value: e
-            })
-        }
-    })
-});
-var nn = A.event;
-function Vn() {}
-function Wn() {
-    return this.cancelBubble
-}
-function Yn() {
-    return this.defaultPrevented
-}
-A.event = function(t) {
-    return nn && (t = nn(t)),
-    t.persist = Vn,
-    t.isPropagationStopped = Wn,
-    t.isDefaultPrevented = Yn,
-    t.nativeEvent = t
-}
-;
-var on = {
-    configurable: !0,
-    get: function() {
-        return this.class
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+const styles = {
+  container: {
+    borderRadius: "5%",
+    backgroundColor: "rgba(0,0,0,.7)",
+    color: "white",
+    padding: "5px 10px",
+    margin: 0,
+    maxWidth: 400
+  },
+  titleContainer: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  title: {
+    margin: 0,
+    overflow: "hidden"
+  },
+  description: {
+    margin: 0,
+    marginTop: 10
+  },
+  button: {
+    backgroundColor: "transparent",
+    color: "white",
+    borderRadius: "15%",
+    borderStyle: "outset",
+    padding: "2px 5px"
+  },
+  editContainer: {
+    marginTop: 10,
+    display: "flex",
+    justifyContent: "center"
+  }
+};
+const InfoElement = ({ title, description, isEdit, sanitized, id }) => {
+  const [isOpen, toggleIsOpen] = useToggle(false);
+  const elementRef = _$1(null);
+  const onClickContainer = T$1(() => {
+    if (isOpen === false) {
+      toggleIsOpen(true);
+      dispatchEvent("TOGGLE_INFO_ELEMENT");
     }
-}
-  , rn = A.vnode;
-A.vnode = function(t) {
-    var e = t.type
-      , i = t.props
-      , c = i;
-    if (typeof e == "string") {
-        var _ = e.indexOf("-") === -1;
-        for (var l in c = {},
-        i) {
-            var w = i[l];
-            zn && l === "children" && e === "noscript" || l === "value" && "defaultValue"in i && w == null || (l === "defaultValue" && "value"in i && i.value == null ? l = "value" : l === "download" && w === !0 ? w = "" : /ondoubleclick/i.test(l) ? l = "ondblclick" : /^onchange(textarea|input)/i.test(l + e) && !Gn(i.type) ? l = "oninput" : /^onfocus$/i.test(l) ? l = "onfocusin" : /^onblur$/i.test(l) ? l = "onfocusout" : /^on(Ani|Tra|Tou|BeforeInp|Compo)/.test(l) ? l = l.toLowerCase() : _ && Bn.test(l) ? l = l.replace(/[A-Z0-9]/g, "-$&").toLowerCase() : w === null && (w = void 0),
-            /^oninput$/i.test(l) && (l = l.toLowerCase(),
-            c[l] && (l = "oninputCapture")),
-            c[l] = w)
-        }
-        e == "select" && c.multiple && Array.isArray(c.value) && (c.value = ge(i.children).forEach(function(I) {
-            I.props.selected = c.value.indexOf(I.props.value) != -1
-        })),
-        e == "select" && c.defaultValue != null && (c.value = ge(i.children).forEach(function(I) {
-            I.props.selected = c.multiple ? c.defaultValue.indexOf(I.props.value) != -1 : c.defaultValue == I.props.value
-        })),
-        t.props = c,
-        i.class != i.className && (on.enumerable = "className"in i,
-        i.className != null && (c.class = i.className),
-        Object.defineProperty(c, "className", on))
+  }, []);
+  const contentProps = F$1(() => {
+    let props;
+    if (sanitized) {
+      props = {
+        dangerouslySetInnerHTML: { __html: description }
+      };
+    } else {
+      props = { children: description };
     }
-    t.$$typeof = Hn,
-    rn && rn(t)
+    return props;
+  }, [sanitized, description]);
+  const dispatchEvent = T$1((eventName, data) => {
+    const event = new CustomEvent(eventName, { bubbles: true, detail: __spreadValues({ id }, data) });
+    elementRef.current.dispatchEvent(event);
+  }, [elementRef.current, id]);
+  const onClickClose = T$1((e) => {
+    e.stopPropagation();
+    toggleIsOpen(false);
+    dispatchEvent("TOGGLE_INFO_ELEMENT");
+  }, []);
+  const saveElement = T$1((e) => {
+    e.stopPropagation();
+    const container = elementRef.current;
+    const title2 = container.querySelector("h4").textContent;
+    const description2 = container.querySelector("p").textContent;
+    toggleIsOpen(false);
+    dispatchEvent("UPDATE_INFO_ELEMENT", { title: title2, description: description2 });
+  }, []);
+  return /* @__PURE__ */ o("div", { ref: elementRef, style: styles.container, onClick: onClickContainer, children: [
+    /* @__PURE__ */ o("div", { style: styles.titleContainer, children: [
+      /* @__PURE__ */ o("h4", { contentEditable: isOpen && isEdit, style: styles.title, children: title }),
+      isOpen && /* @__PURE__ */ o("button", { style: styles.button, onClick: onClickClose, children: "X" })
+    ] }),
+    /* @__PURE__ */ o("p", __spreadValues({ contentEditable: isEdit, style: __spreadProps(__spreadValues({}, styles.description), { display: isOpen ? "block" : "none" }) }, contentProps)),
+    isEdit && isOpen && /* @__PURE__ */ o("div", { style: styles.editContainer, children: [
+      /* @__PURE__ */ o("button", { onClick: saveElement, style: styles.button, children: "Guardar" }),
+      "\xA0",
+      /* @__PURE__ */ o("button", { onClick: () => dispatchEvent("DELETE_INFO_ELEMENT"), style: styles.button, children: "Borrar" })
+    ] })
+  ] });
+};
+
+class HashTable {
+  constructor(array = [], prop = "id") {
+    this._prop = prop;
+    this._array = array;
+    this.table = this._arrayToDict(this._array);
+  }
+  add(item) {
+    this._array.push(item);
+    this.table[item[this._prop]] = item;
+    return this;
+  }
+  delete(item) {
+    if (typeof item === "string" || typeof item === "number") {
+      item = this.get(item);
+    }
+    if (item) {
+      this._array.forEach((arrayItem, i) => {
+        if (arrayItem[this._prop] === item[this._prop]) {
+          this._array.splice(i, 1);
+        }
+      });
+      return delete this.table[item[this._prop]];
+    }
+    return false;
+  }
+  get(index = 0) {
+    return index ? this.table[index] : this._array[index];
+  }
+  get length() {
+    return this._array.length;
+  }
+  get array() {
+    return this._array;
+  }
+  _arrayToDict(array) {
+    return array.reduce((obj, item) => {
+      obj[item[this._prop]] = item;
+      return obj;
+    }, {});
+  }
 }
-;
-var an = A.__r;
-A.__r = function(t) {
-    an && an(t),
-    t.__c
-}
-;
-var Xn = 0;
-function Ot(t, e, i, c, _) {
-    var l, w, I = {};
-    for (w in e)
-        w == "ref" ? l = e[w] : I[w] = e[w];
-    var H = {
-        type: t,
-        props: I,
-        key: i,
-        ref: l,
-        __k: null,
-        __: null,
-        __b: 0,
-        __e: null,
-        __d: void 0,
-        __c: null,
-        __h: null,
-        constructor: void 0,
-        __v: --Xn,
-        __source: _,
-        __self: c
+
+const _TourRenderer = class {
+  constructor(tour, dom, options = {}) {
+    this._classPrefix = "tr";
+    this._onUpdateInfoListeners = [];
+    this._onDeleteInfoListeners = [];
+    this._tour = tour;
+    this._options = Object.assign({}, _TourRenderer.DEFAULTS, options);
+    if (typeof dom === "string") {
+      dom = document.querySelector(dom);
+    }
+    this._validateTour();
+    this._dom = dom;
+    this._onLoad = options.onLoad;
+    this._init();
+  }
+  get panos() {
+    return this._panos;
+  }
+  destroy() {
+    this._viewer.destroy();
+  }
+  addInfoUpdateListener(fn) {
+    this._onUpdateInfoListeners.push(fn);
+  }
+  addInfoDeleteListener(fn) {
+    this._onDeleteInfoListeners.push(fn);
+  }
+  selectPOVInViewer() {
+    if (!this._isLoaded) {
+      return Promise.reject(new Error("viewer not loaded"));
+    }
+    this._isSelectingPOV = true;
+    this._selectPOVDeferred = new Defer();
+    this.toggleControls(false);
+    this._dom.classList.add(this._createClass("selecting-pov"));
+    this._selectPOVDeferred.promise.then(() => {
+      this.toggleControls(true);
+      this._dom.classList.remove(this._createClass("selecting-pov"));
+    });
+    return this._selectPOVDeferred.promise;
+  }
+  toggleControls(show) {
+    this._dom.querySelector(".pnlm-controls-container").classList.toggle(this._createClass("hide"), !show);
+    this._dom.querySelector(".pnlm-panorama-info").classList.toggle(this._createClass("hide"), !show);
+  }
+  addDOM(elm) {
+    elm.classList.add(_TourRenderer.CLASSES.DOM_ELEMENT);
+    this._dom.appendChild(elm);
+  }
+  deleteDOM(elm) {
+    this._dom.removeChild(elm);
+  }
+  addOverlay(elm, pov) {
+    const params = {
+      id: generateId(),
+      pitch: pov.pitch,
+      yaw: pov.yaw,
+      type: "info",
+      createTooltipFunc: (divParent) => {
+        divParent.appendChild(elm);
+      }
     };
-    if (typeof t == "function" && (l = t.defaultProps))
-        for (w in l)
-            I[w] === void 0 && (I[w] = l[w]);
-    return A.vnode && A.vnode(H),
-    H
-}
-window.libpannellum = function(t, e, i) {
-    function c(u) {
-        function Y(h, d) {
-            return h.level == 1 && d.level != 1 ? -1 : d.level == 1 && h.level != 1 ? 1 : d.timestamp - h.timestamp
-        }
-        function D(h, d) {
-            return h.level != d.level ? h.level - d.level : h.diff - d.diff
-        }
-        function b(h, d, z, T, y, f) {
-            this.vertices = h,
-            this.side = d,
-            this.level = z,
-            this.x = T,
-            this.y = y,
-            this.path = f.replace("%s", d).replace("%l", z).replace("%x", T).replace("%y", y)
-        }
-        function B(h, d, z, T, y) {
-            var f, L = d.vertices;
-            f = yt(h, L.slice(0, 3));
-            var p = yt(h, L.slice(3, 6))
-              , N = yt(h, L.slice(6, 9))
-              , L = yt(h, L.slice(9, 12))
-              , R = f[0] + p[0] + N[0] + L[0];
-            if (R == -4 || R == 4 ? f = !1 : (R = f[1] + p[1] + N[1] + L[1],
-            f = R == -4 || R == 4 ? !1 : f[2] + p[2] + N[2] + L[2] != 4),
-            f) {
-                for (f = d.vertices,
-                p = f[0] + f[3] + f[6] + f[9],
-                N = f[1] + f[4] + f[7] + f[10],
-                L = f[2] + f[5] + f[8] + f[11],
-                R = Math.sqrt(p * p + N * N + L * L),
-                L = Math.asin(L / R),
-                p = Math.atan2(N, p) - T,
-                p += p > Math.PI ? -2 * Math.PI : p < -Math.PI ? 2 * Math.PI : 0,
-                p = Math.abs(p),
-                d.diff = Math.acos(Math.sin(z) * Math.sin(L) + Math.cos(z) * Math.cos(L) * Math.cos(p)),
-                p = !1,
-                N = 0; N < m.nodeCache.length; N++)
-                    if (m.nodeCache[N].path == d.path) {
-                        p = !0,
-                        m.nodeCache[N].timestamp = m.nodeCacheTimestamp++,
-                        m.nodeCache[N].diff = d.diff,
-                        m.currentNodes.push(m.nodeCache[N]);
-                        break
-                    }
-                if (p || (d.timestamp = m.nodeCacheTimestamp++,
-                m.currentNodes.push(d),
-                m.nodeCache.push(d)),
-                d.level < m.level) {
-                    var L = P.cubeResolution * Math.pow(2, d.level - P.maxLevel)
-                      , p = Math.ceil(L * P.invTileResolution) - 1
-                      , N = L % P.tileResolution * 2
-                      , $ = 2 * L % P.tileResolution;
-                    $ === 0 && ($ = P.tileResolution),
-                    N === 0 && (N = 2 * P.tileResolution),
-                    R = .5,
-                    (d.x == p || d.y == p) && (R = 1 - P.tileResolution / (P.tileResolution + $));
-                    var G = 1 - R
-                      , L = []
-                      , nt = R
-                      , lt = R
-                      , q = R
-                      , Z = G
-                      , E = G
-                      , V = G;
-                    for ($ < P.tileResolution && (d.x == p && d.y != p ? (E = lt = .5,
-                    (d.side == "d" || d.side == "u") && (V = q = .5)) : d.x != p && d.y == p && (Z = nt = .5,
-                    d.side == "l" || d.side == "r") && (V = q = .5)),
-                    N <= P.tileResolution && (d.x == p && (nt = 0,
-                    Z = 1,
-                    d.side == "l" || d.side == "r") && (q = 0,
-                    V = 1),
-                    d.y == p && (lt = 0,
-                    E = 1,
-                    d.side == "d" || d.side == "u") && (q = 0,
-                    V = 1)),
-                    $ = [f[0], f[1], f[2], f[0] * nt + f[3] * Z, f[1] * R + f[4] * G, f[2] * q + f[5] * V, f[0] * nt + f[6] * Z, f[1] * lt + f[7] * E, f[2] * q + f[8] * V, f[0] * R + f[9] * G, f[1] * lt + f[10] * E, f[2] * q + f[11] * V],
-                    $ = new b($,d.side,d.level + 1,2 * d.x,2 * d.y,P.fullpath),
-                    L.push($),
-                    d.x == p && N <= P.tileResolution || ($ = [f[0] * nt + f[3] * Z, f[1] * R + f[4] * G, f[2] * q + f[5] * V, f[3], f[4], f[5], f[3] * R + f[6] * G, f[4] * lt + f[7] * E, f[5] * q + f[8] * V, f[0] * nt + f[6] * Z, f[1] * lt + f[7] * E, f[2] * q + f[8] * V],
-                    $ = new b($,d.side,d.level + 1,2 * d.x + 1,2 * d.y,P.fullpath),
-                    L.push($)),
-                    d.x == p && N <= P.tileResolution || d.y == p && N <= P.tileResolution || ($ = [f[0] * nt + f[6] * Z, f[1] * lt + f[7] * E, f[2] * q + f[8] * V, f[3] * R + f[6] * G, f[4] * lt + f[7] * E, f[5] * q + f[8] * V, f[6], f[7], f[8], f[9] * nt + f[6] * Z, f[10] * R + f[7] * G, f[11] * q + f[8] * V],
-                    $ = new b($,d.side,d.level + 1,2 * d.x + 1,2 * d.y + 1,P.fullpath),
-                    L.push($)),
-                    d.y == p && N <= P.tileResolution || ($ = [f[0] * R + f[9] * G, f[1] * lt + f[10] * E, f[2] * q + f[11] * V, f[0] * nt + f[6] * Z, f[1] * lt + f[7] * E, f[2] * q + f[8] * V, f[9] * nt + f[6] * Z, f[10] * R + f[7] * G, f[11] * q + f[8] * V, f[9], f[10], f[11]],
-                    $ = new b($,d.side,d.level + 1,2 * d.x,2 * d.y + 1,P.fullpath),
-                    L.push($)),
-                    d = 0; d < L.length; d++)
-                        B(h, L[d], z, T)
-                }
-            }
-        }
-        function at() {
-            return [-1, 1, -1, 1, 1, -1, 1, -1, -1, -1, -1, -1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1]
-        }
-        function X(h, d, z) {
-            var T = Math.sin(d);
-            if (d = Math.cos(d),
-            z == "x")
-                return [h[0], d * h[1] + T * h[2], d * h[2] - T * h[1], h[3], d * h[4] + T * h[5], d * h[5] - T * h[4], h[6], d * h[7] + T * h[8], d * h[8] - T * h[7]];
-            if (z == "y")
-                return [d * h[0] - T * h[2], h[1], d * h[2] + T * h[0], d * h[3] - T * h[5], h[4], d * h[5] + T * h[3], d * h[6] - T * h[8], h[7], d * h[8] + T * h[6]];
-            if (z == "z")
-                return [d * h[0] + T * h[1], d * h[1] - T * h[0], h[2], d * h[3] + T * h[4], d * h[4] - T * h[3], h[5], d * h[6] + T * h[7], d * h[7] - T * h[6], h[8]]
-        }
-        function Q(h) {
-            return [h[0], h[4], h[8], h[12], h[1], h[5], h[9], h[13], h[2], h[6], h[10], h[14], h[3], h[7], h[11], h[15]]
-        }
-        function ht(h) {
-            ae(h, h.path + "." + P.extension, function(d, z) {
-                h.texture = d,
-                h.textureLoaded = z ? 2 : 1
-            }, Vt.crossOrigin)
-        }
-        function yt(h, d) {
-            var y = [h[0] * d[0] + h[1] * d[1] + h[2] * d[2], h[4] * d[0] + h[5] * d[1] + h[6] * d[2], h[11] + h[8] * d[0] + h[9] * d[1] + h[10] * d[2], 1 / (h[12] * d[0] + h[13] * d[1] + h[14] * d[2])]
-              , z = y[0] * y[3]
-              , T = y[1] * y[3]
-              , y = y[2] * y[3]
-              , f = [0, 0, 0];
-            return -1 > z && (f[0] = -1),
-            1 < z && (f[0] = 1),
-            -1 > T && (f[1] = -1),
-            1 < T && (f[1] = 1),
-            (-1 > y || 1 < y) && (f[2] = 1),
-            f
-        }
-        function wt() {
-            console.log("Reducing canvas size due to error 1286!"),
-            K.width = Math.round(K.width / 2),
-            K.height = Math.round(K.height / 2)
-        }
-        var K = e.createElement("canvas");
-        K.style.width = K.style.height = "100%",
-        u.appendChild(K);
-        var m, a, J, st, Tt, mt, Gt, Dt, P, j, tt, St, jt, Et, Bt, Vt;
-        this.init = function(h, d, z, T, y, f, p, N) {
-            function L(Z) {
-                if ($) {
-                    var E = Z * Z * 4
-                      , V = new Uint8ClampedArray(E)
-                      , ot = N.backgroundColor ? N.backgroundColor : [0, 0, 0];
-                    ot[0] *= 255,
-                    ot[1] *= 255,
-                    ot[2] *= 255;
-                    for (var n = 0; n < E; n++)
-                        V[n++] = ot[0],
-                        V[n++] = ot[1],
-                        V[n++] = ot[2];
-                    for (Z = new ImageData(V,Z,Z),
-                    R = 0; 6 > R; R++)
-                        P[R].width == 0 && (P[R] = Z)
-                }
-            }
-            if (d === i && (d = "equirectangular"),
-            d != "equirectangular" && d != "cubemap" && d != "multires")
-                throw console.log("Error: invalid image type specified!"),
-                {
-                    type: "config error"
-                };
-            if (j = d,
-            P = h,
-            tt = z,
-            Vt = N || {},
-            m) {
-                if (J && (a.detachShader(m, J),
-                a.deleteShader(J)),
-                st && (a.detachShader(m, st),
-                a.deleteShader(st)),
-                a.bindBuffer(a.ARRAY_BUFFER, null),
-                a.bindBuffer(a.ELEMENT_ARRAY_BUFFER, null),
-                m.texture && a.deleteTexture(m.texture),
-                m.nodeCache)
-                    for (h = 0; h < m.nodeCache.length; h++)
-                        a.deleteTexture(m.nodeCache[h].texture);
-                a.deleteProgram(m),
-                m = i
-            }
-            Dt = i;
-            var R, $ = !1, G;
-            if (j == "cubemap")
-                for (R = 0; 6 > R; R++)
-                    0 < P[R].width ? (G === i && (G = P[R].width),
-                    G != P[R].width && console.log("Cube faces have inconsistent widths: " + G + " vs. " + P[R].width)) : $ = !0;
-            if (j == "cubemap" && (G & G - 1) !== 0 && (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 8_/) || navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 9_/) || navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 10_/) || navigator.userAgent.match(/Trident.*rv[ :]*11\./)) || (a || (a = K.getContext("experimental-webgl", {
-                alpha: !1,
-                depth: !1
-            })),
-            a && a.getError() == 1286 && wt()),
-            !a && (j == "multires" && P.hasOwnProperty("fallbackPath") || j == "cubemap") && ("WebkitAppearance"in e.documentElement.style || navigator.userAgent.match(/Trident.*rv[ :]*11\./) || navigator.appVersion.indexOf("MSIE 10") !== -1)) {
-                mt && u.removeChild(mt),
-                mt = e.createElement("div"),
-                mt.className = "pnlm-world",
-                T = P.basePath ? P.basePath + P.fallbackPath : P.fallbackPath;
-                var nt = "frblud".split("")
-                  , lt = 0;
-                y = function() {
-                    var E = e.createElement("canvas");
-                    E.className = "pnlm-face pnlm-" + nt[this.side] + "face",
-                    mt.appendChild(E);
-                    var V = E.getContext("2d");
-                    E.style.width = this.width + 4 + "px",
-                    E.style.height = this.height + 4 + "px",
-                    E.width = this.width + 4,
-                    E.height = this.height + 4,
-                    V.drawImage(this, 2, 2);
-                    var ot = V.getImageData(0, 0, E.width, E.height), n = ot.data, O, S;
-                    for (O = 2; O < E.width - 2; O++)
-                        for (S = 0; 4 > S; S++)
-                            n[4 * (O + E.width) + S] = n[4 * (O + 2 * E.width) + S],
-                            n[4 * (O + E.width * (E.height - 2)) + S] = n[4 * (O + E.width * (E.height - 3)) + S];
-                    for (O = 2; O < E.height - 2; O++)
-                        for (S = 0; 4 > S; S++)
-                            n[4 * (O * E.width + 1) + S] = n[4 * (O * E.width + 2) + S],
-                            n[4 * ((O + 1) * E.width - 2) + S] = n[4 * ((O + 1) * E.width - 3) + S];
-                    for (S = 0; 4 > S; S++)
-                        n[4 * (E.width + 1) + S] = n[4 * (2 * E.width + 2) + S],
-                        n[4 * (2 * E.width - 2) + S] = n[4 * (3 * E.width - 3) + S],
-                        n[4 * (E.width * (E.height - 2) + 1) + S] = n[4 * (E.width * (E.height - 3) + 2) + S],
-                        n[4 * (E.width * (E.height - 1) - 2) + S] = n[4 * (E.width * (E.height - 2) - 3) + S];
-                    for (O = 1; O < E.width - 1; O++)
-                        for (S = 0; 4 > S; S++)
-                            n[4 * O + S] = n[4 * (O + E.width) + S],
-                            n[4 * (O + E.width * (E.height - 1)) + S] = n[4 * (O + E.width * (E.height - 2)) + S];
-                    for (O = 1; O < E.height - 1; O++)
-                        for (S = 0; 4 > S; S++)
-                            n[O * E.width * 4 + S] = n[4 * (O * E.width + 1) + S],
-                            n[4 * ((O + 1) * E.width - 1) + S] = n[4 * ((O + 1) * E.width - 2) + S];
-                    for (S = 0; 4 > S; S++)
-                        n[S] = n[4 * (E.width + 1) + S],
-                        n[4 * (E.width - 1) + S] = n[4 * (2 * E.width - 2) + S],
-                        n[E.width * (E.height - 1) * 4 + S] = n[4 * (E.width * (E.height - 2) + 1) + S],
-                        n[4 * (E.width * E.height - 1) + S] = n[4 * (E.width * (E.height - 1) - 2) + S];
-                    V.putImageData(ot, 0, 0),
-                    q.call(this)
-                }
-                ;
-                var q = function() {
-                    0 < this.width ? (Tt === i && (Tt = this.width),
-                    Tt != this.width && console.log("Fallback faces have inconsistent widths: " + Tt + " vs. " + this.width)) : $ = !0,
-                    lt++,
-                    lt == 6 && (Tt = this.width,
-                    u.appendChild(mt),
-                    p())
-                }
-                  , $ = !1;
-                for (R = 0; 6 > R; R++)
-                    f = new Image,
-                    f.crossOrigin = Vt.crossOrigin ? Vt.crossOrigin : "anonymous",
-                    f.side = R,
-                    f.onload = y,
-                    f.onerror = q,
-                    f.src = j == "multires" ? T.replace("%s", nt[R]) + "." + P.extension : P[R].src;
-                L(Tt)
-            } else {
-                if (!a)
-                    throw console.log("Error: no WebGL support detected!"),
-                    {
-                        type: "no webgl"
-                    };
-                for (j == "cubemap" && L(G),
-                P.fullpath = P.basePath ? P.basePath + P.path : P.path,
-                P.invTileResolution = 1 / P.tileResolution,
-                h = at(),
-                Gt = [],
-                R = 0; 6 > R; R++)
-                    Gt[R] = h.slice(12 * R, 12 * R + 12),
-                    h = at();
-                if (h = 0,
-                j == "equirectangular") {
-                    if (h = a.getParameter(a.MAX_TEXTURE_SIZE),
-                    Math.max(P.width / 2, P.height) > h)
-                        throw console.log("Error: The image is too big; it's " + P.width + "px wide, but this device's maximum supported size is " + 2 * h + "px."),
-                        {
-                            type: "webgl size error",
-                            width: P.width,
-                            maxWidth: 2 * h
-                        }
-                } else if (j == "cubemap" && G > a.getParameter(a.MAX_CUBE_MAP_TEXTURE_SIZE))
-                    throw console.log("Error: The image is too big; it's " + G + "px wide, but this device's maximum supported size is " + h + "px."),
-                    {
-                        type: "webgl size error",
-                        width: G,
-                        maxWidth: h
-                    };
-                if (N === i || N.horizonPitch === i && N.horizonRoll === i || (Dt = [N.horizonPitch == i ? 0 : N.horizonPitch, N.horizonRoll == i ? 0 : N.horizonRoll]),
-                G = a.TEXTURE_2D,
-                a.viewport(0, 0, a.drawingBufferWidth, a.drawingBufferHeight),
-                a.getShaderPrecisionFormat && (d = a.getShaderPrecisionFormat(a.FRAGMENT_SHADER, a.HIGH_FLOAT)) && 1 > d.precision && (w = w.replace("highp", "mediump")),
-                J = a.createShader(a.VERTEX_SHADER),
-                d = _,
-                j == "multires" && (d = l),
-                a.shaderSource(J, d),
-                a.compileShader(J),
-                st = a.createShader(a.FRAGMENT_SHADER),
-                d = H,
-                j == "cubemap" ? (G = a.TEXTURE_CUBE_MAP,
-                d = I) : j == "multires" && (d = W),
-                a.shaderSource(st, d),
-                a.compileShader(st),
-                m = a.createProgram(),
-                a.attachShader(m, J),
-                a.attachShader(m, st),
-                a.linkProgram(m),
-                a.getShaderParameter(J, a.COMPILE_STATUS) || console.log(a.getShaderInfoLog(J)),
-                a.getShaderParameter(st, a.COMPILE_STATUS) || console.log(a.getShaderInfoLog(st)),
-                a.getProgramParameter(m, a.LINK_STATUS) || console.log(a.getProgramInfoLog(m)),
-                a.useProgram(m),
-                m.drawInProgress = !1,
-                d = N.backgroundColor ? N.backgroundColor : [0, 0, 0],
-                a.clearColor(d[0], d[1], d[2], 1),
-                a.clear(a.COLOR_BUFFER_BIT),
-                m.texCoordLocation = a.getAttribLocation(m, "a_texCoord"),
-                a.enableVertexAttribArray(m.texCoordLocation),
-                j != "multires" ? (St || (St = a.createBuffer()),
-                a.bindBuffer(a.ARRAY_BUFFER, St),
-                a.bufferData(a.ARRAY_BUFFER, new Float32Array([-1, 1, 1, 1, 1, -1, -1, 1, 1, -1, -1, -1]), a.STATIC_DRAW),
-                a.vertexAttribPointer(m.texCoordLocation, 2, a.FLOAT, !1, 0, 0),
-                m.aspectRatio = a.getUniformLocation(m, "u_aspectRatio"),
-                a.uniform1f(m.aspectRatio, a.drawingBufferWidth / a.drawingBufferHeight),
-                m.psi = a.getUniformLocation(m, "u_psi"),
-                m.theta = a.getUniformLocation(m, "u_theta"),
-                m.f = a.getUniformLocation(m, "u_f"),
-                m.h = a.getUniformLocation(m, "u_h"),
-                m.v = a.getUniformLocation(m, "u_v"),
-                m.vo = a.getUniformLocation(m, "u_vo"),
-                m.rot = a.getUniformLocation(m, "u_rot"),
-                a.uniform1f(m.h, T / (2 * Math.PI)),
-                a.uniform1f(m.v, y / Math.PI),
-                a.uniform1f(m.vo, f / Math.PI * 2),
-                j == "equirectangular" && (m.backgroundColor = a.getUniformLocation(m, "u_backgroundColor"),
-                a.uniform4fv(m.backgroundColor, d.concat([1]))),
-                m.texture = a.createTexture(),
-                a.bindTexture(G, m.texture),
-                j == "cubemap" ? (a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_X, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[1]),
-                a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[3]),
-                a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[4]),
-                a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[5]),
-                a.texImage2D(a.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[0]),
-                a.texImage2D(a.TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P[2])) : P.width <= h ? (a.uniform1i(a.getUniformLocation(m, "u_splitImage"), 0),
-                a.texImage2D(G, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P)) : (a.uniform1i(a.getUniformLocation(m, "u_splitImage"), 1),
-                T = e.createElement("canvas"),
-                T.width = P.width / 2,
-                T.height = P.height,
-                T = T.getContext("2d"),
-                T.drawImage(P, 0, 0),
-                y = T.getImageData(0, 0, P.width / 2, P.height),
-                a.texImage2D(G, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, y),
-                m.texture2 = a.createTexture(),
-                a.activeTexture(a.TEXTURE1),
-                a.bindTexture(G, m.texture2),
-                a.uniform1i(a.getUniformLocation(m, "u_image1"), 1),
-                T.drawImage(P, -P.width / 2, 0),
-                y = T.getImageData(0, 0, P.width / 2, P.height),
-                a.texImage2D(G, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, y),
-                a.texParameteri(G, a.TEXTURE_WRAP_S, a.CLAMP_TO_EDGE),
-                a.texParameteri(G, a.TEXTURE_WRAP_T, a.CLAMP_TO_EDGE),
-                a.texParameteri(G, a.TEXTURE_MIN_FILTER, a.LINEAR),
-                a.texParameteri(G, a.TEXTURE_MAG_FILTER, a.LINEAR),
-                a.activeTexture(a.TEXTURE0)),
-                a.texParameteri(G, a.TEXTURE_WRAP_S, a.CLAMP_TO_EDGE),
-                a.texParameteri(G, a.TEXTURE_WRAP_T, a.CLAMP_TO_EDGE),
-                a.texParameteri(G, a.TEXTURE_MIN_FILTER, a.LINEAR),
-                a.texParameteri(G, a.TEXTURE_MAG_FILTER, a.LINEAR)) : (m.vertPosLocation = a.getAttribLocation(m, "a_vertCoord"),
-                a.enableVertexAttribArray(m.vertPosLocation),
-                jt || (jt = a.createBuffer()),
-                Et || (Et = a.createBuffer()),
-                Bt || (Bt = a.createBuffer()),
-                a.bindBuffer(a.ARRAY_BUFFER, Et),
-                a.bufferData(a.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]), a.STATIC_DRAW),
-                a.bindBuffer(a.ELEMENT_ARRAY_BUFFER, Bt),
-                a.bufferData(a.ELEMENT_ARRAY_BUFFER, new Uint16Array([0, 1, 2, 0, 2, 3]), a.STATIC_DRAW),
-                m.perspUniform = a.getUniformLocation(m, "u_perspMatrix"),
-                m.cubeUniform = a.getUniformLocation(m, "u_cubeMatrix"),
-                m.level = -1,
-                m.currentNodes = [],
-                m.nodeCache = [],
-                m.nodeCacheTimestamp = 0),
-                T = a.getError(),
-                T !== 0)
-                    throw console.log("Error: Something went wrong with WebGL!", T),
-                    {
-                        type: "webgl error"
-                    };
-                p()
-            }
-        }
-        ,
-        this.destroy = function() {
-            if (u !== i && (K !== i && u.contains(K) && u.removeChild(K),
-            mt !== i && u.contains(mt) && u.removeChild(mt)),
-            a) {
-                var h = a.getExtension("WEBGL_lose_context");
-                h && h.loseContext()
-            }
-        }
-        ,
-        this.resize = function() {
-            var h = t.devicePixelRatio || 1;
-            K.width = K.clientWidth * h,
-            K.height = K.clientHeight * h,
-            a && (a.getError() == 1286 && wt(),
-            a.viewport(0, 0, a.drawingBufferWidth, a.drawingBufferHeight),
-            j != "multires" && a.uniform1f(m.aspectRatio, K.clientWidth / K.clientHeight))
-        }
-        ,
-        this.resize(),
-        this.setPose = function(h, d) {
-            Dt = [h, d]
-        }
-        ,
-        this.render = function(h, d, z, T) {
-            var y, f = 0;
-            if (T === i && (T = {}),
-            T.roll && (f = T.roll),
-            Dt !== i) {
-                y = Dt[0];
-                var p = Dt[1]
-                  , N = h
-                  , L = d
-                  , R = Math.cos(p) * Math.sin(h) * Math.sin(y) + Math.cos(h) * (Math.cos(y) * Math.cos(d) + Math.sin(p) * Math.sin(y) * Math.sin(d))
-                  , $ = -Math.sin(h) * Math.sin(p) + Math.cos(h) * Math.cos(p) * Math.sin(d);
-                h = Math.cos(p) * Math.cos(y) * Math.sin(h) + Math.cos(h) * (-Math.cos(d) * Math.sin(y) + Math.cos(y) * Math.sin(p) * Math.sin(d)),
-                h = Math.asin(Math.max(Math.min(h, 1), -1)),
-                d = Math.atan2($, R),
-                y = [Math.cos(N) * (Math.sin(p) * Math.sin(y) * Math.cos(L) - Math.cos(y) * Math.sin(L)), Math.cos(N) * Math.cos(p) * Math.cos(L), Math.cos(N) * (Math.cos(y) * Math.sin(p) * Math.cos(L) + Math.sin(L) * Math.sin(y))],
-                p = [-Math.cos(h) * Math.sin(d), Math.cos(h) * Math.cos(d)],
-                p = Math.acos(Math.max(Math.min((y[0] * p[0] + y[1] * p[1]) / (Math.sqrt(y[0] * y[0] + y[1] * y[1] + y[2] * y[2]) * Math.sqrt(p[0] * p[0] + p[1] * p[1])), 1), -1)),
-                0 > y[2] && (p = 2 * Math.PI - p),
-                f += p
-            }
-            if (a || j != "multires" && j != "cubemap") {
-                if (j != "multires")
-                    z = 2 * Math.atan(Math.tan(.5 * z) / (a.drawingBufferWidth / a.drawingBufferHeight)),
-                    z = 1 / Math.tan(.5 * z),
-                    a.uniform1f(m.psi, d),
-                    a.uniform1f(m.theta, h),
-                    a.uniform1f(m.rot, f),
-                    a.uniform1f(m.f, z),
-                    tt === !0 && j == "equirectangular" && (a.bindTexture(a.TEXTURE_2D, m.texture),
-                    a.texImage2D(a.TEXTURE_2D, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, P)),
-                    a.drawArrays(a.TRIANGLES, 0, 6);
-                else {
-                    for (y = a.drawingBufferWidth / a.drawingBufferHeight,
-                    p = 2 * Math.atan(Math.tan(z / 2) * a.drawingBufferHeight / a.drawingBufferWidth),
-                    p = 1 / Math.tan(p / 2),
-                    y = [p / y, 0, 0, 0, 0, p, 0, 0, 0, 0, 100.1 / -99.9, 20 / -99.9, 0, 0, -1, 0],
-                    p = 1; p < P.maxLevel && a.drawingBufferWidth > P.tileResolution * Math.pow(2, p - 1) * Math.tan(z / 2) * .707; )
-                        p++;
-                    if (m.level = p,
-                    p = [1, 0, 0, 0, 1, 0, 0, 0, 1],
-                    p = X(p, -f, "z"),
-                    p = X(p, -h, "x"),
-                    p = X(p, d, "y"),
-                    p = [p[0], p[1], p[2], 0, p[3], p[4], p[5], 0, p[6], p[7], p[8], 0, 0, 0, 0, 1],
-                    a.uniformMatrix4fv(m.perspUniform, !1, new Float32Array(Q(y))),
-                    a.uniformMatrix4fv(m.cubeUniform, !1, new Float32Array(Q(p))),
-                    f = [y[0] * p[0], y[0] * p[1], y[0] * p[2], 0, y[5] * p[4], y[5] * p[5], y[5] * p[6], 0, y[10] * p[8], y[10] * p[9], y[10] * p[10], y[11], -p[8], -p[9], -p[10], 0],
-                    m.nodeCache.sort(Y),
-                    200 < m.nodeCache.length && m.nodeCache.length > m.currentNodes.length + 50)
-                        for (y = m.nodeCache.splice(200, m.nodeCache.length - 200),
-                        p = 0; p < y.length; p++)
-                            a.deleteTexture(y[p].texture);
-                    for (m.currentNodes = [],
-                    p = "fbudlr".split(""),
-                    y = 0; 6 > y; y++)
-                        N = new b(Gt[y],p[y],1,0,0,P.fullpath),
-                        B(f, N, h, d);
-                    for (m.currentNodes.sort(D),
-                    h = Lt.length - 1; 0 <= h; h--)
-                        m.currentNodes.indexOf(Lt[h].node) === -1 && (Lt[h].node.textureLoad = !1,
-                        Lt.splice(h, 1));
-                    if (Lt.length === 0) {
-                        for (h = 0; h < m.currentNodes.length; h++)
-                            if (d = m.currentNodes[h],
-                            !d.texture && !d.textureLoad) {
-                                d.textureLoad = !0,
-                                setTimeout(ht, 0, d);
-                                break
-                            }
-                    }
-                    if (!m.drawInProgress) {
-                        for (m.drawInProgress = !0,
-                        a.clear(a.COLOR_BUFFER_BIT),
-                        h = 0; h < m.currentNodes.length; h++)
-                            1 < m.currentNodes[h].textureLoaded && (a.bindBuffer(a.ARRAY_BUFFER, jt),
-                            a.bufferData(a.ARRAY_BUFFER, new Float32Array(m.currentNodes[h].vertices), a.STATIC_DRAW),
-                            a.vertexAttribPointer(m.vertPosLocation, 3, a.FLOAT, !1, 0, 0),
-                            a.bindBuffer(a.ARRAY_BUFFER, Et),
-                            a.vertexAttribPointer(m.texCoordLocation, 2, a.FLOAT, !1, 0, 0),
-                            a.bindTexture(a.TEXTURE_2D, m.currentNodes[h].texture),
-                            a.drawElements(a.TRIANGLES, 6, a.UNSIGNED_SHORT, 0));
-                        m.drawInProgress = !1
-                    }
-                }
-                if (T.returnImage !== i)
-                    return K.toDataURL("image/png")
-            } else
-                for (y = Tt / 2,
-                T = {
-                    f: "translate3d(-" + (y + 2) + "px, -" + (y + 2) + "px, -" + y + "px)",
-                    b: "translate3d(" + (y + 2) + "px, -" + (y + 2) + "px, " + y + "px) rotateX(180deg) rotateZ(180deg)",
-                    u: "translate3d(-" + (y + 2) + "px, -" + y + "px, " + (y + 2) + "px) rotateX(270deg)",
-                    d: "translate3d(-" + (y + 2) + "px, " + y + "px, -" + (y + 2) + "px) rotateX(90deg)",
-                    l: "translate3d(-" + y + "px, -" + (y + 2) + "px, " + (y + 2) + "px) rotateX(180deg) rotateY(90deg) rotateZ(180deg)",
-                    r: "translate3d(" + y + "px, -" + (y + 2) + "px, -" + (y + 2) + "px) rotateY(270deg)"
-                },
-                z = 1 / Math.tan(z / 2),
-                z = z * K.clientWidth / 2 + "px",
-                d = "perspective(" + z + ") translateZ(" + z + ") rotateX(" + h + "rad) rotateY(" + d + "rad) ",
-                z = Object.keys(T),
-                h = 0; 6 > h; h++)
-                    (f = mt.querySelector(".pnlm-" + z[h] + "face")) && (f.style.webkitTransform = d + T[z[h]],
-                    f.style.transform = d + T[z[h]])
-        }
-        ,
-        this.isLoading = function() {
-            if (a && j == "multires") {
-                for (var h = 0; h < m.currentNodes.length; h++)
-                    if (!m.currentNodes[h].textureLoaded)
-                        return !0
-            }
-            return !1
-        }
-        ,
-        this.getCanvas = function() {
-            return K
-        }
-        ;
-        var Lt = []
-          , ae = function() {
-            function h() {
-                var p = this;
-                this.texture = this.callback = null,
-                this.image = new Image,
-                this.image.crossOrigin = y || "anonymous";
-                var N = function() {
-                    if (0 < p.image.width && 0 < p.image.height) {
-                        var L = p.image;
-                        a.bindTexture(a.TEXTURE_2D, p.texture),
-                        a.texImage2D(a.TEXTURE_2D, 0, a.RGB, a.RGB, a.UNSIGNED_BYTE, L),
-                        a.texParameteri(a.TEXTURE_2D, a.TEXTURE_MAG_FILTER, a.LINEAR),
-                        a.texParameteri(a.TEXTURE_2D, a.TEXTURE_MIN_FILTER, a.LINEAR),
-                        a.texParameteri(a.TEXTURE_2D, a.TEXTURE_WRAP_S, a.CLAMP_TO_EDGE),
-                        a.texParameteri(a.TEXTURE_2D, a.TEXTURE_WRAP_T, a.CLAMP_TO_EDGE),
-                        a.bindTexture(a.TEXTURE_2D, null),
-                        p.callback(p.texture, !0)
-                    } else
-                        p.callback(p.texture, !1);
-                    Lt.length ? (L = Lt.shift(),
-                    p.loadTexture(L.src, L.texture, L.callback)) : T[z++] = p
-                };
-                this.image.addEventListener("load", N),
-                this.image.addEventListener("error", N)
-            }
-            function d(p, N, L, R) {
-                this.node = p,
-                this.src = N,
-                this.texture = L,
-                this.callback = R
-            }
-            var z = 4, T = {}, y;
-            h.prototype.loadTexture = function(p, N, L) {
-                this.texture = N,
-                this.callback = L,
-                this.image.src = p
-            }
-            ;
-            for (var f = 0; f < z; f++)
-                T[f] = new h;
-            return function(p, N, L, R) {
-                return y = R,
-                R = a.createTexture(),
-                z ? T[--z].loadTexture(N, R, L) : Lt.push(new d(p,N,R,L)),
-                R
-            }
-        }()
+    this._viewer.addHotSpot(params);
+    return params;
+  }
+  deleteOverlay(item) {
+    let index;
+    if (typeof item === "object") {
+      index = item.id;
+    } else {
+      index = item;
     }
-    var _ = "attribute vec2 a_texCoord;varying vec2 v_texCoord;void main() {gl_Position = vec4(a_texCoord, 0.0, 1.0);v_texCoord = a_texCoord;}"
-      , l = "attribute vec3 a_vertCoord;attribute vec2 a_texCoord;uniform mat4 u_cubeMatrix;uniform mat4 u_perspMatrix;varying mediump vec2 v_texCoord;void main(void) {gl_Position = u_perspMatrix * u_cubeMatrix * vec4(a_vertCoord, 1.0);v_texCoord = a_texCoord;}"
-      , w = `precision highp float;
-uniform float u_aspectRatio;
-uniform float u_psi;
-uniform float u_theta;
-uniform float u_f;
-uniform float u_h;
-uniform float u_v;
-uniform float u_vo;
-uniform float u_rot;
-const float PI = 3.14159265358979323846264;
-uniform sampler2D u_image0;
-uniform sampler2D u_image1;
-uniform bool u_splitImage;
-uniform samplerCube u_imageCube;
-varying vec2 v_texCoord;
-uniform vec4 u_backgroundColor;
-void main() {
-float x = v_texCoord.x * u_aspectRatio;
-float y = v_texCoord.y;
-float sinrot = sin(u_rot);
-float cosrot = cos(u_rot);
-float rot_x = x * cosrot - y * sinrot;
-float rot_y = x * sinrot + y * cosrot;
-float sintheta = sin(u_theta);
-float costheta = cos(u_theta);
-float a = u_f * costheta - rot_y * sintheta;
-float root = sqrt(rot_x * rot_x + a * a);
-float lambda = atan(rot_x / root, a / root) + u_psi;
-float phi = atan((rot_y * costheta + u_f * sintheta) / root);`
-      , I = w + `float cosphi = cos(phi);
-gl_FragColor = textureCube(u_imageCube, vec3(cosphi*sin(lambda), sin(phi), cosphi*cos(lambda)));
-}`
-      , H = w + `lambda = mod(lambda + PI, PI * 2.0) - PI;
-vec2 coord = vec2(lambda / PI, phi / (PI / 2.0));
-if(coord.x < -u_h || coord.x > u_h || coord.y < -u_v + u_vo || coord.y > u_v + u_vo)
-gl_FragColor = u_backgroundColor;
-else {
-if(u_splitImage) {
-if(coord.x < 0.0)
-gl_FragColor = texture2D(u_image0, vec2((coord.x + u_h) / u_h, (-coord.y + u_v + u_vo) / (u_v * 2.0)));
-else
-gl_FragColor = texture2D(u_image1, vec2((coord.x + u_h) / u_h - 1.0, (-coord.y + u_v + u_vo) / (u_v * 2.0)));
-} else {
-gl_FragColor = texture2D(u_image0, vec2((coord.x + u_h) / (u_h * 2.0), (-coord.y + u_v + u_vo) / (u_v * 2.0)));
-}
-}
-}`
-      , W = "varying mediump vec2 v_texCoord;uniform sampler2D u_sampler;void main(void) {gl_FragColor = texture2D(u_sampler, v_texCoord);}";
+    this._viewer.removeHotSpot(index);
+  }
+  forceToRender() {
+    this._viewer.setPitch(this._viewer.getPitch() + 0.1);
+  }
+  addInfoElement(obj) {
+    let { id, title, description, POV: POV2 } = obj;
+    id = id || generateId();
+    const pano = this.getPano();
+    const info = {
+      id,
+      POV: POV2,
+      title,
+      description,
+      infoElement: /* @__PURE__ */ o(InfoElement, { isEdit: this._options.editMode, title, description, id })
+    };
+    pano.infoElements.add(info);
+    this._addInfoToViewer(info);
+  }
+  deleteInfoElement(elem) {
+    const pano = this.getPano();
+    if (typeof elem === "string") {
+      elem = pano.infoElements.get(elem);
+    }
+    pano.infoElements.delete(elem);
+    this.deleteOverlay(elem);
+  }
+  getPano(id = this._viewer.getScene()) {
+    return this._panos.get(id);
+  }
+  setPano(pano) {
+    let id = typeof pano === "object" ? pano.id : pano;
+    return this._viewer.loadScene(id);
+  }
+  /**
+   * @deprecated Use get pano
+   */
+  getCurrentPano() {
+    return this.getPano();
+  }
+  getPOV() {
+    const pov = {
+      pitch: 0,
+      yaw: 0
+    };
+    if (this._viewer) {
+      pov.yaw = this._viewer.getYaw();
+      pov.pitch = this._viewer.getPitch();
+    }
+    return pov;
+  }
+  deleteLink(link) {
+    const pano = this.getPano();
+    if (typeof link === "string") {
+      link = pano.links.get(link);
+    }
+    pano.links.delete(link.id);
+    this._viewer.removeHotSpot(link.id);
+    this.forceToRender();
+  }
+  getLink(id) {
+    return this.getPano().links.get(id);
+  }
+  createLinkTo(pano, pov = this.getPOV(), targetPOV = { pitch: 0, yaw: 0 }, id) {
+    if (!this._isLoaded)
+      return console.info("Viewer not loaded");
+    if (typeof pano !== "object") {
+      pano = this.getPano(pano);
+    }
+    if (!pano)
+      throw new Error("parameter missing: pano");
+    const link = {
+      POV: pov,
+      id: id || generateId(),
+      targetPOV,
+      to: pano
+    };
+    const currentPano = this.getCurrentPano();
+    currentPano.links.add(link);
+    this._addLink(link);
+    const event = new CustomEvent("newLink", { detail: link });
+    this._dom.dispatchEvent(event);
+    return link;
+  }
+  isFirstPano() {
+    return this.getCurrentPano() === this._first;
+  }
+  setFirstPano(pano) {
+    this._first = pano;
+  }
+  // ----------------------------------- PRIVATE ----------------------------------------------------------------
+  _init() {
+    this._processTour();
+    this._initViewer();
+    this._setListeners();
+  }
+  _initViewer() {
+    var _a, _b;
+    const params = {
+      autoLoad: this._options.autoLoad,
+      autoRotate: this._options.autoRotate,
+      showControls: this._options.showControls,
+      keyboardZoom: this._options.keyboardZoom,
+      mouseZoom: this._options.mouseZoom,
+      disableKeyboardCtrl: true,
+      // zoom level 120, 100 default, 50 most
+      default: {
+        firstScene: this._first.id,
+        pitch: (_a = this._first.POV) == null ? void 0 : _a.pitch,
+        sceneFadeDuration: 1e3,
+        yaw: (_b = this._first.POV) == null ? void 0 : _b.yaw
+      },
+      hfov: 120,
+      scenes: this._pannellumPanos.table
+    };
+    if (this._preview) {
+      params.preview = this._preview.url;
+    }
+    this._viewer = pannellum.viewer(this._dom, params);
+  }
+  _createClass(className) {
+    return `${this._classPrefix}-${className}`;
+  }
+  _processPanos() {
+    const panos = this._tour.panos || this._tour.photoSpheres;
+    this._panos = new HashTable(
+      panos.map((photoSphere) => {
+        return {
+          id: photoSphere.id,
+          infoElements: new HashTable(photoSphere.infoElements),
+          name: photoSphere.name,
+          POV: photoSphere.POV,
+          url: photoSphere.link
+        };
+      })
+    );
+    panos.forEach((photoSphere) => {
+      const pano = this._panos.get(photoSphere.id);
+      photoSphere.links = photoSphere.links || [];
+      photoSphere.infoElements = photoSphere.infoElements || [];
+      pano.links = new HashTable(photoSphere.links.map(this._transformToLink.bind(this)));
+      pano.infoElements = new HashTable(photoSphere.infoElements.map(this._transformToInfo.bind(this)));
+    });
+    this._pannellumPanos = new HashTable(this._panos.array.map(this._transformToPannellumPano.bind(this)));
+  }
+  _validateTour() {
+    const panos = this._tour && (this._tour.panos || this._tour.photoSpheres);
+    if (!panos || !panos.length) {
+      throw new Error(_TourRenderer.ERRORS.INVALID_TOUR);
+    }
+    const image = this._tour.images && this._tour.images[0];
+    if (image) {
+      this._preview = { url: image.link, name: image.name, id: image.id };
+    }
+    if (!this._tour.POV) {
+      this._tour.POV = {
+        yaw: 0,
+        pitch: 0
+      };
+    }
+  }
+  _processTour() {
+    this._name = this._tour.name;
+    this._description = this._tour.description;
+    this._processPanos();
+    if (this._tour.firstPhotoSphereId) {
+      this._first = this._panos.get(this._tour.firstPhotoSphereId) || this._panos.get();
+    } else {
+      this._first = this._panos.get();
+    }
+  }
+  _setListeners() {
+    this._viewer.on("load", this._onLoadPano.bind(this));
+    this._viewer.on("mousedown", this._onClick.bind(this));
+    this._viewer.on("touchstart", this._onClick.bind(this));
+    this._dom.addEventListener("TOGGLE_INFO_ELEMENT", this.forceToRender.bind(this));
+    this._dom.addEventListener("UPDATE_INFO_ELEMENT", this._updateInfoListener.bind(this));
+    this._dom.addEventListener("DELETE_INFO_ELEMENT", this._deleteInfoListener.bind(this));
+  }
+  _deleteInfoListener(ev) {
+    const data = ev.detail;
+    this.deleteInfoElement(data.id);
+    this._onDeleteInfoListeners.forEach((fn) => {
+      fn(data);
+    });
+  }
+  _updateInfoListener(ev) {
+    const data = ev.detail;
+    const info = this.getPano().infoElements.get(data.id);
+    info.title = data.title;
+    info.description = data.description;
+    this._onUpdateInfoListeners.forEach((fn) => {
+      fn(info);
+    });
+  }
+  _onClick(mouseEvent) {
+    if (!this._isSelectingPOV) {
+      return;
+    }
+    const event = mouseEvent.targetTouches && mouseEvent.targetTouches[0] || mouseEvent;
+    const coords = this._viewer.mouseEventToCoords(event);
+    const pov = {
+      pitch: coords[0],
+      yaw: coords[1]
+    };
+    this._isSelectingPOV = false;
+    this._selectPOVDeferred.resolve(pov);
+    this._selectPOVDeferred = null;
+  }
+  _onLoadPano(id) {
+    this._isLoaded = true;
+    if (!this._options.noLinks) {
+      this._setLinks();
+    }
+    this._setInfos();
+    const event = new Event("load");
+    this._dom.dispatchEvent(event);
+    if (typeof this._onLoad === "function")
+      this._onLoad();
+  }
+  _setLinks() {
+    const links = this.getCurrentPano().links;
+    links.array.forEach((link) => {
+      this._addLink(link);
+    });
+  }
+  _setInfos() {
+    const infos = this.getPano().infoElements;
+    infos.array.forEach((info) => {
+      this._addInfoToViewer(info);
+    });
+  }
+  _addInfoToViewer(info) {
+    this._viewer.addHotSpot(this._transformToPannellumOverlay(info));
+  }
+  _addLink(link) {
+    this._viewer.removeHotSpot(link.id);
+    this._viewer.addHotSpot(this._transformToPannellumLink(link));
+  }
+  _transformToLink(link) {
+    const pano = this._panos.get(link.toPhotoSphereId || link.toId);
     return {
-        renderer: function(u, Y, D, b) {
-            return new c(u)
-        }
-    }
-}(window, document);
-window.pannellum = function(t, e, i) {
-    function c(_, l) {
-        function w() {
-            var o = e.createElement("div");
-            if (o.innerHTML = "<!--[if lte IE 9]><i></i><![endif]-->",
-            o.getElementsByTagName("i").length == 1)
-                u();
-            else {
-                zt = n.hfov,
-                Qt = n.pitch;
-                var r;
-                if (n.type == "cubemap") {
-                    for (ft = [],
-                    o = 0; 6 > o; o++)
-                        ft.push(new Image),
-                        ft[o].crossOrigin = n.crossOrigin;
-                    M.load.lbox.style.display = "block",
-                    M.load.lbar.style.display = "none"
-                } else if (n.type == "multires")
-                    o = JSON.parse(JSON.stringify(n.multiRes)),
-                    n.basePath && n.multiRes.basePath && !/^(?:[a-z]+:)?\/\//i.test(n.multiRes.basePath) ? o.basePath = n.basePath + n.multiRes.basePath : n.multiRes.basePath ? o.basePath = n.multiRes.basePath : n.basePath && (o.basePath = n.basePath),
-                    ft = o;
-                else if (n.dynamic === !0)
-                    ft = n.panorama;
-                else {
-                    if (n.panorama === i) {
-                        u(n.strings.noPanoramaError);
-                        return
-                    }
-                    ft = new Image
-                }
-                if (n.type == "cubemap")
-                    for (var s = 6, v = function() {
-                        s--,
-                        s === 0 && H()
-                    }, g = function(xt) {
-                        var pt = e.createElement("a");
-                        pt.href = xt.target.src,
-                        pt.textContent = pt.href,
-                        u(n.strings.fileAccessError.replace("%s", pt.outerHTML))
-                    }, o = 0; o < ft.length; o++)
-                        r = n.cubeMap[o],
-                        r == "null" ? (console.log("Will use background instead of missing cubemap face " + o),
-                        v()) : (n.basePath && !I(r) && (r = n.basePath + r),
-                        ft[o].onload = v,
-                        ft[o].onerror = g,
-                        ft[o].src = Z(r));
-                else if (n.type == "multires")
-                    H();
-                else if (r = "",
-                n.basePath && (r = n.basePath),
-                n.dynamic !== !0) {
-                    r = I(n.panorama) ? n.panorama : r + n.panorama,
-                    ft.onload = function() {
-                        t.URL.revokeObjectURL(this.src),
-                        H()
-                    }
-                    ;
-                    var x = new XMLHttpRequest;
-                    x.onloadend = function() {
-                        if (x.status != 200) {
-                            var F = e.createElement("a");
-                            F.href = r,
-                            F.textContent = F.href,
-                            u(n.strings.fileAccessError.replace("%s", F.outerHTML))
-                        }
-                        W(this.response),
-                        M.load.msg.innerHTML = ""
-                    }
-                    ,
-                    x.onprogress = function(F) {
-                        if (F.lengthComputable) {
-                            M.load.lbarFill.style.width = F.loaded / F.total * 100 + "%";
-                            var xt, pt;
-                            1e6 < F.total ? (xt = "MB",
-                            pt = (F.loaded / 1e6).toFixed(2),
-                            F = (F.total / 1e6).toFixed(2)) : 1e3 < F.total ? (xt = "kB",
-                            pt = (F.loaded / 1e3).toFixed(1),
-                            F = (F.total / 1e3).toFixed(1)) : (xt = "B",
-                            pt = F.loaded,
-                            F = F.total),
-                            M.load.msg.innerHTML = pt + " / " + F + " " + xt
-                        } else
-                            M.load.lbox.style.display = "block",
-                            M.load.lbar.style.display = "none"
-                    }
-                    ;
-                    try {
-                        x.open("GET", r, !0)
-                    } catch {
-                        u(n.strings.malformedURLError)
-                    }
-                    x.responseType = "blob",
-                    x.setRequestHeader("Accept", "image/*,*/*;q=0.9"),
-                    x.withCredentials = n.crossOrigin === "use-credentials",
-                    x.send()
-                }
-                n.draggable && it.classList.add("pnlm-grab"),
-                it.classList.remove("pnlm-grabbing"),
-                ue = n.dynamicUpdate === !0,
-                n.dynamic && ue && (ft = n.panorama,
-                H())
-            }
-        }
-        function I(o) {
-            return /^(?:[a-z]+:)?\/\//i.test(o) || o[0] == "/" || o.slice(0, 5) == "blob:"
-        }
-        function H() {
-            O || (O = new libpannellum.renderer(ct)),
-            be || (be = !0,
-            gt.addEventListener("mousedown", b, !1),
-            e.addEventListener("mousemove", X, !1),
-            e.addEventListener("mouseup", Q, !1),
-            n.mouseZoom && (it.addEventListener("mousewheel", J, !1),
-            it.addEventListener("DOMMouseScroll", J, !1)),
-            n.doubleClickZoom && gt.addEventListener("dblclick", B, !1),
-            _.addEventListener("mozfullscreenchange", p, !1),
-            _.addEventListener("webkitfullscreenchange", p, !1),
-            _.addEventListener("msfullscreenchange", p, !1),
-            _.addEventListener("fullscreenchange", p, !1),
-            t.addEventListener("resize", j, !1),
-            t.addEventListener("orientationchange", j, !1),
-            n.disableKeyboardCtrl || (_.addEventListener("keydown", st, !1),
-            _.addEventListener("keyup", mt, !1),
-            _.addEventListener("blur", Tt, !1)),
-            e.addEventListener("mouseleave", Q, !1),
-            e.documentElement.style.pointerAction === "" && e.documentElement.style.touchAction === "" ? (gt.addEventListener("pointerdown", K, !1),
-            gt.addEventListener("pointermove", m, !1),
-            gt.addEventListener("pointerup", a, !1),
-            gt.addEventListener("pointerleave", a, !1)) : (gt.addEventListener("touchstart", ht, !1),
-            gt.addEventListener("touchmove", yt, !1),
-            gt.addEventListener("touchend", wt, !1)),
-            t.navigator.pointerEnabled && (_.style.touchAction = "none")),
-            Vt(),
-            L(n.hfov),
-            setTimeout(function() {}, 500)
-        }
-        function W(o) {
-            var r = new FileReader;
-            r.addEventListener("loadend", function() {
-                var s = r.result;
-                if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad).* os 8_/)) {
-                    var v = s.indexOf("\xFF\xC2");
-                    (0 > v || 65536 < v) && u(n.strings.iOS8WebGLError)
-                }
-                if (v = s.indexOf("<x:xmpmeta"),
-                -1 < v && n.ignoreGPanoXMP !== !0) {
-                    var g = s.substring(v, s.indexOf("</x:xmpmeta>") + 12)
-                      , _t = function(Xt) {
-                        var It;
-                        return 0 <= g.indexOf(Xt + '="') ? (It = g.substring(g.indexOf(Xt + '="') + Xt.length + 2),
-                        It = It.substring(0, It.indexOf('"'))) : 0 <= g.indexOf(Xt + ">") && (It = g.substring(g.indexOf(Xt + ">") + Xt.length + 1),
-                        It = It.substring(0, It.indexOf("<"))),
-                        It !== i ? Number(It) : null
-                    }
-                      , s = _t("GPano:FullPanoWidthPixels")
-                      , v = _t("GPano:CroppedAreaImageWidthPixels")
-                      , x = _t("GPano:FullPanoHeightPixels")
-                      , F = _t("GPano:CroppedAreaImageHeightPixels")
-                      , xt = _t("GPano:CroppedAreaTopPixels")
-                      , pt = _t("GPano:PoseHeadingDegrees")
-                      , Mt = _t("GPano:PosePitchDegrees")
-                      , _t = _t("GPano:PoseRollDegrees");
-                    s !== null && v !== null && x !== null && F !== null && xt !== null && (0 > Ct.indexOf("haov") && (n.haov = v / s * 360),
-                    0 > Ct.indexOf("vaov") && (n.vaov = F / x * 180),
-                    0 > Ct.indexOf("vOffset") && (n.vOffset = -180 * ((xt + F / 2) / x - .5)),
-                    pt !== null && 0 > Ct.indexOf("northOffset") && (n.northOffset = pt,
-                    n.compass !== !1 && (n.compass = !0)),
-                    Mt !== null && _t !== null && (0 > Ct.indexOf("horizonPitch") && (n.horizonPitch = Mt),
-                    0 > Ct.indexOf("horizonRoll") && (n.horizonRoll = _t)))
-                }
-                ft.src = t.URL.createObjectURL(o)
-            }),
-            r.readAsBinaryString !== i ? r.readAsBinaryString(o) : r.readAsText(o)
-        }
-        function u(o) {
-            o === i && (o = n.strings.genericWebGLError),
-            M.errorMsg.innerHTML = "<p>" + o + "</p>",
-            k.load.style.display = "none",
-            M.load.box.style.display = "none",
-            M.errorMsg.style.display = "table",
-            ce = !0,
-            et = i,
-            ct.style.display = "none",
-            V("error", o)
-        }
-        function Y(o) {
-            var r = D(o);
-            Nt.style.left = r.x + "px",
-            Nt.style.top = r.y + "px",
-            clearTimeout(Y.t1),
-            clearTimeout(Y.t2),
-            Nt.style.display = "block",
-            Nt.style.opacity = 1,
-            Y.t1 = setTimeout(function() {
-                Nt.style.opacity = 0
-            }, 2e3),
-            Y.t2 = setTimeout(function() {
-                Nt.style.display = "none"
-            }, 2500),
-            o.preventDefault()
-        }
-        function D(o) {
-            var r = _.getBoundingClientRect()
-              , s = {};
-            return s.x = (o.clientX || o.pageX) - r.left,
-            s.y = (o.clientY || o.pageY) - r.top,
-            s
-        }
-        function b(o) {
-            if (o.preventDefault(),
-            _.focus(),
-            et && n.draggable) {
-                var r = D(o);
-                if (n.hotSpotDebug) {
-                    var s = at(o);
-                    console.log("Pitch: " + s[0] + ", Yaw: " + s[1] + ", Center Pitch: " + n.pitch + ", Center Yaw: " + n.yaw + ", HFOV: " + n.hfov)
-                }
-                R(),
-                nt(),
-                n.roll = 0,
-                U.hfov = 0,
-                Ft = !0,
-                ut = Date.now(),
-                Zt = r.x,
-                Kt = r.y,
-                se = n.yaw,
-                le = n.pitch,
-                it.classList.add("pnlm-grabbing"),
-                it.classList.remove("pnlm-grab"),
-                V("mousedown", o),
-                tt()
-            }
-        }
-        function B(o) {
-            n.minHfov === n.hfov ? ot.setHfov(zt, 1e3) : (o = at(o),
-            ot.lookAt(o[0], o[1], n.minHfov, 1e3))
-        }
-        function at(o) {
-            var g = D(o);
-            o = O.getCanvas();
-            var x = o.clientWidth
-              , F = o.clientHeight;
-            o = g.x / x * 2 - 1;
-            var F = (1 - g.y / F * 2) * F / x
-              , r = 1 / Math.tan(n.hfov * Math.PI / 360)
-              , s = Math.sin(n.pitch * Math.PI / 180)
-              , v = Math.cos(n.pitch * Math.PI / 180)
-              , g = r * v - F * s
-              , x = Math.sqrt(o * o + g * g)
-              , F = 180 * Math.atan((F * v + r * s) / x) / Math.PI;
-            return o = 180 * Math.atan2(o / x, g / x) / Math.PI + n.yaw,
-            -180 > o && (o += 360),
-            180 < o && (o -= 360),
-            [F, o]
-        }
-        function X(o) {
-            if (Ft && et) {
-                ut = Date.now();
-                var s = O.getCanvas()
-                  , r = s.clientWidth
-                  , s = s.clientHeight;
-                o = D(o);
-                var v = 180 * (Math.atan(Zt / r * 2 - 1) - Math.atan(o.x / r * 2 - 1)) / Math.PI * n.hfov / 90 + se;
-                U.yaw = (v - n.yaw) % 360 * .2,
-                n.yaw = v,
-                r = 360 * Math.atan(Math.tan(n.hfov / 360 * Math.PI) * s / r) / Math.PI,
-                r = 180 * (Math.atan(o.y / s * 2 - 1) - Math.atan(Kt / s * 2 - 1)) / Math.PI * r / 90 + le,
-                U.pitch = .2 * (r - n.pitch),
-                n.pitch = r
-            }
-        }
-        function Q(o) {
-            Ft && (Ft = !1,
-            15 < Date.now() - ut && (U.pitch = U.yaw = 0),
-            it.classList.add("pnlm-grab"),
-            it.classList.remove("pnlm-grabbing"),
-            ut = Date.now(),
-            V("mouseup", o))
-        }
-        function ht(o) {
-            if (et && n.draggable) {
-                R(),
-                nt(),
-                n.roll = 0,
-                U.hfov = 0;
-                var r = D(o.targetTouches[0]);
-                if (Zt = r.x,
-                Kt = r.y,
-                o.targetTouches.length == 2) {
-                    var s = D(o.targetTouches[1]);
-                    Zt += .5 * (s.x - r.x),
-                    Kt += .5 * (s.y - r.y),
-                    Jt = Math.sqrt((r.x - s.x) * (r.x - s.x) + (r.y - s.y) * (r.y - s.y))
-                }
-                Ft = !0,
-                ut = Date.now(),
-                se = n.yaw,
-                le = n.pitch,
-                V("touchstart", o),
-                tt()
-            }
-        }
-        function yt(o) {
-            if (n.draggable && (o.preventDefault(),
-            et && (ut = Date.now()),
-            Ft && et)) {
-                var r = D(o.targetTouches[0])
-                  , s = r.x
-                  , v = r.y;
-                o.targetTouches.length == 2 && Jt != -1 && (o = D(o.targetTouches[1]),
-                s += .5 * (o.x - r.x),
-                v += .5 * (o.y - r.y),
-                r = Math.sqrt((r.x - o.x) * (r.x - o.x) + (r.y - o.y) * (r.y - o.y)),
-                L(n.hfov + .1 * (Jt - r)),
-                Jt = r),
-                r = n.hfov / 360 * n.touchPanSpeedCoeffFactor,
-                s = (Zt - s) * r + se,
-                U.yaw = (s - n.yaw) % 360 * .2,
-                n.yaw = s,
-                v = (v - Kt) * r + le,
-                U.pitch = .2 * (v - n.pitch),
-                n.pitch = v
-            }
-        }
-        function wt() {
-            Ft = !1,
-            150 < Date.now() - ut && (U.pitch = U.yaw = 0),
-            Jt = -1,
-            ut = Date.now(),
-            V("touchend", event)
-        }
-        function K(o) {
-            o.pointerType == "touch" && et && n.draggable && (kt.push(o.pointerId),
-            Yt.push({
-                clientX: o.clientX,
-                clientY: o.clientY
-            }),
-            o.targetTouches = Yt,
-            ht(o),
-            o.preventDefault())
-        }
-        function m(o) {
-            if (o.pointerType == "touch" && n.draggable) {
-                for (var r = 0; r < kt.length; r++)
-                    if (o.pointerId == kt[r]) {
-                        Yt[r].clientX = o.clientX,
-                        Yt[r].clientY = o.clientY,
-                        o.targetTouches = Yt,
-                        yt(o),
-                        o.preventDefault();
-                        break
-                    }
-            }
-        }
-        function a(o) {
-            if (o.pointerType == "touch") {
-                for (var r = !1, s = 0; s < kt.length; s++)
-                    o.pointerId == kt[s] && (kt[s] = i),
-                    kt[s] && (r = !0);
-                r || (kt = [],
-                Yt = [],
-                wt()),
-                o.preventDefault()
-            }
-        }
-        function J(o) {
-            et && (n.mouseZoom != "fullscreenonly" || Wt) && (o.preventDefault(),
-            R(),
-            ut = Date.now(),
-            o.wheelDeltaY ? (L(n.hfov - .05 * o.wheelDeltaY),
-            U.hfov = 0 > o.wheelDelta ? 1 : -1) : o.wheelDelta ? (L(n.hfov - .05 * o.wheelDelta),
-            U.hfov = 0 > o.wheelDelta ? 1 : -1) : o.detail && (L(n.hfov + 1.5 * o.detail),
-            U.hfov = 0 < o.detail ? 1 : -1),
-            tt())
-        }
-        function st(o) {
-            R(),
-            ut = Date.now(),
-            nt(),
-            n.roll = 0;
-            var r = o.which || o.keycode;
-            0 > n.capturedKeyNumbers.indexOf(r) || (o.preventDefault(),
-            r == 27 ? Wt && f() : Gt(r, !0))
-        }
-        function Tt() {
-            for (var o = 0; 10 > o; o++)
-                C[o] = !1
-        }
-        function mt(o) {
-            var r = o.which || o.keycode;
-            0 > n.capturedKeyNumbers.indexOf(r) || (o.preventDefault(),
-            Gt(r, !1))
-        }
-        function Gt(o, r) {
-            var s = !1;
-            switch (o) {
-            case 109:
-            case 189:
-            case 17:
-            case 173:
-                C[0] != r && (s = !0),
-                C[0] = r;
-                break;
-            case 107:
-            case 187:
-            case 16:
-            case 61:
-                C[1] != r && (s = !0),
-                C[1] = r;
-                break;
-            case 38:
-                C[2] != r && (s = !0),
-                C[2] = r;
-                break;
-            case 87:
-                C[6] != r && (s = !0),
-                C[6] = r;
-                break;
-            case 40:
-                C[3] != r && (s = !0),
-                C[3] = r;
-                break;
-            case 83:
-                C[7] != r && (s = !0),
-                C[7] = r;
-                break;
-            case 37:
-                C[4] != r && (s = !0),
-                C[4] = r;
-                break;
-            case 65:
-                C[8] != r && (s = !0),
-                C[8] = r;
-                break;
-            case 39:
-                C[5] != r && (s = !0),
-                C[5] = r;
-                break;
-            case 68:
-                C[9] != r && (s = !0),
-                C[9] = r
-            }
-            s && r && (Rt = typeof performance < "u" && performance.now() ? performance.now() : Date.now(),
-            tt())
-        }
-        function Dt() {
-            if (et) {
-                var o = !1, r = n.pitch, s = n.yaw, v = n.hfov, g;
-                g = typeof performance < "u" && performance.now() ? performance.now() : Date.now(),
-                Rt === i && (Rt = g);
-                var x = (g - Rt) * n.hfov / 1700
-                  , x = Math.min(x, 1);
-                if (C[0] && n.keyboardZoom === !0 && (L(n.hfov + (.8 * U.hfov + .5) * x),
-                o = !0),
-                C[1] && n.keyboardZoom === !0 && (L(n.hfov + (.8 * U.hfov - .2) * x),
-                o = !0),
-                (C[2] || C[6]) && (n.pitch += (.8 * U.pitch + .2) * x,
-                o = !0),
-                (C[3] || C[7]) && (n.pitch += (.8 * U.pitch - .2) * x,
-                o = !0),
-                (C[4] || C[8]) && (n.yaw += (.8 * U.yaw - .2) * x,
-                o = !0),
-                (C[5] || C[9]) && (n.yaw += (.8 * U.yaw + .2) * x,
-                o = !0),
-                o && (ut = Date.now()),
-                n.autoRotate) {
-                    if (.001 < g - Rt) {
-                        var o = (g - Rt) / 1e3
-                          , F = (U.yaw / o * x - .2 * n.autoRotate) * o
-                          , F = (0 < -n.autoRotate ? 1 : -1) * Math.min(Math.abs(n.autoRotate * o), Math.abs(F));
-                        n.yaw += F
-                    }
-                    n.autoRotateStopDelay && (n.autoRotateStopDelay -= g - Rt,
-                    0 >= n.autoRotateStopDelay && (n.autoRotateStopDelay = !1,
-                    Pt = n.autoRotate,
-                    n.autoRotate = 0))
-                }
-                dt.pitch && (P("pitch"),
-                r = n.pitch),
-                dt.yaw && (P("yaw"),
-                s = n.yaw),
-                dt.hfov && (P("hfov"),
-                v = n.hfov),
-                0 < x && !n.autoRotate && (o = 1 - n.friction,
-                C[4] || C[5] || C[8] || C[9] || dt.yaw || (n.yaw += U.yaw * x * o),
-                C[2] || C[3] || C[6] || C[7] || dt.pitch || (n.pitch += U.pitch * x * o),
-                C[0] || C[1] || dt.hfov || L(n.hfov + U.hfov * x * o)),
-                Rt = g,
-                0 < x && (U.yaw = .8 * U.yaw + (n.yaw - s) / x * .2,
-                U.pitch = .8 * U.pitch + (n.pitch - r) / x * .2,
-                U.hfov = .8 * U.hfov + (n.hfov - v) / x * .2,
-                r = n.autoRotate ? Math.abs(n.autoRotate) : 5,
-                U.yaw = Math.min(r, Math.max(U.yaw, -r)),
-                U.pitch = Math.min(r, Math.max(U.pitch, -r)),
-                U.hfov = Math.min(r, Math.max(U.hfov, -r))),
-                C[0] && C[1] && (U.hfov = 0),
-                (C[2] || C[6]) && (C[3] || C[7]) && (U.pitch = 0),
-                (C[4] || C[8]) && (C[5] || C[9]) && (U.yaw = 0)
-            }
-        }
-        function P(o) {
-            var r = dt[o]
-              , s = Math.min(1, Math.max((Date.now() - r.startTime) / 1e3 / (r.duration / 1e3), 0))
-              , s = r.startPosition + n.animationTimingFunction(s) * (r.endPosition - r.startPosition);
-            (r.endPosition > r.startPosition && s >= r.endPosition || r.endPosition < r.startPosition && s <= r.endPosition || r.endPosition === r.startPosition) && (s = r.endPosition,
-            U[o] = 0,
-            delete dt[o]),
-            n[o] = s
-        }
-        function j() {
-            p("resize")
-        }
-        function tt() {
-            Pe || (Pe = !0,
-            St())
-        }
-        function St() {
-            if (!Ue)
-                if (jt(),
-                he && clearTimeout(he),
-                Ft || bt === !0)
-                    requestAnimationFrame(St);
-                else if (C[0] || C[1] || C[2] || C[3] || C[4] || C[5] || C[6] || C[7] || C[8] || C[9] || n.autoRotate || dt.pitch || dt.yaw || dt.hfov || .01 < Math.abs(U.yaw) || .01 < Math.abs(U.pitch) || .01 < Math.abs(U.hfov))
-                    Dt(),
-                    0 <= n.autoRotateInactivityDelay && Pt && Date.now() - ut > n.autoRotateInactivityDelay && !n.autoRotate && (n.autoRotate = Pt,
-                    ot.lookAt(Qt, i, zt, 3e3)),
-                    requestAnimationFrame(St);
-                else if (O && (O.isLoading() || n.dynamic === !0 && ue))
-                    requestAnimationFrame(St);
-                else {
-                    V("animatefinished", {
-                        pitch: ot.getPitch(),
-                        yaw: ot.getYaw(),
-                        hfov: ot.getHfov()
-                    }),
-                    Pe = !1,
-                    Rt = i;
-                    var o = n.autoRotateInactivityDelay - (Date.now() - ut);
-                    0 < o ? he = setTimeout(function() {
-                        n.autoRotate = Pt,
-                        ot.lookAt(Qt, i, zt, 3e3),
-                        tt()
-                    }, o) : 0 <= n.autoRotateInactivityDelay && Pt && (n.autoRotate = Pt,
-                    ot.lookAt(Qt, i, zt, 3e3),
-                    tt())
-                }
-        }
-        function jt() {
-            var o;
-            if (et) {
-                var r = O.getCanvas();
-                n.autoRotate !== !1 && (360 < n.yaw ? n.yaw -= 360 : -360 > n.yaw && (n.yaw += 360)),
-                o = n.yaw;
-                var s = 0;
-                if (n.avoidShowingBackground) {
-                    var v = n.hfov / 2
-                      , g = 180 * Math.atan2(Math.tan(v / 180 * Math.PI), r.width / r.height) / Math.PI;
-                    n.vaov > n.haov ? Math.min(Math.cos((n.pitch - v) / 180 * Math.PI), Math.cos((n.pitch + v) / 180 * Math.PI)) : s = v * (1 - Math.min(Math.cos((n.pitch - g) / 180 * Math.PI), Math.cos((n.pitch + g) / 180 * Math.PI)))
-                }
-                var v = n.maxYaw - n.minYaw
-                  , g = -180
-                  , x = 180;
-                360 > v && (g = n.minYaw + n.hfov / 2 + s,
-                x = n.maxYaw - n.hfov / 2 - s,
-                v < n.hfov && (g = x = (g + x) / 2),
-                n.yaw = Math.max(g, Math.min(x, n.yaw))),
-                n.autoRotate === !1 && (360 < n.yaw ? n.yaw -= 360 : -360 > n.yaw && (n.yaw += 360)),
-                n.autoRotate !== !1 && o != n.yaw && Rt !== i && (n.autoRotate *= -1),
-                o = 2 * Math.atan(Math.tan(n.hfov / 180 * Math.PI * .5) / (r.width / r.height)) / Math.PI * 180,
-                r = n.minPitch + o / 2,
-                s = n.maxPitch - o / 2,
-                n.maxPitch - n.minPitch < o && (r = s = (r + s) / 2),
-                isNaN(r) && (r = -90),
-                isNaN(s) && (s = 90),
-                n.pitch = Math.max(r, Math.min(s, n.pitch)),
-                O.render(n.pitch * Math.PI / 180, n.yaw * Math.PI / 180, n.hfov * Math.PI / 180, {
-                    roll: n.roll * Math.PI / 180
-                }),
-                n.hotSpots.forEach(z),
-                n.compass && (te.style.transform = "rotate(" + (-n.yaw - n.northOffset) + "deg)",
-                te.style.webkitTransform = "rotate(" + (-n.yaw - n.northOffset) + "deg)")
-            }
-        }
-        function Et(o, r, s, v) {
-            this.w = o,
-            this.x = r,
-            this.y = s,
-            this.z = v
-        }
-        function Bt(o) {
-            var r;
-            r = o.alpha;
-            var s = o.beta;
-            o = o.gamma,
-            s = [s ? s * Math.PI / 180 / 2 : 0, o ? o * Math.PI / 180 / 2 : 0, r ? r * Math.PI / 180 / 2 : 0],
-            r = [Math.cos(s[0]), Math.cos(s[1]), Math.cos(s[2])],
-            s = [Math.sin(s[0]), Math.sin(s[1]), Math.sin(s[2])],
-            r = new Et(r[0] * r[1] * r[2] - s[0] * s[1] * s[2],s[0] * r[1] * r[2] - r[0] * s[1] * s[2],r[0] * s[1] * r[2] + s[0] * r[1] * s[2],r[0] * r[1] * s[2] + s[0] * s[1] * r[2]),
-            r = r.multiply(new Et(Math.sqrt(.5),-Math.sqrt(.5),0,0)),
-            s = t.orientation ? -t.orientation * Math.PI / 180 / 2 : 0,
-            r = r.multiply(new Et(Math.cos(s),0,-Math.sin(s),0)).toEulerAngles(),
-            typeof bt == "number" && 10 > bt ? bt += 1 : bt === 10 ? (ke = r[2] / Math.PI * 180 + n.yaw,
-            bt = !0,
-            requestAnimationFrame(St)) : (n.pitch = r[0] / Math.PI * 180,
-            n.roll = -r[1] / Math.PI * 180,
-            n.yaw = -r[2] / Math.PI * 180 + ke)
-        }
-        function Vt() {
-            try {
-                var o = {};
-                n.horizonPitch !== i && (o.horizonPitch = n.horizonPitch * Math.PI / 180),
-                n.horizonRoll !== i && (o.horizonRoll = n.horizonRoll * Math.PI / 180),
-                n.backgroundColor !== i && (o.backgroundColor = n.backgroundColor),
-                O.init(ft, n.type, n.dynamic, n.haov * Math.PI / 180, n.vaov * Math.PI / 180, n.vOffset * Math.PI / 180, Lt, o),
-                n.dynamic !== !0 && (ft = i)
-            } catch (r) {
-                if (r.type == "webgl error" || r.type == "no webgl")
-                    u();
-                else if (r.type == "webgl size error")
-                    u(n.strings.textureSizeError.replace("%s", r.width).replace("%s", r.maxWidth));
-                else
-                    throw u(n.strings.unknownError),
-                    r
-            }
-        }
-        function Lt() {
-            if (n.sceneFadeDuration && O.fadeImg !== i) {
-                O.fadeImg.style.opacity = 0;
-                var o = O.fadeImg;
-                delete O.fadeImg,
-                setTimeout(function() {
-                    ct.removeChild(o),
-                    V("scenechangefadedone")
-                }, n.sceneFadeDuration)
-            }
-            te.style.display = n.compass ? "inline" : "none",
-            h(),
-            M.load.box.style.display = "none",
-            S !== i && (ct.removeChild(S),
-            S = i),
-            et = !0,
-            V("load"),
-            tt()
-        }
-        function ae(o) {
-            o.pitch = Number(o.pitch) || 0,
-            o.yaw = Number(o.yaw) || 0;
-            var r = e.createElement("div");
-            r.className = "pnlm-hotspot-base",
-            r.className = o.cssClass ? r.className + (" " + o.cssClass) : r.className + (" pnlm-hotspot pnlm-sprite pnlm-" + q(o.type));
-            var s = e.createElement("span");
-            o.text && (s.innerHTML = q(o.text));
-            var v;
-            if (o.video) {
-                v = e.createElement("video");
-                var g = o.video;
-                n.basePath && !I(g) && (g = n.basePath + g),
-                v.src = Z(g),
-                v.controls = !0,
-                v.style.width = o.width + "px",
-                ct.appendChild(r),
-                s.appendChild(v)
-            } else if (o.image) {
-                g = o.image,
-                n.basePath && !I(g) && (g = n.basePath + g),
-                v = e.createElement("a"),
-                v.href = Z(o.URL ? o.URL : g, !0),
-                v.target = "_blank",
-                s.appendChild(v);
-                var x = e.createElement("img");
-                x.src = Z(g),
-                x.style.width = o.width + "px",
-                x.style.paddingTop = "5px",
-                ct.appendChild(r),
-                v.appendChild(x),
-                s.style.maxWidth = "initial"
-            } else if (o.URL) {
-                if (v = e.createElement("a"),
-                v.href = Z(o.URL, !0),
-                o.attributes)
-                    for (g in o.attributes)
-                        v.setAttribute(g, o.attributes[g]);
-                else
-                    v.target = "_blank";
-                ct.appendChild(v),
-                r.className += " pnlm-pointer",
-                s.className += " pnlm-pointer",
-                v.appendChild(r)
-            } else
-                o.sceneId && (r.onclick = r.ontouchend = function() {
-                    return r.clicked || (r.clicked = !0,
-                    G(o.sceneId, o.targetPitch, o.targetYaw, o.targetHfov)),
-                    !1
-                }
-                ,
-                r.className += " pnlm-pointer",
-                s.className += " pnlm-pointer"),
-                ct.appendChild(r);
-            o.createTooltipFunc ? o.createTooltipFunc(r, o.createTooltipArgs) : (o.text || o.video || o.image) && (r.classList.add("pnlm-tooltip"),
-            r.appendChild(s),
-            s.style.width = s.scrollWidth - 20 + "px",
-            s.style.marginLeft = -(s.scrollWidth - r.offsetWidth) / 2 + "px",
-            s.style.marginTop = -s.scrollHeight - 12 + "px"),
-            o.clickHandlerFunc && (r.addEventListener("click", function(F) {
-                o.clickHandlerFunc(F, o.clickHandlerArgs)
-            }, "false"),
-            r.className += " pnlm-pointer",
-            s.className += " pnlm-pointer"),
-            o.div = r
-        }
-        function h() {
-            xe || (n.hotSpots ? (n.hotSpots = n.hotSpots.sort(function(o, r) {
-                return o.pitch < r.pitch
-            }),
-            n.hotSpots.forEach(ae)) : n.hotSpots = [],
-            xe = !0,
-            n.hotSpots.forEach(z))
-        }
-        function d() {
-            var o = n.hotSpots;
-            if (xe = !1,
-            delete n.hotSpots,
-            o)
-                for (var r = 0; r < o.length; r++) {
-                    var s = o[r].div;
-                    if (s) {
-                        for (; s.parentNode && s.parentNode != ct; )
-                            s = s.parentNode;
-                        ct.removeChild(s)
-                    }
-                    delete o[r].div
-                }
-        }
-        function z(o) {
-            var r = Math.sin(o.pitch * Math.PI / 180)
-              , s = Math.cos(o.pitch * Math.PI / 180)
-              , v = Math.sin(n.pitch * Math.PI / 180)
-              , g = Math.cos(n.pitch * Math.PI / 180)
-              , x = Math.cos((-o.yaw + n.yaw) * Math.PI / 180)
-              , F = r * v + s * x * g;
-            if (90 >= o.yaw && -90 < o.yaw && 0 >= F || (90 < o.yaw || -90 >= o.yaw) && 0 >= F)
-                o.div.style.visibility = "hidden";
-            else {
-                var xt = Math.sin((-o.yaw + n.yaw) * Math.PI / 180)
-                  , pt = Math.tan(n.hfov * Math.PI / 360);
-                o.div.style.visibility = "visible";
-                var _t = O.getCanvas()
-                  , Mt = _t.clientWidth
-                  , _t = _t.clientHeight
-                  , r = [-Mt / pt * xt * s / F / 2, -Mt / pt * (r * g - s * x * v) / F / 2]
-                  , s = Math.sin(n.roll * Math.PI / 180)
-                  , v = Math.cos(n.roll * Math.PI / 180)
-                  , r = [r[0] * v - r[1] * s, r[0] * s + r[1] * v];
-                r[0] += (Mt - o.div.offsetWidth) / 2,
-                r[1] += (_t - o.div.offsetHeight) / 2,
-                Mt = "translate(" + r[0] + "px, " + r[1] + "px) translateZ(9999px) rotate(" + n.roll + "deg)",
-                o.scale && (Mt += " scale(" + zt / n.hfov / F + ")"),
-                o.div.style.webkitTransform = Mt,
-                o.div.style.MozTransform = Mt,
-                o.div.style.transform = Mt
-            }
-        }
-        function T(o) {
-            n = {};
-            var r, s, v = "haov vaov vOffset northOffset horizonPitch horizonRoll".split(" ");
-            Ct = [];
-            for (r in Me)
-                Me.hasOwnProperty(r) && (n[r] = Me[r]);
-            for (r in l.default)
-                if (l.default.hasOwnProperty(r))
-                    if (r == "strings")
-                        for (s in l.default.strings)
-                            l.default.strings.hasOwnProperty(s) && (n.strings[s] = q(l.default.strings[s]));
-                    else
-                        n[r] = l.default[r],
-                        0 <= v.indexOf(r) && Ct.push(r);
-            if (o !== null && o !== "" && l.scenes && l.scenes[o]) {
-                var g = l.scenes[o];
-                for (r in g)
-                    if (g.hasOwnProperty(r))
-                        if (r == "strings")
-                            for (s in g.strings)
-                                g.strings.hasOwnProperty(s) && (n.strings[s] = q(g.strings[s]));
-                        else
-                            n[r] = g[r],
-                            0 <= v.indexOf(r) && Ct.push(r);
-                n.scene = o
-            }
-            for (r in l)
-                if (l.hasOwnProperty(r))
-                    if (r == "strings")
-                        for (s in l.strings)
-                            l.strings.hasOwnProperty(s) && (n.strings[s] = q(l.strings[s]));
-                    else
-                        n[r] = l[r],
-                        0 <= v.indexOf(r) && Ct.push(r)
-        }
-        function y(o) {
-            if ((o = o || !1) && "preview"in n) {
-                var r = n.preview;
-                n.basePath && !I(r) && (r = n.basePath + r),
-                S = e.createElement("div"),
-                S.className = "pnlm-preview-img",
-                S.style.backgroundImage = "url('" + Z(r).replace(/"/g, "%22").replace(/'/g, "%27") + "')",
-                ct.appendChild(S)
-            }
-            var r = n.title
-              , s = n.author;
-            o && ("previewTitle"in n && (n.title = n.previewTitle),
-            "previewAuthor"in n && (n.author = n.previewAuthor)),
-            n.hasOwnProperty("title") || (M.title.innerHTML = ""),
-            n.hasOwnProperty("author") || (M.author.innerHTML = ""),
-            n.hasOwnProperty("title") || n.hasOwnProperty("author") || (M.container.style.display = "none"),
-            k.load.innerHTML = "<p>" + n.strings.loadButtonLabel + "</p>",
-            M.load.boxp.innerHTML = n.strings.loadingLabel;
-            for (var v in n)
-                if (n.hasOwnProperty(v))
-                    switch (v) {
-                    case "title":
-                        M.title.innerHTML = q(n[v]),
-                        M.container.style.display = "inline";
-                        break;
-                    case "author":
-                        var g = q(n[v]);
-                        n.authorURL && (g = e.createElement("a"),
-                        g.href = Z(n.authorURL, !0),
-                        g.target = "_blank",
-                        g.innerHTML = q(n[v]),
-                        g = g.outerHTML),
-                        M.author.innerHTML = n.strings.bylineLabel.replace("%s", g),
-                        M.container.style.display = "inline";
-                        break;
-                    case "fallback":
-                        g = e.createElement("a"),
-                        g.href = Z(n[v], !0),
-                        g.target = "_blank",
-                        g.textContent = "Click here to view this panorama in an alternative viewer.";
-                        var x = e.createElement("p");
-                        x.textContent = "Your browser does not support WebGL.",
-                        x.appendChild(e.createElement("br")),
-                        x.appendChild(g),
-                        M.errorMsg.innerHTML = "",
-                        M.errorMsg.appendChild(x);
-                        break;
-                    case "hfov":
-                        L(Number(n[v]));
-                        break;
-                    case "autoLoad":
-                        n[v] === !0 && O === i && (M.load.box.style.display = "inline",
-                        k.load.style.display = "none",
-                        w());
-                        break;
-                    case "showZoomCtrl":
-                        k.zoom.style.display = n[v] && n.showControls != !1 ? "block" : "none";
-                        break;
-                    case "showFullscreenCtrl":
-                        k.fullscreen.style.display = n[v] && n.showControls != !1 && ("fullscreen"in e || "mozFullScreen"in e || "webkitIsFullScreen"in e || "msFullscreenElement"in e) ? "block" : "none";
-                        break;
-                    case "hotSpotDebug":
-                        Te.style.display = n[v] ? "block" : "none";
-                        break;
-                    case "showControls":
-                        n[v] || (k.orientation.style.display = "none",
-                        k.zoom.style.display = "none",
-                        k.fullscreen.style.display = "none");
-                        break;
-                    case "orientationOnByDefault":
-                        n[v] && lt()
-                    }
-            o && (r ? n.title = r : delete n.title,
-            s ? n.author = s : delete n.author)
-        }
-        function f() {
-            if (et && !ce)
-                if (Wt)
-                    e.exitFullscreen ? e.exitFullscreen() : e.mozCancelFullScreen ? e.mozCancelFullScreen() : e.webkitCancelFullScreen ? e.webkitCancelFullScreen() : e.msExitFullscreen && e.msExitFullscreen();
-                else
-                    try {
-                        _.requestFullscreen ? _.requestFullscreen() : _.mozRequestFullScreen ? _.mozRequestFullScreen() : _.msRequestFullscreen ? _.msRequestFullscreen() : _.webkitRequestFullScreen()
-                    } catch {}
-        }
-        function p(o) {
-            e.fullscreenElement || e.fullscreen || e.mozFullScreen || e.webkitIsFullScreen || e.msFullscreenElement ? (k.fullscreen.classList.add("pnlm-fullscreen-toggle-button-active"),
-            Wt = !0) : (k.fullscreen.classList.remove("pnlm-fullscreen-toggle-button-active"),
-            Wt = !1),
-            o !== "resize" && V("fullscreenchange", Wt),
-            O.resize(),
-            L(n.hfov),
-            tt()
-        }
-        function N(o) {
-            var r = n.minHfov;
-            if (n.type == "multires" && O && !n.multiResMinHfov && (r = Math.min(r, O.getCanvas().width / (n.multiRes.cubeResolution / 90 * .9))),
-            r > n.maxHfov)
-                return console.log("HFOV bounds do not make sense (minHfov > maxHfov)."),
-                n.hfov;
-            var s = n.hfov
-              , s = o < r ? r : o > n.maxHfov ? n.maxHfov : o;
-            return n.avoidShowingBackground && O && (o = O.getCanvas(),
-            s = Math.min(s, 360 * Math.atan(Math.tan((n.maxPitch - n.minPitch) / 360 * Math.PI) / o.height * o.width) / Math.PI)),
-            s
-        }
-        function L(o) {
-            n.hfov = N(o),
-            V("zoomchange", n.hfov)
-        }
-        function R() {
-            dt = {},
-            Pt = n.autoRotate ? n.autoRotate : Pt,
-            n.autoRotate = !1
-        }
-        function $() {
-            ce && (M.load.box.style.display = "none",
-            M.errorMsg.style.display = "none",
-            ce = !1,
-            ct.style.display = "block",
-            V("errorcleared")),
-            et = !1,
-            k.load.style.display = "none",
-            M.load.box.style.display = "inline",
-            w()
-        }
-        function G(o, r, s, v, g) {
-            et || (g = !0),
-            et = !1,
-            dt = {};
-            var x, F;
-            if (n.sceneFadeDuration && !g && (x = O.render(n.pitch * Math.PI / 180, n.yaw * Math.PI / 180, n.hfov * Math.PI / 180, {
-                returnImage: !0
-            }),
-            x !== i)) {
-                g = new Image,
-                g.className = "pnlm-fade-img",
-                g.style.transition = "opacity " + n.sceneFadeDuration / 1e3 + "s",
-                g.style.width = "100%",
-                g.style.height = "100%",
-                g.onload = function() {
-                    G(o, r, s, v, !0)
-                }
-                ,
-                g.src = x,
-                ct.appendChild(g),
-                O.fadeImg = g;
-                return
-            }
-            g = r === "same" ? n.pitch : r,
-            x = s === "same" ? n.yaw : s === "sameAzimuth" ? n.yaw + (n.northOffset || 0) - (l.scenes[o].northOffset || 0) : s,
-            F = v === "same" ? n.hfov : v,
-            d(),
-            T(o),
-            U.yaw = U.pitch = U.hfov = 0,
-            y(),
-            g !== i && (n.pitch = g),
-            x !== i && (n.yaw = x),
-            F !== i && (n.hfov = F),
-            V("scenechange", o),
-            $()
-        }
-        function nt() {
-            t.removeEventListener("deviceorientation", Bt),
-            k.orientation.classList.remove("pnlm-orientation-button-active"),
-            bt = !1
-        }
-        function lt() {
-            typeof DeviceMotionEvent.requestPermission == "function" ? DeviceOrientationEvent.requestPermission().then(function(o) {
-                o == "granted" && (bt = 1,
-                t.addEventListener("deviceorientation", Bt),
-                k.orientation.classList.add("pnlm-orientation-button-active"))
-            }) : (bt = 1,
-            t.addEventListener("deviceorientation", Bt),
-            k.orientation.classList.add("pnlm-orientation-button-active"))
-        }
-        function q(o) {
-            return l.escapeHTML ? String(o).split(/&/g).join("&amp;").split('"').join("&quot;").split("'").join("&#39;").split("<").join("&lt;").split(">").join("&gt;").split("/").join("&#x2f;").split(`
-`).join("<br>") : String(o).split(`
-`).join("<br>")
-        }
-        function Z(o, r) {
-            try {
-                var s = decodeURIComponent(E(o)).replace(/[^\w:]/g, "").toLowerCase()
-            } catch {
-                return "about:blank"
-            }
-            return s.indexOf("javascript:") === 0 || s.indexOf("vbscript:") === 0 ? (console.log("Script URL removed."),
-            "about:blank") : r && s.indexOf("data:") === 0 ? (console.log("Data URI removed from link."),
-            "about:blank") : o
-        }
-        function E(o) {
-            return o.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig, function(r, s) {
-                return s = s.toLowerCase(),
-                s === "colon" ? ":" : s.charAt(0) === "#" ? s.charAt(1) === "x" ? String.fromCharCode(parseInt(s.substring(2), 16)) : String.fromCharCode(+s.substring(1)) : ""
-            })
-        }
-        function V(o) {
-            if (o in vt)
-                for (var r = vt[o].length; 0 < r; r--)
-                    vt[o][vt[o].length - r].apply(null, [].slice.call(arguments, 1))
-        }
-        var ot = this, n, O, S, Ft = !1, ut = Date.now(), Zt = 0, Kt = 0, Jt = -1, se = 0, le = 0, C = Array(10), Wt = !1, et, ce = !1, be = !1, ft, Rt, U = {
-            yaw: 0,
-            pitch: 0,
-            hfov: 0
-        }, Pe = !1, bt = !1, ke = 0, he, Pt = 0, zt, Qt, dt = {}, vt = {}, Ct = [], ue = !1, xe = !1, Ue = !1, Me = {
-            hfov: 100,
-            minHfov: 50,
-            multiResMinHfov: !1,
-            maxHfov: 120,
-            pitch: 0,
-            minPitch: i,
-            maxPitch: i,
-            yaw: 0,
-            minYaw: -180,
-            maxYaw: 180,
-            roll: 0,
-            haov: 360,
-            vaov: 180,
-            vOffset: 0,
-            autoRotate: !1,
-            autoRotateInactivityDelay: -1,
-            autoRotateStopDelay: i,
-            type: "equirectangular",
-            northOffset: 0,
-            showFullscreenCtrl: !0,
-            dynamic: !1,
-            dynamicUpdate: !1,
-            doubleClickZoom: !0,
-            keyboardZoom: !0,
-            mouseZoom: !0,
-            showZoomCtrl: !0,
-            autoLoad: !1,
-            showControls: !0,
-            orientationOnByDefault: !1,
-            hotSpotDebug: !1,
-            backgroundColor: [0, 0, 0],
-            avoidShowingBackground: !1,
-            animationTimingFunction: function(o) {
-                return .5 > o ? 2 * o * o : -1 + (4 - 2 * o) * o
-            },
-            draggable: !0,
-            disableKeyboardCtrl: !1,
-            crossOrigin: "anonymous",
-            touchPanSpeedCoeffFactor: 1,
-            capturedKeyNumbers: [16, 17, 27, 37, 38, 39, 40, 61, 65, 68, 83, 87, 107, 109, 173, 187, 189],
-            friction: .15,
-            strings: {
-                loadButtonLabel: "Click to<br>Load<br>Panorama",
-                loadingLabel: "Loading...",
-                bylineLabel: "by %s",
-                noPanoramaError: "No panorama image was specified.",
-                fileAccessError: "The file %s could not be accessed.",
-                malformedURLError: "There is something wrong with the panorama URL.",
-                iOS8WebGLError: "Due to iOS 8's broken WebGL implementation, only progressive encoded JPEGs work for your device (this panorama uses standard encoding).",
-                genericWebGLError: "Your browser does not have the necessary WebGL support to display this panorama.",
-                textureSizeError: "This panorama is too big for your device! It's %spx wide, but your device only supports images up to %spx wide. Try another device. (If you're the author, try scaling down the image.)",
-                unknownError: "Unknown error. Check developer console."
-            }
-        };
-        _ = typeof _ == "string" ? e.getElementById(_) : _,
-        _.classList.add("pnlm-container"),
-        _.tabIndex = 0;
-        var it = e.createElement("div");
-        it.className = "pnlm-ui",
-        _.appendChild(it);
-        var ct = e.createElement("div");
-        ct.className = "pnlm-render-container",
-        _.appendChild(ct);
-        var gt = e.createElement("div");
-        gt.className = "pnlm-dragfix",
-        it.appendChild(gt);
-        var Nt = e.createElement("span");
-        Nt.className = "pnlm-about-msg",
-        Nt.innerHTML = '<a href="https://pannellum.org/" target="_blank">Pannellum</a> 2.5.6',
-        it.appendChild(Nt),
-        gt.addEventListener("contextmenu", Y);
-        var M = {}
-          , Te = e.createElement("div");
-        Te.className = "pnlm-sprite pnlm-hot-spot-debug-indicator",
-        it.appendChild(Te),
-        M.container = e.createElement("div"),
-        M.container.className = "pnlm-panorama-info",
-        M.title = e.createElement("div"),
-        M.title.className = "pnlm-title-box",
-        M.container.appendChild(M.title),
-        M.author = e.createElement("div"),
-        M.author.className = "pnlm-author-box",
-        M.container.appendChild(M.author),
-        it.appendChild(M.container),
-        M.load = {},
-        M.load.box = e.createElement("div"),
-        M.load.box.className = "pnlm-load-box",
-        M.load.boxp = e.createElement("p"),
-        M.load.box.appendChild(M.load.boxp),
-        M.load.lbox = e.createElement("div"),
-        M.load.lbox.className = "pnlm-lbox",
-        M.load.lbox.innerHTML = '<div class="pnlm-loading"></div>',
-        M.load.box.appendChild(M.load.lbox),
-        M.load.lbar = e.createElement("div"),
-        M.load.lbar.className = "pnlm-lbar",
-        M.load.lbarFill = e.createElement("div"),
-        M.load.lbarFill.className = "pnlm-lbar-fill",
-        M.load.lbar.appendChild(M.load.lbarFill),
-        M.load.box.appendChild(M.load.lbar),
-        M.load.msg = e.createElement("p"),
-        M.load.msg.className = "pnlm-lmsg",
-        M.load.box.appendChild(M.load.msg),
-        it.appendChild(M.load.box),
-        M.errorMsg = e.createElement("div"),
-        M.errorMsg.className = "pnlm-error-msg pnlm-info-box",
-        it.appendChild(M.errorMsg);
-        var k = {};
-        k.container = e.createElement("div"),
-        k.container.className = "pnlm-controls-container",
-        it.appendChild(k.container),
-        k.load = e.createElement("div"),
-        k.load.className = "pnlm-load-button",
-        k.load.addEventListener("click", function() {
-            y(),
-            $()
-        }),
-        it.appendChild(k.load),
-        k.zoom = e.createElement("div"),
-        k.zoom.className = "pnlm-zoom-controls pnlm-controls",
-        k.zoomIn = e.createElement("div"),
-        k.zoomIn.className = "pnlm-zoom-in pnlm-sprite pnlm-control",
-        k.zoomIn.addEventListener("click", function() {
-            et && (L(n.hfov - 5),
-            tt())
-        }),
-        k.zoom.appendChild(k.zoomIn),
-        k.zoomOut = e.createElement("div"),
-        k.zoomOut.className = "pnlm-zoom-out pnlm-sprite pnlm-control",
-        k.zoomOut.addEventListener("click", function() {
-            et && (L(n.hfov + 5),
-            tt())
-        }),
-        k.zoom.appendChild(k.zoomOut),
-        k.container.appendChild(k.zoom),
-        k.fullscreen = e.createElement("div"),
-        k.fullscreen.addEventListener("click", f),
-        k.fullscreen.className = "pnlm-fullscreen-toggle-button pnlm-sprite pnlm-fullscreen-toggle-button-inactive pnlm-controls pnlm-control",
-        (e.fullscreenEnabled || e.mozFullScreenEnabled || e.webkitFullscreenEnabled || e.msFullscreenEnabled) && k.container.appendChild(k.fullscreen),
-        k.orientation = e.createElement("div"),
-        k.orientation.addEventListener("click", function(o) {
-            bt ? nt() : lt()
-        }),
-        k.orientation.addEventListener("mousedown", function(o) {
-            o.stopPropagation()
-        }),
-        k.orientation.addEventListener("touchstart", function(o) {
-            o.stopPropagation()
-        }),
-        k.orientation.addEventListener("pointerdown", function(o) {
-            o.stopPropagation()
-        }),
-        k.orientation.className = "pnlm-orientation-button pnlm-orientation-button-inactive pnlm-sprite pnlm-controls pnlm-control";
-        var Le = !1;
-        t.DeviceOrientationEvent && location.protocol == "https:" && 0 <= navigator.userAgent.toLowerCase().indexOf("mobi") && (k.container.appendChild(k.orientation),
-        Le = !0);
-        var te = e.createElement("div");
-        te.className = "pnlm-compass pnlm-controls pnlm-control",
-        it.appendChild(te),
-        l.firstScene ? T(l.firstScene) : l.default && l.default.firstScene ? T(l.default.firstScene) : T(null),
-        y(!0);
-        var kt = []
-          , Yt = [];
-        Et.prototype.multiply = function(o) {
-            return new Et(this.w * o.w - this.x * o.x - this.y * o.y - this.z * o.z,this.x * o.w + this.w * o.x + this.y * o.z - this.z * o.y,this.y * o.w + this.w * o.y + this.z * o.x - this.x * o.z,this.z * o.w + this.w * o.z + this.x * o.y - this.y * o.x)
-        }
-        ,
-        Et.prototype.toEulerAngles = function() {
-            var o = Math.atan2(2 * (this.w * this.x + this.y * this.z), 1 - 2 * (this.x * this.x + this.y * this.y))
-              , r = Math.asin(2 * (this.w * this.y - this.z * this.x))
-              , s = Math.atan2(2 * (this.w * this.z + this.x * this.y), 1 - 2 * (this.y * this.y + this.z * this.z));
-            return [o, r, s]
-        }
-        ,
-        this.isLoaded = function() {
-            return Boolean(et)
-        }
-        ,
-        this.getPitch = function() {
-            return n.pitch
-        }
-        ,
-        this.setPitch = function(o, r, s, v) {
-            return ut = Date.now(),
-            1e-6 >= Math.abs(o - n.pitch) ? (typeof s == "function" && s(v),
-            this) : ((r = r == i ? 1e3 : Number(r)) ? (dt.pitch = {
-                startTime: Date.now(),
-                startPosition: n.pitch,
-                endPosition: o,
-                duration: r
-            },
-            typeof s == "function" && setTimeout(function() {
-                s(v)
-            }, r)) : n.pitch = o,
-            tt(),
-            this)
-        }
-        ,
-        this.getPitchBounds = function() {
-            return [n.minPitch, n.maxPitch]
-        }
-        ,
-        this.setPitchBounds = function(o) {
-            return n.minPitch = Math.max(-90, Math.min(o[0], 90)),
-            n.maxPitch = Math.max(-90, Math.min(o[1], 90)),
-            this
-        }
-        ,
-        this.getYaw = function() {
-            return (n.yaw + 540) % 360 - 180
-        }
-        ,
-        this.setYaw = function(o, r, s, v) {
-            return ut = Date.now(),
-            1e-6 >= Math.abs(o - n.yaw) ? (typeof s == "function" && s(v),
-            this) : (r = r == i ? 1e3 : Number(r),
-            o = (o + 180) % 360 - 180,
-            r ? (180 < n.yaw - o ? o += 360 : 180 < o - n.yaw && (o -= 360),
-            dt.yaw = {
-                startTime: Date.now(),
-                startPosition: n.yaw,
-                endPosition: o,
-                duration: r
-            },
-            typeof s == "function" && setTimeout(function() {
-                s(v)
-            }, r)) : n.yaw = o,
-            tt(),
-            this)
-        }
-        ,
-        this.getYawBounds = function() {
-            return [n.minYaw, n.maxYaw]
-        }
-        ,
-        this.setYawBounds = function(o) {
-            return n.minYaw = Math.max(-360, Math.min(o[0], 360)),
-            n.maxYaw = Math.max(-360, Math.min(o[1], 360)),
-            this
-        }
-        ,
-        this.getHfov = function() {
-            return n.hfov
-        }
-        ,
-        this.setHfov = function(o, r, s, v) {
-            return ut = Date.now(),
-            1e-6 >= Math.abs(o - n.hfov) ? (typeof s == "function" && s(v),
-            this) : ((r = r == i ? 1e3 : Number(r)) ? (dt.hfov = {
-                startTime: Date.now(),
-                startPosition: n.hfov,
-                endPosition: N(o),
-                duration: r
-            },
-            typeof s == "function" && setTimeout(function() {
-                s(v)
-            }, r)) : L(o),
-            tt(),
-            this)
-        }
-        ,
-        this.getHfovBounds = function() {
-            return [n.minHfov, n.maxHfov]
-        }
-        ,
-        this.setHfovBounds = function(o) {
-            return n.minHfov = Math.max(0, o[0]),
-            n.maxHfov = Math.max(0, o[1]),
-            this
-        }
-        ,
-        this.lookAt = function(o, r, s, v, g, x) {
-            return v = v == i ? 1e3 : Number(v),
-            o !== i && 1e-6 < Math.abs(o - n.pitch) && (this.setPitch(o, v, g, x),
-            g = i),
-            r !== i && 1e-6 < Math.abs(r - n.yaw) && (this.setYaw(r, v, g, x),
-            g = i),
-            s !== i && 1e-6 < Math.abs(s - n.hfov) && (this.setHfov(s, v, g, x),
-            g = i),
-            typeof g == "function" && g(x),
-            this
-        }
-        ,
-        this.getNorthOffset = function() {
-            return n.northOffset
-        }
-        ,
-        this.setNorthOffset = function(o) {
-            return n.northOffset = Math.min(360, Math.max(0, o)),
-            tt(),
-            this
-        }
-        ,
-        this.getHorizonRoll = function() {
-            return n.horizonRoll
-        }
-        ,
-        this.setHorizonRoll = function(o) {
-            return n.horizonRoll = Math.min(90, Math.max(-90, o)),
-            O.setPose(n.horizonPitch * Math.PI / 180, n.horizonRoll * Math.PI / 180),
-            tt(),
-            this
-        }
-        ,
-        this.getHorizonPitch = function() {
-            return n.horizonPitch
-        }
-        ,
-        this.setHorizonPitch = function(o) {
-            return n.horizonPitch = Math.min(90, Math.max(-90, o)),
-            O.setPose(n.horizonPitch * Math.PI / 180, n.horizonRoll * Math.PI / 180),
-            tt(),
-            this
-        }
-        ,
-        this.startAutoRotate = function(o, r) {
-            return o = o || Pt || 1,
-            r = r === i ? Qt : r,
-            n.autoRotate = o,
-            ot.lookAt(r, i, zt, 3e3),
-            tt(),
-            this
-        }
-        ,
-        this.stopAutoRotate = function() {
-            return Pt = n.autoRotate ? n.autoRotate : Pt,
-            n.autoRotate = !1,
-            n.autoRotateInactivityDelay = -1,
-            this
-        }
-        ,
-        this.stopMovement = function() {
-            R(),
-            U = {
-                yaw: 0,
-                pitch: 0,
-                hfov: 0
-            }
-        }
-        ,
-        this.getRenderer = function() {
-            return O
-        }
-        ,
-        this.setUpdate = function(o) {
-            return ue = o === !0,
-            O === i ? H() : tt(),
-            this
-        }
-        ,
-        this.mouseEventToCoords = function(o) {
-            return at(o)
-        }
-        ,
-        this.loadScene = function(o, r, s, v) {
-            return et !== !1 && G(o, r, s, v),
-            this
-        }
-        ,
-        this.getScene = function() {
-            return n.scene
-        }
-        ,
-        this.addScene = function(o, r) {
-            return l.scenes[o] = r,
-            this
-        }
-        ,
-        this.removeScene = function(o) {
-            return n.scene === o || !l.scenes.hasOwnProperty(o) ? !1 : (delete l.scenes[o],
-            !0)
-        }
-        ,
-        this.toggleFullscreen = function() {
-            return f(),
-            this
-        }
-        ,
-        this.getConfig = function() {
-            return n
-        }
-        ,
-        this.getContainer = function() {
-            return _
-        }
-        ,
-        this.addHotSpot = function(o, r) {
-            if (r === i && n.scene === i)
-                n.hotSpots.push(o);
-            else {
-                var s = r !== i ? r : n.scene;
-                if (l.scenes.hasOwnProperty(s))
-                    l.scenes[s].hasOwnProperty("hotSpots") || (l.scenes[s].hotSpots = [],
-                    s == n.scene && (n.hotSpots = l.scenes[s].hotSpots)),
-                    l.scenes[s].hotSpots.push(o);
-                else
-                    throw "Invalid scene ID!"
-            }
-            return (r === i || n.scene == r) && (ae(o),
-            et && z(o)),
-            this
-        }
-        ,
-        this.removeHotSpot = function(o, r) {
-            if (r === i || n.scene == r) {
-                if (!n.hotSpots)
-                    return !1;
-                for (var s = 0; s < n.hotSpots.length; s++)
-                    if (n.hotSpots[s].hasOwnProperty("id") && n.hotSpots[s].id === o) {
-                        for (var v = n.hotSpots[s].div; v.parentNode != ct; )
-                            v = v.parentNode;
-                        return ct.removeChild(v),
-                        delete n.hotSpots[s].div,
-                        n.hotSpots.splice(s, 1),
-                        !0
-                    }
-            } else if (l.scenes.hasOwnProperty(r)) {
-                if (!l.scenes[r].hasOwnProperty("hotSpots"))
-                    return !1;
-                for (s = 0; s < l.scenes[r].hotSpots.length; s++)
-                    if (l.scenes[r].hotSpots[s].hasOwnProperty("id") && l.scenes[r].hotSpots[s].id === o)
-                        return l.scenes[r].hotSpots.splice(s, 1),
-                        !0
-            } else
-                return !1
-        }
-        ,
-        this.resize = function() {
-            O && j()
-        }
-        ,
-        this.isLoaded = function() {
-            return et
-        }
-        ,
-        this.isOrientationSupported = function() {
-            return Le || !1
-        }
-        ,
-        this.stopOrientation = function() {
-            nt()
-        }
-        ,
-        this.startOrientation = function() {
-            Le && lt()
-        }
-        ,
-        this.isOrientationActive = function() {
-            return Boolean(bt)
-        }
-        ,
-        this.on = function(o, r) {
-            return vt[o] = vt[o] || [],
-            vt[o].push(r),
-            this
-        }
-        ,
-        this.off = function(o, r) {
-            if (!o)
-                return vt = {},
-                this;
-            if (r) {
-                var s = vt[o].indexOf(r);
-                0 <= s && vt[o].splice(s, 1),
-                vt[o].length == 0 && delete vt[o]
-            } else
-                delete vt[o];
-            return this
-        }
-        ,
-        this.destroy = function() {
-            Ue = !0,
-            clearTimeout(he),
-            O && O.destroy(),
-            be && (e.removeEventListener("mousemove", X, !1),
-            e.removeEventListener("mouseup", Q, !1),
-            _.removeEventListener("mozfullscreenchange", p, !1),
-            _.removeEventListener("webkitfullscreenchange", p, !1),
-            _.removeEventListener("msfullscreenchange", p, !1),
-            _.removeEventListener("fullscreenchange", p, !1),
-            t.removeEventListener("resize", j, !1),
-            t.removeEventListener("orientationchange", j, !1),
-            _.removeEventListener("keydown", st, !1),
-            _.removeEventListener("keyup", mt, !1),
-            _.removeEventListener("blur", Tt, !1),
-            e.removeEventListener("mouseleave", Q, !1)),
-            _.innerHTML = "",
-            _.classList.remove("pnlm-container")
-        }
-    }
+      POV: link.POV,
+      id: link.id,
+      targetPOV: link.targetPOV,
+      to: pano
+    };
+  }
+  _transformToInfo(infoElement) {
+    const { POV: POV2, id, name, description } = infoElement;
     return {
-        viewer: function(_, l) {
-            return new c(_,l)
-        }
+      title: name,
+      description,
+      POV: POV2,
+      id,
+      infoElement: /* @__PURE__ */ o(InfoElement, { isEdit: this._options.editMode, id, title: name, description })
+    };
+  }
+  _transformToPannellumOverlay(info) {
+    return {
+      id: info.id,
+      pitch: info.POV.pitch,
+      yaw: info.POV.yaw,
+      type: "info",
+      cssClass: "n",
+      createTooltipFunc: (divParent) => D$1(info.infoElement, divParent)
+    };
+  }
+  _transformToPannellumLink(link) {
+    return {
+      id: link.id,
+      pitch: link.POV.pitch,
+      sceneId: link.to && link.to.id,
+      targetPitch: link.targetPOV.pitch,
+      targetYaw: link.targetPOV.yaw,
+      text: link.to && link.to.name,
+      type: "scene",
+      yaw: link.POV.yaw
+    };
+  }
+  _transformToPannellumPano(pano) {
+    const params = {
+      id: pano.id,
+      panorama: pano.url,
+      type: "equirectangular"
+    };
+    if (!this._options.noTitle) {
+      params.title = pano.name;
     }
-}(window, document);
-const Ie = ()=>new Date().valueOf().toString();
-class $n {
-    constructor() {
-        const e = new Promise((i,c)=>{
-            this.resolve = i,
-            this.reject = c
-        }
-        );
-        this.promise = e
+    if (pano.POV) {
+      params.pitch = pano.POV.pitch;
+      params.yaw = pano.POV.yaw;
     }
-}
-const qn = t=>{
-    const [e,i] = On(t)
-      , c = ne(_=>{
-        i(typeof _ == "boolean" ? _ : !e)
-    }
-    , []);
-    return [e, c]
-}
-;
-var jn = Object.defineProperty
-  , Zn = Object.defineProperties
-  , Kn = Object.getOwnPropertyDescriptors
-  , sn = Object.getOwnPropertySymbols
-  , Jn = Object.prototype.hasOwnProperty
-  , Qn = Object.prototype.propertyIsEnumerable
-  , ln = (t,e,i)=>e in t ? jn(t, e, {
-    enumerable: !0,
-    configurable: !0,
-    writable: !0,
-    value: i
-}) : t[e] = i
-  , Oe = (t,e)=>{
-    for (var i in e || (e = {}))
-        Jn.call(e, i) && ln(t, i, e[i]);
-    if (sn)
-        for (var i of sn(e))
-            Qn.call(e, i) && ln(t, i, e[i]);
-    return t
-}
-  , to = (t,e)=>Zn(t, Kn(e));
-const Ut = {
-    container: {
-        borderRadius: "5%",
-        backgroundColor: "rgba(0,0,0,.7)",
-        color: "white",
-        padding: "5px 10px",
-        margin: 0,
-        maxWidth: 400
-    },
-    titleContainer: {
-        display: "flex",
-        justifyContent: "space-between"
-    },
-    title: {
-        margin: 0,
-        overflow: "hidden"
-    },
-    description: {
-        margin: 0,
-        marginTop: 10
-    },
-    button: {
-        backgroundColor: "transparent",
-        color: "white",
-        borderRadius: "15%",
-        borderStyle: "outset",
-        padding: "2px 5px"
-    },
-    editContainer: {
-        marginTop: 10,
-        display: "flex",
-        justifyContent: "center"
-    }
-}
-  , cn = ({title: t, description: e, isEdit: i, sanitized: c, id: _})=>{
-    const [l,w] = qn(!1)
-      , I = Nn(null)
-      , H = ne(()=>{
-        l === !1 && (w(!0),
-        u("TOGGLE_INFO_ELEMENT"))
-    }
-    , [])
-      , W = Fe(()=>{
-        let b;
-        return c ? b = {
-            dangerouslySetInnerHTML: {
-                __html: e
-            }
-        } : b = {
-            children: e
-        },
-        b
-    }
-    , [c, e])
-      , u = ne((b,B)=>{
-        const at = new CustomEvent(b,{
-            bubbles: !0,
-            detail: Oe({
-                id: _
-            }, B)
-        });
-        I.current.dispatchEvent(at)
-    }
-    , [I.current, _])
-      , Y = ne(b=>{
-        b.stopPropagation(),
-        w(!1),
-        u("TOGGLE_INFO_ELEMENT")
-    }
-    , [])
-      , D = ne(b=>{
-        b.stopPropagation();
-        const B = I.current
-          , at = B.querySelector("h4").textContent
-          , X = B.querySelector("p").textContent;
-        w(!1),
-        u("UPDATE_INFO_ELEMENT", {
-            title: at,
-            description: X
-        })
-    }
-    , []);
-    return Ot("div", {
-        ref: I,
-        style: Ut.container,
-        onClick: H,
-        children: [Ot("div", {
-            style: Ut.titleContainer,
-            children: [Ot("h4", {
-                contentEditable: l && i,
-                style: Ut.title,
-                children: t
-            }), l && Ot("button", {
-                style: Ut.button,
-                onClick: Y,
-                children: "X"
-            })]
-        }), Ot("p", Oe({
-            contentEditable: i,
-            style: to(Oe({}, Ut.description), {
-                display: l ? "block" : "none"
-            })
-        }, W)), i && l && Ot("div", {
-            style: Ut.editContainer,
-            children: [Ot("button", {
-                onClick: D,
-                style: Ut.button,
-                children: "Guardar"
-            }), "\xA0", Ot("button", {
-                onClick: ()=>u("DELETE_INFO_ELEMENT"),
-                style: Ut.button,
-                children: "Borrar"
-            })]
-        })]
-    })
-}
-;
-class ee {
-    constructor(e=[], i="id") {
-        this._prop = i,
-        this._array = e,
-        this.table = this._arrayToDict(this._array)
-    }
-    add(e) {
-        return this._array.push(e),
-        this.table[e[this._prop]] = e,
-        this
-    }
-    delete(e) {
-        return (typeof e == "string" || typeof e == "number") && (e = this.get(e)),
-        e ? (this._array.forEach((i,c)=>{
-            i[this._prop] === e[this._prop] && this._array.splice(c, 1)
-        }
-        ),
-        delete this.table[e[this._prop]]) : !1
-    }
-    get(e=0) {
-        return e ? this.table[e] : this._array[e]
-    }
-    get length() {
-        return this._array.length
-    }
-    get array() {
-        return this._array
-    }
-    _arrayToDict(e) {
-        return e.reduce((i,c)=>(i[c[this._prop]] = c,
-        i), {})
-    }
-}
-const me = class {
-    constructor(t, e, i={}) {
-        this._classPrefix = "tr",
-        this._onUpdateInfoListeners = [],
-        this._onDeleteInfoListeners = [],
-        this._tour = t,
-        this._options = Object.assign({}, me.DEFAULTS, i),
-        typeof e == "string" && (e = document.querySelector(e)),
-        this._validateTour(),
-        this._dom = e,
-        this._onLoad = i.onLoad,
-        this._init()
-    }
-    get panos() {
-        return this._panos
-    }
-    destroy() {
-        this._viewer.destroy()
-    }
-    addInfoUpdateListener(t) {
-        this._onUpdateInfoListeners.push(t)
-    }
-    addInfoDeleteListener(t) {
-        this._onDeleteInfoListeners.push(t)
-    }
-    selectPOVInViewer() {
-        return this._isLoaded ? (this._isSelectingPOV = !0,
-        this._selectPOVDeferred = new $n,
-        this.toggleControls(!1),
-        this._dom.classList.add(this._createClass("selecting-pov")),
-        this._selectPOVDeferred.promise.then(()=>{
-            this.toggleControls(!0),
-            this._dom.classList.remove(this._createClass("selecting-pov"))
-        }
-        ),
-        this._selectPOVDeferred.promise) : Promise.reject(new Error("viewer not loaded"))
-    }
-    toggleControls(t) {
-        this._dom.querySelector(".pnlm-controls-container").classList.toggle(this._createClass("hide"), !t),
-        this._dom.querySelector(".pnlm-panorama-info").classList.toggle(this._createClass("hide"), !t)
-    }
-    addDOM(t) {
-        t.classList.add(me.CLASSES.DOM_ELEMENT),
-        this._dom.appendChild(t)
-    }
-    deleteDOM(t) {
-        this._dom.removeChild(t)
-    }
-    addOverlay(t, e) {
-        const i = {
-            id: Ie(),
-            pitch: e.pitch,
-            yaw: e.yaw,
-            type: "info",
-            createTooltipFunc: c=>{
-                c.appendChild(t)
-            }
-        };
-        return this._viewer.addHotSpot(i),
-        i
-    }
-    deleteOverlay(t) {
-        let e;
-        typeof t == "object" ? e = t.id : e = t,
-        this._viewer.removeHotSpot(e)
-    }
-    forceToRender() {
-        this._viewer.setPitch(this._viewer.getPitch() + .1)
-    }
-    addInfoElement(t) {
-        let {id: e, title: i, description: c, POV: _} = t;
-        e = e || Ie();
-        const l = this.getPano()
-          , w = {
-            id: e,
-            POV: _,
-            title: i,
-            description: c,
-            infoElement: Ot(cn, {
-                isEdit: this._options.editMode,
-                title: i,
-                description: c,
-                id: e
-            })
-        };
-        l.infoElements.add(w),
-        this._addInfoToViewer(w)
-    }
-    deleteInfoElement(t) {
-        const e = this.getPano();
-        typeof t == "string" && (t = e.infoElements.get(t)),
-        e.infoElements.delete(t),
-        this.deleteOverlay(t)
-    }
-    getPano(t=this._viewer.getScene()) {
-        return this._panos.get(t)
-    }
-    setPano(t) {
-        let e = typeof t == "object" ? t.id : t;
-        return this._viewer.loadScene(e)
-    }
-    getCurrentPano() {
-        return this.getPano()
-    }
-    getPOV() {
-        const t = {
-            pitch: 0,
-            yaw: 0
-        };
-        return this._viewer && (t.yaw = this._viewer.getYaw(),
-        t.pitch = this._viewer.getPitch()),
-        t
-    }
-    deleteLink(t) {
-        const e = this.getPano();
-        typeof t == "string" && (t = e.links.get(t)),
-        e.links.delete(t.id),
-        this._viewer.removeHotSpot(t.id),
-        this.forceToRender()
-    }
-    getLink(t) {
-        return this.getPano().links.get(t)
-    }
-    createLinkTo(t, e=this.getPOV(), i={
-        pitch: 0,
-        yaw: 0
-    }, c) {
-        if (!this._isLoaded)
-            return console.info("Viewer not loaded");
-        if (typeof t != "object" && (t = this.getPano(t)),
-        !t)
-            throw new Error("parameter missing: pano");
-        const _ = {
-            POV: e,
-            id: c || Ie(),
-            targetPOV: i,
-            to: t
-        };
-        this.getCurrentPano().links.add(_),
-        this._addLink(_);
-        const w = new CustomEvent("newLink",{
-            detail: _
-        });
-        return this._dom.dispatchEvent(w),
-        _
-    }
-    isFirstPano() {
-        return this.getCurrentPano() === this._first
-    }
-    setFirstPano(t) {
-        this._first = t
-    }
-    _init() {
-        this._processTour(),
-        this._initViewer(),
-        this._setListeners()
-    }
-    _initViewer() {
-        const t = {
-            autoLoad: this._options.autoLoad,
-            autoRotate: this._options.autoRotate,
-            showControls: this._options.showControls,
-            keyboardZoom: this._options.keyboardZoom,
-            mouseZoom: this._options.mouseZoom,
-            disableKeyboardCtrl: !0,
-            default: {
-                firstScene: this._first.id,
-                pitch: this._first.POV.pitch,
-                sceneFadeDuration: 1e3,
-                yaw: this._first.POV.yaw
-            },
-            hfov: 120,
-            scenes: this._pannellumPanos.table
-        };
-        this._preview && (t.preview = this._preview.url),
-        this._viewer = pannellum.viewer(this._dom, t)
-    }
-    _createClass(t) {
-        return `${this._classPrefix}-${t}`
-    }
-    _processPanos() {
-        const t = this._tour.panos || this._tour.photoSpheres;
-        this._panos = new ee(t.map(e=>({
-            id: e.id,
-            infoElements: new ee(e.infoElements),
-            name: e.name,
-            POV: e.POV,
-            url: e.link
-        }))),
-        t.forEach(e=>{
-            const i = this._panos.get(e.id);
-            e.links = e.links || [],
-            e.infoElements = e.infoElements || [],
-            i.links = new ee(e.links.map(this._transformToLink.bind(this))),
-            i.infoElements = new ee(e.infoElements.map(this._transformToInfo.bind(this)))
-        }
-        ),
-        this._pannellumPanos = new ee(this._panos.array.map(this._transformToPannellumPano.bind(this)))
-    }
-    _validateTour() {
-        const t = this._tour && (this._tour.panos || this._tour.photoSpheres);
-        if (!t || !t.length)
-            throw new Error(me.ERRORS.INVALID_TOUR);
-        const e = this._tour.images && this._tour.images[0];
-        e && (this._preview = {
-            url: e.link,
-            name: e.name,
-            id: e.id
-        }),
-        this._tour.POV || (this._tour.POV = {
-            yaw: 0,
-            pitch: 0
-        })
-    }
-    _processTour() {
-        this._name = this._tour.name,
-        this._description = this._tour.description,
-        this._processPanos(),
-        this._tour.firstPhotoSphereId ? this._first = this._panos.get(this._tour.firstPhotoSphereId) : this._first = this._panos.get(),
-        this._first.POV = this._tour.POV
-    }
-    _setListeners() {
-        this._viewer.on("load", this._onLoadPano.bind(this)),
-        this._viewer.on("mousedown", this._onClick.bind(this)),
-        this._viewer.on("touchstart", this._onClick.bind(this)),
-        this._dom.addEventListener("TOGGLE_INFO_ELEMENT", this.forceToRender.bind(this)),
-        this._dom.addEventListener("UPDATE_INFO_ELEMENT", this._updateInfoListener.bind(this)),
-        this._dom.addEventListener("DELETE_INFO_ELEMENT", this._deleteInfoListener.bind(this))
-    }
-    _deleteInfoListener(t) {
-        const e = t.detail;
-        this.deleteInfoElement(e.id),
-        this._onDeleteInfoListeners.forEach(i=>{
-            i(e)
-        }
-        )
-    }
-    _updateInfoListener(t) {
-        const e = t.detail
-          , i = this.getPano().infoElements.get(e.id);
-        i.title = e.title,
-        i.description = e.description,
-        this._onUpdateInfoListeners.forEach(c=>{
-            c(i)
-        }
-        )
-    }
-    _onClick(t) {
-        if (!this._isSelectingPOV)
-            return;
-        const e = t.targetTouches && t.targetTouches[0] || t
-          , i = this._viewer.mouseEventToCoords(e)
-          , c = {
-            pitch: i[0],
-            yaw: i[1]
-        };
-        this._isSelectingPOV = !1,
-        this._selectPOVDeferred.resolve(c),
-        this._selectPOVDeferred = null
-    }
-    _onLoadPano(t) {
-        this._isLoaded = !0,
-        this._options.noLinks || this._setLinks(),
-        this._setInfos();
-        const e = new Event("load");
-        this._dom.dispatchEvent(e),
-        typeof this._onLoad == "function" && this._onLoad()
-    }
-    _setLinks() {
-        this.getCurrentPano().links.array.forEach(e=>{
-            this._addLink(e)
-        }
-        )
-    }
-    _setInfos() {
-        this.getPano().infoElements.array.forEach(e=>{
-            this._addInfoToViewer(e)
-        }
-        )
-    }
-    _addInfoToViewer(t) {
-        this._viewer.addHotSpot(this._transformToPannellumOverlay(t))
-    }
-    _addLink(t) {
-        this._viewer.removeHotSpot(t.id),
-        this._viewer.addHotSpot(this._transformToPannellumLink(t))
-    }
-    _transformToLink(t) {
-        const e = this._panos.get(t.toPhotoSphereId || t.toId);
-        return {
-            POV: t.POV,
-            id: t.id,
-            targetPOV: t.targetPOV,
-            to: e
-        }
-    }
-    _transformToInfo(t) {
-        const {POV: e, id: i, name: c, description: _} = t;
-        return {
-            title: c,
-            description: _,
-            POV: e,
-            id: i,
-            infoElement: Ot(cn, {
-                isEdit: this._options.editMode,
-                id: i,
-                title: c,
-                description: _
-            })
-        }
-    }
-    _transformToPannellumOverlay(t) {
-        return {
-            id: t.id,
-            pitch: t.POV.pitch,
-            yaw: t.POV.yaw,
-            type: "info",
-            cssClass: "n",
-            createTooltipFunc: e=>In(t.infoElement, e)
-        }
-    }
-    _transformToPannellumLink(t) {
-        return {
-            id: t.id,
-            pitch: t.POV.pitch,
-            sceneId: t.to && t.to.id,
-            targetPitch: t.targetPOV.pitch,
-            targetYaw: t.targetPOV.yaw,
-            text: t.to && t.to.name,
-            type: "scene",
-            yaw: t.POV.yaw
-        }
-    }
-    _transformToPannellumPano(t) {
-        const e = {
-            id: t.id,
-            panorama: t.url,
-            type: "equirectangular"
-        };
-        return this._options.noTitle || (e.title = t.name),
-        t.POV && (e.pitch = t.POV.pitch,
-        e.yaw = t.POV.yaw),
-        t.links && t.links.length,
-        e
-    }
-}
-;
-let qt = me;
-qt.EVENTS = Object.assign({
+    if (pano.links && pano.links.length) ;
+    return params;
+  }
+};
+let TourRenderer = _TourRenderer;
+TourRenderer.EVENTS = Object.assign(
+  {
     UPDATE_INFO_ELEMENT: "UPDATE_INFO_ELEMENT",
     TOGGLE_INFO_ELEMENT: "TOGGLE_INFO_ELEMENT",
     DELETE_INFO_ELEMENT: "DELETE_INFO_ELEMENT"
-}, {
+  },
+  {
     CREATE_INFO_ELEMENT: "CREATE_INFO_ELEMENT",
     CREATE_LINK: "CREATE_LINK",
     DELETE_LINK: "DELETE_LINK"
-});
-qt.CLASSES = {
-    DOM_ELEMENT: "dom-element"
+  }
+);
+TourRenderer.CLASSES = {
+  DOM_ELEMENT: "dom-element"
 };
-qt.ERRORS = {
-    INVALID_TOUR: "The properties of the tour are not valid"
+TourRenderer.ERRORS = {
+  INVALID_TOUR: "The properties of the tour are not valid"
 };
-qt.DEFAULTS = {
-    autoLoad: !1,
-    autoRotate: void 0,
-    showControls: !0
+TourRenderer.DEFAULTS = {
+  autoLoad: false,
+  autoRotate: void 0,
+  showControls: true
 };
-window.TourRenderer = qt;
-export default qt;
+window.TourRenderer = TourRenderer;
 
+module.exports = TourRenderer;
+//# sourceMappingURL=TourRenderer.js.map
